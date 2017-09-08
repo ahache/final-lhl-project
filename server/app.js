@@ -1,9 +1,17 @@
+"use strict";
+
+require('dotenv').config();
+
 var express = require('express');
+const ENV = process.env.ENV || "development";
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+const knexConfig = require("./knexfile");
+const knex = require("knex")(knexConfig[ENV]);
+const knexLogger  = require('knex-logger');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
