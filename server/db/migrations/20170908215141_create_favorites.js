@@ -15,5 +15,7 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  knex.schema.dropTableIfExists('favorites');
+  return Promise.all([
+  knex.schema.dropTableIfExists('favorites')
+  ])
 };
