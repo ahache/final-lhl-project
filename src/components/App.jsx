@@ -10,12 +10,6 @@ class App extends Component {
     this.state = { users: [] }
   }
 
-  componentDidMount() {
-    fetch('/users')
-      .then(res => res.json())
-      .then(users => this.setState({ users }));
-  }
-
   render() {
     const style = {
       width: 'auto',
@@ -27,12 +21,6 @@ class App extends Component {
       <div>
         <NavBar />
         <Main />
-        <div className="App">
-          <h1>Users</h1>
-          {this.state.users.map(user =>
-            <div key={user.id}>{user.username}</div>
-          )}
-        </div>
       </div>
     );
   }
