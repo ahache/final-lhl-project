@@ -18,6 +18,7 @@ const index = require('./routes/index');
 const users = require('./routes/users');
 const login = require('./routes/login');
 const register = require('./routes/register');
+const filters = require('./routes/filters');
 
 const app = express();
 
@@ -38,6 +39,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/login', login(knex));
 app.use('/register', register(knex));
+app.use('/filters', filters(knex));
 
 
 // catch 404 and forward to error handler
