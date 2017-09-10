@@ -15,6 +15,29 @@ export class Map extends React.Component {
     }
   }
 
+  renderChildren() {
+    const {children} = this.props;
+    // return null so that if we use the map w/o children
+    // our component won't blow up
+    if (!children) return;
+
+    return React.Children.map(children, c => {
+      /*
+      cloneElement() accepts an element and creates a copy,
+      which gives us the opportunity to append props and/or children
+      to the child. We can use this to append map instance plus the google prop.
+      Now each of the Map component's children will receive the original props they
+      were passed plus the map instance, google api instance and mapCenter from the
+      <Map /> component.
+      */
+      return React.cloneElement(c, {
+        map: this.map,
+        google: this.props.google,
+        mapCenter: this.state.currentLocation
+      });
+    })
+  }
+
   loadMap() {
     if (this.props && this.props.google) {
       // if google is available
@@ -128,7 +151,7 @@ export class Map extends React.Component {
     return (
       <div ref='map' style={style}>
         Loading map...
-        // {this.renderChildren()}
+        {this.renderChildren()}
       </div>
     )
   }
