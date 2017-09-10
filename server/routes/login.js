@@ -2,6 +2,7 @@ const express = require('express');
 const router  = express.Router();
 const bodyParser = require("body-parser");
 const cookieSession = require('cookie-session');
+const bcrypt = require('bcrypt');
 
 router.use(bodyParser.urlencoded({extended: true}));
 router.use(cookieSession({
@@ -9,9 +10,7 @@ router.use(cookieSession({
 }));
 
 module.exports = (knex) => {
-
   router.post("/", (req, res) => {
-    console.log(req.body);
     knex
       .select("*")
       .from("users")
