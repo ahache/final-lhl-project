@@ -11,10 +11,11 @@ router.use(cookieSession({
 module.exports = (knex) => {
 
   router.post("/", (req, res) => {
+    console.log(req.body);
     knex
       .select("*")
       .from("users")
-      .where({email: "hi@gmail.com"})
+      .where({email: req.body.email})
       .then((results) => {
         console.log(results);
         res.json(results);

@@ -14,9 +14,9 @@ class Login extends Component {
       <div>
         <LoginForm />
         <div style={style}>
-        <a href='#'>Forgot Password?</a>
-        <br/>
-        <Link to='/register'>Need an account? Register here</Link>
+          <a href='#'>Forgot Password?</a>
+          <br/>
+          <Link to='/register'>Need an account? Register here</Link>
         </div>
       </div>
     );
