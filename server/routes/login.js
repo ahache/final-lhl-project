@@ -11,15 +11,13 @@ router.use(cookieSession({
 
 module.exports = (knex) => {
   router.post("/", (req, res) => {
-    console.log(req.body);
     knex
       .select("*")
       .from("users")
       .where({email: req.body.email})
       .then((results) => {
         console.log(results);
-        // res.status(200).send("Working");
-        res.json(results);
+        res.status(200).send("Logged in");
       });
   })
   return router;

@@ -32,6 +32,9 @@ module.exports = (knex) => {
         email: email,
         password: hashedPassword
       })
+      .then((results) => {
+        res.status(200).send("Successfully Registered");
+      })
       .catch((error) => {
         console.error(error);
       });

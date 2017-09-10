@@ -16,7 +16,6 @@ class App extends Component {
       textAlign: 'center'
     }
 
-
     return (
       <div>
         <NavBar />

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 
-// const URL = "localhost:3001";
+const URL = "http:\//localhost:3001/login";
 
 class LoginForm extends Component {
   constructor(props) {
@@ -10,7 +10,7 @@ class LoginForm extends Component {
   }
 
   handleSubmit(event) {
-    $.post('http:\//localhost:3001/login', {email: this.email.value})
+    $.post(URL, {email: this.email.value, password: this.password.value})
       .done((data) => {
         console.log(data);
       });
