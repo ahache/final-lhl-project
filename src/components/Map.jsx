@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import camelize from '../javascript/camelize.js'
 
 export class Map extends React.Component {
   constructor(props){
@@ -16,7 +17,7 @@ export class Map extends React.Component {
 
   loadMap() {
     if (this.props && this.props.google) {
-      // google is available
+      // if google is available
       const {google} = this.props;
       const maps = google.maps;
 
@@ -32,21 +33,63 @@ export class Map extends React.Component {
         zoom: zoom
       })
       this.map = new maps.Map(node, mapConfig);
+
+      /* MESSAGES FROM MATT:
+      This code deals with dragging the map and having a callback for it,
+      when the user finishes dragging the map, we can do something with that!
+      One issue is that we don't to be handling the callback that many times
+      since the user is likely to drag A LOT. So we can set the callback to only
+      be called at the end. We can create a limit to the times we'll call onMove()
+      and can do this for many different types of events!
+      */
+      let centerChangedTimeout;
+      /*
+      If we wanted to deal with many types of events that get handled the same we
+      can do something like const eventNames = ['click', 'dragend']
+      */
+      const eventNames = ['ready', 'click', 'dragend'];
+      eventNames.forEach(event => {
+        this.map.addListener(event, this.handleEvent(event));
+      });
+      // After the map is ready, can use a trigger function on the map instance
+      // and because we've already set up the rest of the event handlers, this will just work.
+      maps.event.trigger(this.map, 'ready');
+    }
+  }
+
+  /*
+  Basically any time we pass a prop with an event name (such as click) it will
+  get called whenever we click on the map itself. Note: This is not very React-like (or JS-like).
+  Going meta here.
+  */
+  handleEvent(eventName) {
+    let timeout;
+    const handlerName = `on${camelize(eventName)}`;
+    return (event) => {
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+      }
+      timeout = setTimeout(() => {
+        if (this.props[handlerName]) {
+          this.props[handlerName](this.props, this.map, event);
+        }
+      }, 0);
     }
   }
 
   componentDidMount() {
     if (this.props.centerAroundCurrentLocation) {
       if (navigator && navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition((pos) => {
-            const coords = pos.coords;
-            this.setState({
-              currentLocation: {
-                lat: coords.latitude,
-                lng: coords.longitude
-              }
-            })
+        navigator.geolocation.getCurrentPosition((pos) => {
+          const coords = pos.coords;
+          this.setState({
+            currentLocation: {
+              lat: coords.latitude,
+              lng: coords.longitude
+            }
           })
+        })
       }
     }
     this.loadMap();
@@ -85,19 +128,24 @@ export class Map extends React.Component {
     return (
       <div ref='map' style={style}>
         Loading map...
+        // {this.renderChildren()}
       </div>
     )
   }
 }
 
+// Here I'm explicitly saying what types my props will be, this is supposedly good practice!
 Map.propTypes = {
   google: React.PropTypes.object,
   zoom: React.PropTypes.number,
   initialCenter: React.PropTypes.object,
-  centerAroundCurrentLocation: React.PropTypes.bool
+  centerAroundCurrentLocation: React.PropTypes.bool,
+  onMove: React.PropTypes.func
 }
 
+// Setting default values on my props
 Map.defaultProps = {
+  onMove: function() {},
   zoom: 13,
   // Vancouver, by default
   initialCenter: {
