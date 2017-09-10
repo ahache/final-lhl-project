@@ -16,8 +16,15 @@ module.exports = (knex) => {
       .from("users")
       .where({email: req.body.email})
       .then((results) => {
-        console.log(results);
-        res.status(200).send("Logged in");
+        if (results.length === 0) {
+          res.status(400).send("User is not registered");
+          return;
+        }
+        if (bcrypt.compareSync(req.body.password, results[0].password)) {
+          res.status(200).send("Logged in");
+        } else {
+          res.status(400).send("Wrong Password");
+        }
       });
   })
   return router;

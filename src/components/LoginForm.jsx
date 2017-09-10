@@ -10,10 +10,16 @@ class LoginForm extends Component {
   }
 
   handleSubmit(event) {
-    $.post(URL, {email: this.email.value, password: this.password.value})
-      .done((data) => {
-        console.log(data);
-      });
+    const email = this.email.value;
+    const password = this.password.value;
+    if (!email || !password) {
+      alert("Fields must not be empty");
+    } else {
+      $.post(URL, {email: email, password: password})
+        .done((data) => {
+          console.log(data);
+        });  
+    }
     event.preventDefault();
   }
 

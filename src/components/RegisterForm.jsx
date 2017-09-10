@@ -11,21 +11,27 @@ class RegisterForm extends Component {
   }
 
   handleSubmit(event) {
-    // Check if password and confirmation match on the client end
+    const first = this.first.value;
+    const last = this.last.value;
+    const email = this.email.value;
     const password = this.password.value;
-    if (password !== this.confirmation.value) {
-      alert("Passwords must match");
-      return;
+    if (!first || !last || !email || !password) {
+      alert("Please fill out every field");
+    } else {
+      if (password !== this.confirmation.value) {
+        alert("Passwords must match");
+      } else {
+        $.post(URL, {
+          first: first,
+          last: last,
+          email: email, 
+          password: password
+        })
+          .done((data) => {
+            console.log(data);
+          });
+      }
     }
-    $.post(URL, {
-      first: this.first.value,
-      last: this.last.value,
-      email: this.email.value, 
-      password: password
-    })
-      .done((data) => {
-        console.log(data);
-      });
     event.preventDefault();
   }    
 

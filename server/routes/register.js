@@ -11,7 +11,6 @@ router.use(cookieSession({
 
 module.exports = (knex) => {
   router.post("/", (req, res) => {
-    console.log(req.body);
     const { first, last, email, password } = req.body;
     knex
       .select("*")
@@ -19,7 +18,6 @@ module.exports = (knex) => {
       .where({email: email})
       .then((result) => {
         if (result.length > 0) {
-          // Not sure how to get react client to receive error
           res.status(400).send("Email is already registered");
           return;
         }
