@@ -12,6 +12,7 @@ const bodyParser = require('body-parser');
 const knexConfig = require("./knexfile");
 const knex = require("knex")(knexConfig[ENV]);
 const knexLogger  = require('knex-logger');
+const cors = require('cors');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
@@ -31,6 +32,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 
 app.use('/', index);
 app.use('/users', users);

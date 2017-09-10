@@ -18,6 +18,7 @@ module.exports = (knex) => {
       .where({email: req.body.email})
       .then((results) => {
         console.log(results);
+        // res.status(200).send("Working");
         res.json(results);
       });
   })
