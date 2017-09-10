@@ -4,6 +4,9 @@
   "private": true,
   "dependencies": {
     "bulma": "^0.5.1",
+    "google-map-react": "^0.24.0",
+    "google-maps-react": "^1.1.0",
+    "lodash": "^4.17.4",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-router-dom": "^4.2.2",
