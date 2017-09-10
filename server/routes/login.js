@@ -21,7 +21,8 @@ module.exports = (knex) => {
           return;
         }
         if (bcrypt.compareSync(req.body.password, results[0].password)) {
-          res.status(200).send("Logged in");
+          res.locals.user = req.body.email;
+          res.json(results);
         } else {
           res.status(400).send("Wrong Password");
         }
