@@ -11,6 +11,7 @@ router.use(cookieSession({
 
 module.exports = (knex) => {
   router.post("/", (req, res) => {
+    console.log(req.body);
     knex
       .select("*")
       .from("users")
