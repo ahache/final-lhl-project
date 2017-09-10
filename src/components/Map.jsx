@@ -3,16 +3,6 @@ import ReactDOM from 'react-dom'
 
 export class Map extends React.Component {
 
-  componentDidMount() {
-    this.loadMap();
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.google !== this.props.google) {
-      this.loadMap();
-    }
-  }
-
   loadMap() {
     if (this.props && this.props.google) {
       // google is available
@@ -32,11 +22,26 @@ export class Map extends React.Component {
       })
       this.map = new maps.Map(node, mapConfig);
     }
+    // ...
+  }
+
+  componentDidMount() {
+    this.loadMap();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.google !== this.props.google) {
+      this.loadMap();
+    }
   }
 
   render() {
+    const style = {
+      width: '100vw',
+      height: '100vh'
+    }
     return (
-      <div ref='map'>
+      <div ref='map' style={style}>
         Loading map...
       </div>
     )
