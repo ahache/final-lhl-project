@@ -18,7 +18,8 @@ class LoginForm extends Component {
       $.post(URL, {email: email, password: password})
         .done((data) => {
           console.log(data);
-        });  
+          this.props.current_user(data[0].email);
+        });
     }
     event.preventDefault();
   }
