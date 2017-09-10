@@ -1,13 +1,34 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
+import $ from 'jquery';
 
+const URL = "http:\//localhost:3001/filters";
 
 class Filters extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      user_email : "hi@gmail.com",
+      filters : []
+    }
+  }
+
+  componentDidMount (){
+    $.get(URL + '/1')
+    .done((data) => {
+      const newFilters = this.state.filters.concat(data);
+      this.setState({filters: newFilters});
+    })
+  }
   render() {
     const style = {
       width: 'auto',
       textAlign: 'center'
     }
+
+    const filterSpan = this.state.filters.map(filter => {
+      return (<p>{filter.name}</p>);
+    })
 
     return (
       <div style={style}>
@@ -28,6 +49,7 @@ class Filters extends Component {
         <h2>What are you interested in?</h2>
         <input type='text' name="interests" placeholder="Tacos" />
         <button>Add</button>
+        {filterSpan}
       </div>
     );
   }
