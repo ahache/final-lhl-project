@@ -75,4 +75,8 @@ class InfoWindow extends React.Component {
   }
 }
 
+InfoWindow.defaultProps = {
+  visible: false
+}
+
 export default InfoWindow;

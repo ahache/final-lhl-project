@@ -53,6 +53,7 @@ export class Container extends React.Component {
     return (
       <div style={style}>
         <Map google={this.props.google} onClick={this.onMapClick}>
+          <Marker />
           <Marker position={pos} onClick={this.onMarkerClick} />
           <Marker position={pos_one} onClick={this.onMarkerClick} />
           <Marker position={pos_two} onClick={this.onMarkerClick} />
@@ -61,7 +62,7 @@ export class Container extends React.Component {
             visible={this.state.showingInfoWindow}
             onClose={this.onInfoWindowClose}>
             <div>
-              <h1>Fuck this</h1>
+              <h1>Fuck</h1>
             </div>
           </InfoWindow>
         </Map>
