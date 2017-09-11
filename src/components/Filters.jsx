@@ -8,13 +8,14 @@ class Filters extends Component {
   constructor(props){
     super(props)
     this.state = {
-      user_id : 1,
       filters : []
     }
+
+    this.addFilter = this.addFilter.bind(this);
   }
 
   componentDidMount (){
-    $.get(URL + '/' + this.state.user_id)
+    $.get(URL)
     .done((data) => {
       const newFilters = this.state.filters.concat(data);
       this.setState({filters: newFilters});
@@ -22,12 +23,12 @@ class Filters extends Component {
   }
 
   addFilter(e){
-    const filter = this.interest.value;
-    const newFilters = this.state.filters.concat(filter);
-    if (!filter) {
+    const newFilter = this.filter.value;
+    const newFilters = this.state.filters.concat(newFilter);
+    if (!newFilter) {
       alert("Fields must not be empty");
     } else {
-      $.post(URL + '/' + this.state.user_id, {filter: filter})
+      $.post(URL, {filter: newFilter})
         .done((data) => {
           this.setState({filters: newFilters})
           console.log(data, " posted");
@@ -64,7 +65,7 @@ class Filters extends Component {
         </form>
         <h2>What are you interested in?</h2>
         <form onSubmit={this.addFilter}>
-          <input type='text' name="interests" placeholder="Tacos" ref={(interest) => this.interest = interest}/>
+          <input type='text' name="filter" placeholder="Tacos" ref={(filter) => this.filter = filter}/>
           <button type="submit">Add</button>
         </form>
         {filterSpan}

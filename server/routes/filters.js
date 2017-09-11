@@ -1,22 +1,30 @@
 const express = require('express');
 const router  = express.Router();
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
 
-router.use(bodyParser.urlencoded({extended: true}));
+// router.use(bodyParser.urlencoded({extended: true}));
 
 module.exports = (knex) => {
-  router.get("/:id", (req, res) => {
+
+
+  router.get("/", (req, res) => {
+
+
+  console.log("can has cookie?", req.session.user);
+    console.log("can has local?", res.locals.user);
+
     knex('users_filters')
       .join('filters', 'filters.id', '=', 'users_filters.filter_id')
       .join('users', 'users.id', '=', 'users_filters.user_id')
       .select('filters.name')
-      .where('users.email', '=', 'hi@gmail.com')
+      .where('users.id', '=', '4')
       .then((results) => {
+        console.log('results', results);
         res.json(results);
       });
   })
 
-  router.post("/:id", (req, res) => {
+  router.post("/", (req, res) => {
     knex('filters')
     .select('*')
     .where('name', '=', req.body.filter)
