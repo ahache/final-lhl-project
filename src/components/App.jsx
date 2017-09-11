@@ -8,6 +8,7 @@ class App extends Component {
   constructor(props) {
     super()
     this.state = { users: [] }
+    this.onLogin = this.onLogin.bind(this);
   }
 
   render() {

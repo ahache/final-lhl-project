@@ -15,5 +15,23 @@ module.exports = (knex) => {
         res.json(results);
       });
   })
+
+  router.post("/:id", (req, res) => {
+    knex('filters')
+    .select('*')
+    .where('name', '=', req.body.filter)
+    .then((result) => {
+      if (result.length === 0) {
+        knex('filters')
+        .insert({name: req.body.filter})
+        .then((results) => {
+        res.status(200).send("Filter Added");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+      }
+    })
+  })
   return router;
 }

@@ -1,21 +1,27 @@
 import React, { Component } from 'react';
 import LoginForm from './LoginForm.jsx';
-import { Link } from 'react-router-dom'
+import { Link, Route, Redirect } from 'react-router-dom';
+import Filters from './Filters.jsx';
 
 
 class Login extends Component {
   constructor(props){
     super(props)
     this.state = {
-      current_user: "none"
+      current_user: "none",
+      loggedIn: false
     }
 
     this.updateCurrentUser = this.updateCurrentUser.bind(this);
+    this.login = this.login.bind(this);
   }
 
   updateCurrentUser(user) {
-    console.log(user);
     this.setState({current_user: user});
+  }
+
+  login() {
+    this.setState({loggedIn: true});
   }
 
   render() {
@@ -23,9 +29,14 @@ class Login extends Component {
       width: 'auto',
       textAlign: 'center'
     }
+    if(this.state.loggedIn){
+      return(
+        <Redirect to="/filters" />
+      )
+    }
     return (
       <div>
-        <LoginForm current_user={this.updateCurrentUser} />
+        <LoginForm login={this.login} current_user={this.updateCurrentUser} />
         <div style={style}>
           <a href='#'>Forgot Password?</a>
           <br/>

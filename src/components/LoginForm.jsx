@@ -6,6 +6,9 @@ const URL = "http:\//localhost:3001/login";
 class LoginForm extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loggedIn: false
+    }
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -19,6 +22,7 @@ class LoginForm extends Component {
         .done((data) => {
           console.log(data);
           this.props.current_user(data[0].email);
+          this.props.login();
         });
     }
     event.preventDefault();
