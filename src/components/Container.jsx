@@ -1,9 +1,46 @@
 import React from 'react'
-import {InfoWindow, GoogleApiWrapper} from 'google-maps-react';
+import {GoogleApiWrapper} from 'google-maps-react';
 import Map from './Map.jsx'
 import Marker from './Marker.jsx'
+import InfoWindow from './InfoWindow.jsx'
 
 export class Container extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      showingInfoWindow: false,
+      activeMarker: {},
+      selectedPlace: {}
+    };
+    this.onMarkerClick = this.onMarkerClick.bind(this);
+		this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
+		this.onMapClick = this.onMapClick.bind(this);
+  }
+
+  onMarkerClick(props, marker, e) {
+		this.setState({
+			selectedPlace: props,
+			activeMarker: marker,
+			showingInfoWindow: true
+		});
+	}
+
+  onInfoWindowClose() {
+    this.setState({
+      showingInfoWindow: false,
+      activeMarker: null
+    });
+  }
+
+  onMapClick() {
+    if (this.state.showingInfoWindow) {
+      this.setState({
+        showingInfoWindow: false,
+        activeMarker: null
+      });
+    }
+  }
+
   render() {
     const style = {
       width: '100vw',
@@ -15,11 +52,19 @@ export class Container extends React.Component {
 
     return (
       <div style={style}>
-        <Map google={this.props.google}>
+        <Map google={this.props.google} onClick={this.onMapClick}>
           <Marker />
-          <Marker position={pos} />
-          <Marker position={pos_one} />
-          <Marker position={pos_two} />
+          <Marker position={pos} onClick={this.onMarkerClick} />
+          <Marker position={pos_one} onClick={this.onMarkerClick} />
+          <Marker position={pos_two} onClick={this.onMarkerClick} />
+          <InfoWindow
+            marker={this.state.activeMarker}
+            visible={this.state.showingInfoWindow}
+            onClose={this.onInfoWindowClose}>
+            <div>
+              <h1>Fuck this</h1>
+            </div>
+          </InfoWindow>
         </Map>
       </div>
     )

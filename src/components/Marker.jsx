@@ -11,6 +11,9 @@ export class Marker extends React.Component {
 
   componentDidUpdate(prevProps) {
     if ((this.props.map !== prevProps.map) || (this.props.position !== prevProps.position)) {
+      if (this.marker) {
+        this.marker.setMap(null);
+      }
       // The relevant props have changed so our marker needs to be updated
       this.renderMarker();
     }
