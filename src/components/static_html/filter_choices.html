@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Bulma!</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.1/css/bulma.min.css">
+  </head>
+  <body>
+    <div class="columns is-mobile is-centered">
+      <div class="column is-one-third">
+        <section class="hero is-fullheight">
+          <div class="hero-body">
+            <div class="container is-fluid">
+              <div class="has-text-centered">
+                <div class="field">
+                  <label class="label is-large hero-buttons">Where are you going?</label>
+                  <div class="control has-icons-left">
+                    <input class="input is-medium" type="text" placeholder="Enter an address/landmark..." required />
+                    <span class="icon is-small is-left">
+                      <i class="fa fa-location-arrow"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="level-item has-text-centered hero-buttons">
+                <div class="field">
+                  <label class="label is-large">How far do you want to go?</label>
+                  <div class="control">
+                    <div class="select is-medium">
+                      <select>
+                        <option>Walking Distance (2 kilometers)</option>
+                        <option>Biking Distance (4 kilometers)</option>
+                        <option>Driving Distance (8 kilometers)</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="level-item has-text-centered">
+                <div class="field">
+                  <label class="label is-large hero-buttons">What are you interested in?</label>
+                  <div class="control has-icons-left level">
+                    <input class="input is-medium" type="text" placeholder="Enter a keyword..." required />
+                    <span class="icon is-small is-left">
+                      <i class="fa fa-search-plus"></i>
+                    </span>
+                    <div class="control">
+                      <button class="button is-medium is-info">
+                        Add to List
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="level-item has-text-centered hero-buttons">
+                <div class="field">
+                  <div class="control">
+                    <button class="button is-large is-primary">
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </body>
+</html>
