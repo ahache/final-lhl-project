@@ -1,15 +1,8 @@
 import camelize from '../javascript/camelize.js'
-/*
-The Google API for markers requires that we have at LEAST a position defined,
-it looks like this:
-let marker = new google.maps.Marker({
-  position: somePosition,
-  map: map
-})
-*/
+import React from 'react'
+import ReactDOM from 'react-dom'
 
 export class Marker extends React.Component {
-
   componentWillUnmount() {
     if (this.marker) {
       this.marker.setMap(null);
@@ -29,25 +22,30 @@ export class Marker extends React.Component {
       map, google, position, mapCenter
     } = this.props;
 
-    let pos = position || mapCenter;
-    position = new google.maps.LatLng(pos.lat, pos.lng);
+    if (!google) {
+      return null;
+    }
 
+    let pos = position || mapCenter;
+    if (!(pos instanceof google.maps.LatLng)) {
+      position = new google.maps.LatLng(pos.lat, pos.lng);
+    }
     const pref = {
       map: map,
       position: position
     };
     this.marker = new google.maps.Marker(pref);
 
-    eventNames.forEach(event => {
-      this.marker.addListener(event, this.handleEvent(event));
+    eventNames.forEach(e => {
+      this.marker.addListener(e, this.handleEvent(e));
     })
   }
 
   handleEvent(eventName) {
-    return (event) => {
+    return (e) => {
       const evtName = `on${camelize(eventName)}`
-      if this.props[evtName]) {
-        this.props[evtName](this.props, this.marker, event)
+      if (this.props[evtName]) {
+        this.props[evtName](this.props, this.marker, e)
       }
     }
   }
@@ -61,3 +59,5 @@ Marker.propTypes = {
   position: React.PropTypes.object,
   map: React.PropTypes.object
 }
+
+export default Marker;

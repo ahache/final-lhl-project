@@ -35,7 +35,7 @@ export class Map extends React.Component {
         google: this.props.google,
         mapCenter: this.state.currentLocation
       });
-    })
+    });
   }
 
   loadMap() {
@@ -71,8 +71,8 @@ export class Map extends React.Component {
       can do something like const eventNames = ['click', 'dragend']
       */
       const eventNames = ['ready', 'click', 'dragend'];
-      eventNames.forEach(event => {
-        this.map.addListener(event, this.handleEvent(event));
+      eventNames.forEach(e => {
+        this.map.addListener(e, this.handleEvent(e));
       });
       // After the map is ready, can use a trigger function on the map instance
       // and because we've already set up the rest of the event handlers, this will just work.
@@ -88,17 +88,17 @@ export class Map extends React.Component {
   handleEvent(eventName) {
     let timeout;
     const handlerName = `on${camelize(eventName)}`;
-    return (event) => {
+    return (e) => {
       if (timeout) {
         clearTimeout(timeout);
         timeout = null;
       }
       timeout = setTimeout(() => {
         if (this.props[handlerName]) {
-          this.props[handlerName](this.props, this.map, event);
+          this.props[handlerName](this.props, this.map, e);
         }
       }, 0);
-    }
+    };
   }
 
   componentDidMount() {

@@ -1,6 +1,7 @@
 import React from 'react'
-import {InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {InfoWindow, GoogleApiWrapper} from 'google-maps-react';
 import Map from './Map.jsx'
+import Marker from './Marker.jsx'
 
 export class Container extends React.Component {
   render() {
@@ -9,11 +10,16 @@ export class Container extends React.Component {
       height: '100vh'
     }
     const pos = {lat: 37.759703, lng: -122.428093}
+    const pos_one = {lat: 38.759703, lng: -122.428093}
+    const pos_two = {lat: 39.759703, lng: -122.428093}
+
     return (
       <div style={style}>
         <Map google={this.props.google}>
           <Marker />
           <Marker position={pos} />
+          <Marker position={pos_one} />
+          <Marker position={pos_two} />
         </Map>
       </div>
     )
