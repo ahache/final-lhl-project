@@ -1,5 +1,6 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
+import {GoogleApiWrapper} from 'google-maps-react';
 import Login from './Login.jsx'
 import Register from './Register.jsx'
 import Filters from './Filters.jsx'
@@ -16,7 +17,7 @@ const Main = () => (
       <Route path='/login' component={Login}/>
       <Route path='/map' component={Container}/>
       <Route path='/register' component={Register}/>
-      <Route path='/Filters' component={Filters}/>
+      <Route path='/filters' component={Filters}/>
     </Switch>
   </main>
 )
