@@ -6,9 +6,9 @@ exports.seed = function(knex, Promise) {
     // Inserts seed entries
     return Promise.all([
       knex('filters').insert([
-        {id: 1, name: 'Spin'},
-        {id: 2, name: 'Meat'},
-        {id: 3, name: 'Bread'}
+        {name: 'Beer'},
+        {name: 'Sushi'},
+        {name: 'Pizza'}
       ])
     ])
   });
