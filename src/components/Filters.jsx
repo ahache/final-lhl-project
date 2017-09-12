@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import $ from 'jquery';
 
 const URL = "http:\//localhost:3001/filters";
+const mapURL = "http:\//localhost:3001/map";
 
 class Filters extends Component {
   constructor(props){
@@ -11,6 +12,7 @@ class Filters extends Component {
       filters : []
     }
     this.addFilter = this.addFilter.bind(this);
+    this.getMapResults = this.getMapResults.bind(this);
   }
 
   componentDidMount() {
@@ -21,7 +23,7 @@ class Filters extends Component {
       });
   }
 
-  addFilter(e){
+  addFilter(e) {
     const newFilter = {name: this.filter.value};
     const newFilters = this.state.filters.concat(newFilter);
     if (!newFilter) {
@@ -38,6 +40,23 @@ class Filters extends Component {
     e.preventDefault();
   }
 
+  getMapResults(e) {
+    const destination = this.destination.value;
+    if (!destination) {
+      alert("Must input destination");
+    } else {
+      $.post(mapURL, {user: localStorage.getItem('token'), destination: destination})
+        .done((data) => {
+          console.log(data);
+        })
+        .fail((error) => {
+          console.log(error.responseText);
+        });
+    }
+
+    e.preventDefault();
+  }
+
   render() {
     const style = {
       width: 'auto',
@@ -50,10 +69,10 @@ class Filters extends Component {
 
     return (
       <div style={style}>
-        <h1> Where are you going? </h1>
-        <input type='text' name="destination" placeholder="Vancouver" />
-        <h2> How are you getting around? </h2>
-        <form>
+        <form onSubmit={this.getMapResults}>
+          <h1> Where are you going? </h1>
+          <input type='text' placeholder="Vancouver" ref={(destination) => this.destination = destination}/>
+          <h2> How are you getting around? </h2>
           <div>
             <input type='radio' value="Walking" />Walking distance
           </div>
@@ -63,6 +82,7 @@ class Filters extends Component {
           <div>
             <input type='radio' value="Driving" />Driving distance
           </div>
+          <button type="submit">See Map</button>
         </form>
         <h2>What are you interested in?</h2>
         <form onSubmit={this.addFilter}>
