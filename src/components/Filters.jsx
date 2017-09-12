@@ -22,7 +22,7 @@ class Filters extends Component {
   }
 
   addFilter(e){
-    const newFilter = this.filter.value;
+    const newFilter = {name: this.filter.value};
     console.log("newFilter: ", newFilter);
     const newFilters = this.state.filters.concat(newFilter);
     console.log("newFilters: ", newFilters);
