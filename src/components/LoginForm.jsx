@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import jwt from 'jsonwebtoken';
 
 const URL = "http:\//localhost:3001/login";
 
@@ -20,9 +21,10 @@ class LoginForm extends Component {
     } else {
       $.post(URL, {email: email, password: password})
         .done((data) => {
-          console.log(data);
-          this.props.current_user(data[0].email);
-          this.props.login();
+          console.log('Post login payload: ', data);
+          localStorage.setItem('token', data);
+          // this.props.current_user(data[0].email);
+          // this.props.login();
         });
     }
     event.preventDefault();

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import $ from 'jquery';
+import axios from 'axios';
 
 const URL = "http:\//localhost:3001/filters";
 
@@ -14,12 +15,21 @@ class Filters extends Component {
     this.addFilter = this.addFilter.bind(this);
   }
 
-  componentDidMount (){
-    $.get(URL)
-    .done((data) => {
-      const newFilters = this.state.filters.concat(data);
-      this.setState({filters: newFilters});
-    })
+  componentDidMount() {
+    // axios({
+    //   method: 'GET',
+    //   url: URL,
+    //   data: {
+    //     user: localStorage.getItem('token')
+    //   }
+    // })
+    // $.post(URL, {user: localStorage.getItem('token')})
+    //   .done();
+    $.get(URL, {user: localStorage.getItem('token')})
+      .done((data) => {
+        const newFilters = this.state.filters.concat(data);
+        this.setState({filters: newFilters});
+      })
   }
 
   addFilter(e){
@@ -28,7 +38,7 @@ class Filters extends Component {
     if (!newFilter) {
       alert("Fields must not be empty");
     } else {
-      $.post(URL, {filter: newFilter})
+      $.post(URL, {user: localStorage.getItem('token'), filter: newFilter})
         .done((data) => {
           this.setState({filters: newFilters})
           console.log(data, " posted");

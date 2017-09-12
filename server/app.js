@@ -7,12 +7,12 @@ const ENV = process.env.ENV || "development";
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
-// const cookieParser = require('cookie-parser');
-// const bodyParser = require('body-parser');
 const knexConfig = require("./knexfile");
 const knex = require("knex")(knexConfig[ENV]);
 const knexLogger  = require('knex-logger');
 const cors = require('cors');
+const expressJWT = require('express-jwt');
+const jwt = require('jsonwebtoken');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
@@ -25,12 +25,6 @@ const app = express();
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
-const cookieSession = require('cookie-session');
-app.use(cookieSession({
-  secret: 'Wing got a wing',
-  // domain: 'http://localhost:3001'
-}));
-
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -38,6 +32,19 @@ app.use(logger('dev'));
 // app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
+
+app.use(expressJWT({
+  secret: 'CBFC',
+  credentialsRequired: false,
+  getToken: function fromHeaderOrQuerystring (req) {
+    if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+        return req.headers.authorization.split(' ')[1];
+    } else if (req.query && req.query.token) {
+      return req.query.token;
+    }
+    return null;
+  }
+}));
 
 app.use('/', index);
 app.use('/users', users);
