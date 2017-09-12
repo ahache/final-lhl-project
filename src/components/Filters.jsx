@@ -23,17 +23,13 @@ class Filters extends Component {
 
   addFilter(e){
     const newFilter = {name: this.filter.value};
-    console.log("newFilter: ", newFilter);
     const newFilters = this.state.filters.concat(newFilter);
-    console.log("newFilters: ", newFilters);
     if (!newFilter) {
       alert("Fields must not be empty");
     } else {
-      $.post(URL, {user: localStorage.getItem('token'), filter: newFilter})
+      $.post(URL, {user: localStorage.getItem('token'), filter: newFilter.name})
         .done((data) => {
-          console.log("newFilters after post: ", newFilters);
           this.setState({filters: newFilters});
-          console.log("After posting new filter: ", data);
         })
         .fail((error) => {
           console.log(error.responseText);

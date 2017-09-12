@@ -23,7 +23,7 @@ module.exports = (knex) => {
   router.post("/", (req, res) => {
     const decoded = jwt.verify(req.body.user, 'CBFC');
     const user_id = decoded.user;
-    const filter = req.body.filter;
+    const filter = req.body.filter.toLowerCase();
     let filter_id;
     if (filter) {
       knex('filters')
