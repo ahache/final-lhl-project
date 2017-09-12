@@ -1,7 +1,7 @@
 const express = require('express');
 const router  = express.Router();
 const bcrypt = require('bcrypt');
-
+const jwt = require('jsonwebtoken');
 
 module.exports = (knex) => {
   router.post("/", (req, res) => {
@@ -16,8 +16,8 @@ module.exports = (knex) => {
           return;
         }
         if (bcrypt.compareSync(req.body.password, results[0].password)) {
-          req.session.user = results[0].id;
-          res.json(results);
+          const token = jwt.sign({ user: results[0].id }, 'CBFC');
+          res.status(200).json(token);
         } else {
           res.status(400).send("Wrong Password");
         }

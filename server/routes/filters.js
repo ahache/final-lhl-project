@@ -1,23 +1,19 @@
 const express = require('express');
 const router  = express.Router();
-// const bodyParser = require("body-parser");
-
-// router.use(bodyParser.urlencoded({extended: true}));
+const jwt = require('jsonwebtoken');
 
 module.exports = (knex) => {
 
-
   router.get("/", (req, res) => {
 
-
-  console.log("can has cookie?", req.session.user);
-    console.log("can has local?", res.locals.user);
+    const decoded = jwt.verify(req.query.user, 'CBFC');
+    const user = decoded.user;
 
     knex('users_filters')
       .join('filters', 'filters.id', '=', 'users_filters.filter_id')
       .join('users', 'users.id', '=', 'users_filters.user_id')
       .select('filters.name')
-      .where('users.id', '=', '4')
+      .where('users.id', '=', user)
       .then((results) => {
         console.log('results', results);
         res.json(results);
@@ -25,21 +21,40 @@ module.exports = (knex) => {
   })
 
   router.post("/", (req, res) => {
-    knex('filters')
-    .select('*')
-    .where('name', '=', req.body.filter)
-    .then((result) => {
-      if (result.length === 0) {
-        knex('filters')
-        .insert({name: req.body.filter})
-        .then((results) => {
-        res.status(200).send("Filter Added");
+    const decoded = jwt.verify(req.body.user, 'CBFC');
+    const user_id = decoded.user;
+    const filter = req.body.filter.toLowerCase();
+    let filter_id;
+    if (filter) {
+      knex('filters')
+      .select('id')
+      .where('name', '=', filter)
+      .then((result) => {
+        // Filter does not exist, add it to filters table and users_filters table
+        if (result.length === 0) {
+          knex('filters')
+          .returning('id')
+          .insert({name: filter})
+          .then((id) => {
+            filter_id = id[0];
+            knex('users_filters')
+            .insert({user_id: user_id, filter_id: filter_id})
+            .then(() => res.status(200).send("Added filter for user"))
+            .catch(() => res.status(400).send("Failed to add filter for user"));
+          })
+          .catch(() => res.status(400).send("Failed to add filter"));
+        } else {
+          filter_id = result[0];
+          knex('users_filters')
+          .insert({user_id: user_id, filter_id: filter_id})
+          .then(() => res.status(200).send("Added filter for user"))
+          .catch(() => res.status(400).send("User already has filter"));
+        }
       })
-      .catch((error) => {
-        console.error(error);
-      });
-      }
-    })
+      .catch(() => res.status(400).send("Error accessing filters"))
+    } else {
+      res.status(400).send("No filter in request");
+    }
   })
   return router;
 }

@@ -10,28 +10,29 @@ class Filters extends Component {
     this.state = {
       filters : []
     }
-
     this.addFilter = this.addFilter.bind(this);
   }
 
-  componentDidMount (){
-    $.get(URL)
-    .done((data) => {
-      const newFilters = this.state.filters.concat(data);
-      this.setState({filters: newFilters});
-    })
+  componentDidMount() {
+    $.get(URL, {user: localStorage.getItem('token')})
+      .done((data) => {
+        const newFilters = this.state.filters.concat(data);
+        this.setState({filters: newFilters});
+      });
   }
 
   addFilter(e){
-    const newFilter = this.filter.value;
+    const newFilter = {name: this.filter.value};
     const newFilters = this.state.filters.concat(newFilter);
     if (!newFilter) {
       alert("Fields must not be empty");
     } else {
-      $.post(URL, {filter: newFilter})
+      $.post(URL, {user: localStorage.getItem('token'), filter: newFilter.name})
         .done((data) => {
-          this.setState({filters: newFilters})
-          console.log(data, " posted");
+          this.setState({filters: newFilters});
+        })
+        .fail((error) => {
+          console.log(error.responseText);
         });
     }
     e.preventDefault();

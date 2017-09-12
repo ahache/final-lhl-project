@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {GoogleApiWrapper} from 'google-maps-react';
 import '../App.css';
 import NavBar from './NavBar.jsx';
 import Main from './Main.jsx';

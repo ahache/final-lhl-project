@@ -1,5 +1,6 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
+import {GoogleApiWrapper} from 'google-maps-react';
 import Login from './Login.jsx'
 import Register from './Register.jsx'
 import Filters from './Filters.jsx'
