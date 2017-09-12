@@ -22,14 +22,15 @@ module.exports = (knex) => {
 
   router.post("/", (req, res) => {
     const decoded = jwt.verify(req.body.user, 'CBFC');
-    const user = decoded.user;
+    const user_id = decoded.user;
     const filter = req.body.filter;
-    let filter_id = 0;
-    if (filter){
+    let filter_id;
+    if (filter) {
       knex('filters')
       .select('id')
       .where('name', '=', filter)
       .then((result) => {
+        // Filter does not exist, add it to filters table and users_filters table
         if (result.length === 0) {
           knex('filters')
           .returning('id')
@@ -37,23 +38,23 @@ module.exports = (knex) => {
           .then((id) => {
             filter_id = id[0];
             knex('users_filters')
-            .insert({user_id: user, filter_id: filter_id})
-            .then(() => res.status(200).send("successfully"));
-            console.log('filter_id (if): ', filter_id);
+            .insert({user_id: user_id, filter_id: filter_id})
+            .then(() => res.status(200).send("Added filter for user"))
+            .catch(() => res.status(400).send("Failed to add filter for user"));
           })
-          .catch((error) => {
-            console.error(error);
-          });
+          .catch(() => res.status(400).send("Failed to add filter"));
         } else {
           filter_id = result[0];
           knex('users_filters')
-          .insert({user_id: user, filter_id: filter_id})
-          .then(() => res.status(200).send("successfully"))
+          .insert({user_id: user_id, filter_id: filter_id})
+          .then(() => res.status(200).send("Added filter for user"))
           .catch(() => res.status(400).send("User already has filter"));
         }
       })
+      .catch(() => res.status(400).send("Error accessing filters"))
+    } else {
+      res.status(400).send("No filter in request");
     }
-
   })
   return router;
 }
