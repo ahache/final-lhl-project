@@ -28,7 +28,7 @@ class RegisterForm extends Component {
           password: password
         })
           .done((data) => {
-            console.log(data);
+            localStorage.setItem('token', data);
           });
       }
     }

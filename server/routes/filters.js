@@ -24,7 +24,7 @@ module.exports = (knex) => {
     const decoded = jwt.verify(req.body.user, 'CBFC');
     const user = decoded.user;
     const filter = req.body.filter;
-    let filter_id;
+    let filter_id = 0;
     if (filter){
       knex('filters')
       .select('id')
@@ -35,18 +35,22 @@ module.exports = (knex) => {
           .returning('id')
           .insert({name: filter})
           .then((id) => {
-            console.log(id);
-            filter_id = id;
+            filter_id = id[0];
+            knex('users_filters')
+            .insert({user_id: user, filter_id: filter_id})
+            .then(() => res.status(200).send("successfully"));
+            console.log('filter_id (if): ', filter_id);
           })
           .catch((error) => {
             console.error(error);
           });
         } else {
           filter_id = result[0];
+          knex('users_filters')
+          .insert({user_id: user, filter_id: filter_id})
+          .then(() => res.status(200).send("successfully"))
+          .catch(() => res.status(400).send("User already has filter"));
         }
-        knex('users_filters')
-        .insert({user_id: Number(user), filter_id: filter_id})
-        .then(() => res.status(200).send("successfully"));
       })
     }
 
