@@ -1,13 +1,7 @@
 const express = require('express');
 const router  = express.Router();
-const bodyParser = require("body-parser");
-const cookieSession = require('cookie-session');
 const bcrypt = require('bcrypt');
-
-router.use(bodyParser.urlencoded({extended: true}));
-router.use(cookieSession({
-  secret: 'Wing got a wing'
-}));
+const jwt = require('jsonwebtoken');
 
 module.exports = (knex) => {
   router.post("/", (req, res) => {
@@ -24,14 +18,16 @@ module.exports = (knex) => {
       });
     const hashedPassword = bcrypt.hashSync(password, 10);
     knex("users")
+      .returning('id')
       .insert({
         first_name: first,
         last_name: last,
         email: email,
         password: hashedPassword
       })
-      .then((results) => {
-        res.status(200).send("Successfully Registered");
+      .then((id) => {
+        const token = jwt.sign({ user: id }, 'CBFC');
+        res.status(200).json(token);
       })
       .catch((error) => {
         console.error(error);
