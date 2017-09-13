@@ -9,7 +9,7 @@ export class SearchContainer extends React.Component {
     this.state = {
     };
   }
-  componentDidMount(){
+  // componentDidMount(){
   //    var searchBox = maps.places.SearchBox(node);
   //   searchBox.addListener('places_changed', function() {
   //         var places = searchBox.getPlaces();
@@ -19,11 +19,11 @@ export class SearchContainer extends React.Component {
   //         }
 
   // }
-  }
+  // }
 
   render() {
     return(
-    <PlacesSearch google={this.props.google} />
+      <PlacesSearch google={this.props.google} getDest={this.props.getDest} />
     );
   }
 }

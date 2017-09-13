@@ -17,11 +17,13 @@ export class PlacesSearch extends React.Component {
       const maps = google.maps;
       const node = ReactDOM.findDOMNode(this.refs.autocomplete);
       const searchBox = new maps.places.SearchBox(node);
-      // searchBox.addListener('places_changed', function() {
-      //     let places = searchBox.getPlaces();
-      //     if (places.length == 0) {
-      //       return;
-      //     }
+      searchBox.addListener('places_changed', function() {
+          let places = searchBox.getPlaces();
+          console.log(places[0].formatted_address);
+          if (places.length == 0) {
+            return;
+          }
+        });
       this.setState({googleLoad: true})
     }
   }
@@ -32,9 +34,13 @@ export class PlacesSearch extends React.Component {
     }
   }
 
+  handleInput = (event) => {
+    this.props.getDest(event.target.value);
+  }
+
   render(){
     return (
-    <input ref='autocomplete' id="pac-input" className="controls" type="text" placeholder="Search Box" />
+      <input ref='autocomplete' id="pac-input" className="controls" type="text" placeholder="Search Box" onBlur={this.handleInput} />
     )
   }
 

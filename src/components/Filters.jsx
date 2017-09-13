@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import $ from 'jquery';
 import SearchContainer from './SearchContainer.jsx';
+
 const URL = "http:\//localhost:3001/filters";
 const mapURL = "http:\//localhost:3001/map";
 
@@ -53,8 +54,11 @@ class Filters extends Component {
           console.log(error.responseText);
         });
     }
-
     e.preventDefault();
+  }
+
+  getDestination(dest) {
+    console.log(dest);
   }
 
   render() {
@@ -71,7 +75,7 @@ class Filters extends Component {
       <div style={style}>
         <form onSubmit={this.getMapResults}>
           <h1> Where are you going? </h1>
-          <SearchContainer />
+          <SearchContainer getDest={this.getDestination} />
           <h2> How are you getting around? </h2>
           <div>
             <input type='radio' value="Walking" />Walking distance
