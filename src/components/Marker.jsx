@@ -20,7 +20,7 @@ export class Marker extends React.Component {
   }
 
   renderMarker() {
-    const eventNames = ['click', 'mouseover'];
+    const eventNames = ['click'];
     let {
       map, google, position, mapCenter
     } = this.props;
@@ -45,12 +45,18 @@ export class Marker extends React.Component {
   }
 
   handleEvent(eventName) {
+    let timeout;
     return (e) => {
-      const evtName = `on${camelize(eventName)}`
-      if (this.props[evtName]) {
-        this.props[evtName](this.props, this.marker, e)
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
       }
-    }
+      timeout = setTimeout(() => {
+        if (this.props.onClick) {
+          this.props.onClick(this.props, this.marker, e)
+        }
+      }, 0);
+    };
   }
 
   render() {

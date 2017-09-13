@@ -8,6 +8,7 @@ export class Map extends React.Component {
 
     const {lat, lng} = this.props.initialCenter;
     this.state = {
+      mapLoaded: false,
       currentLocation: {
         lat: lat,
         lng: lng,
@@ -56,7 +57,7 @@ export class Map extends React.Component {
         zoom: zoom
       })
       this.map = new maps.Map(node, mapConfig);
-
+      this.setState({mapLoaded: true});
       /* MESSAGES FROM MATT:
       This code deals with dragging the map and having a callback for it,
       when the user finishes dragging the map, we can do something with that!
@@ -65,7 +66,7 @@ export class Map extends React.Component {
       be called at the end. We can create a limit to the times we'll call onMove()
       and can do this for many different types of events!
       */
-      let centerChangedTimeout;
+      // let centerChangedTimeout;
       /*
       If we wanted to deal with many types of events that get handled the same we
       can do something like const eventNames = ['click', 'dragend']
@@ -101,20 +102,24 @@ export class Map extends React.Component {
     };
   }
 
-  componentDidMount() {
-    if (this.props.centerAroundCurrentLocation) {
-      if (navigator && navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((pos) => {
-          const coords = pos.coords;
-          this.setState({
-            currentLocation: {
-              lat: coords.latitude,
-              lng: coords.longitude
-            }
-          })
-        })
-      }
-    }
+  // componentDidMount() {
+  //   if (this.props.centerAroundCurrentLocation) {
+  //     if (navigator && navigator.geolocation) {
+  //       navigator.geolocation.getCurrentPosition((pos) => {
+  //         const coords = pos.coords;
+  //         this.setState({
+  //           currentLocation: {
+  //             lat: coords.latitude,
+  //             lng: coords.longitude
+  //           }
+  //         })
+  //       })
+  //     }
+  //   }
+  //   this.loadMap();
+  // }
+
+  componentWillMount() {
     this.loadMap();
   }
 
@@ -122,26 +127,26 @@ export class Map extends React.Component {
     if (prevProps.google !== this.props.google) {
       this.loadMap();
     }
-    if (prevState.currentLocation !== this.state.currentLocation) {
-      this.recenterMap();
-    }
+    // if (prevState.currentLocation !== this.state.currentLocation) {
+    //   this.recenterMap();
+    // }
   }
 
   // Only called when currentLocation in component's state is updated
-  recenterMap() {
-    const map = this.map;
-    const current = this.state.currentLocation;
+  // recenterMap() {
+  //   const map = this.map;
+  //   const current = this.state.currentLocation;
 
-    const google = this.props.google;
-    const maps = google.maps;
+  //   const google = this.props.google;
+  //   const maps = google.maps;
 
-    if (map) {
-      let center = new maps.LatLng(current.lat, current.lng);
-      // Using panTo(center) to change the center of the map
-      map.panTo(center);
-    }
+  //   if (map) {
+  //     let center = new maps.LatLng(current.lat, current.lng);
+  //     // Using panTo(center) to change the center of the map
+  //     map.panTo(center);
+  //   }
 
-  }
+  // }
 
   render() {
     const style = {
