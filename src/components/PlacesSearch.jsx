@@ -17,6 +17,11 @@ export class PlacesSearch extends React.Component {
       const maps = google.maps;
       const node = ReactDOM.findDOMNode(this.refs.autocomplete);
       const searchBox = new maps.places.SearchBox(node);
+      // searchBox.addListener('places_changed', function() {
+      //     let places = searchBox.getPlaces();
+      //     if (places.length == 0) {
+      //       return;
+      //     }
       this.setState({googleLoad: true})
     }
   }
