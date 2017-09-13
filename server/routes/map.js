@@ -14,7 +14,8 @@ module.exports = (knex) => {
 
     const decoded = jwt.verify(req.body.user, 'CBFC');
     const user_id = decoded.user;
-    const destination = req.body.destination;
+    const { destination, radius } = req.body;
+    console.log(radius);
 
     const URL = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${destination}&key=${API}`
 

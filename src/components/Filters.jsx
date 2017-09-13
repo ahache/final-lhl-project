@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import $ from 'jquery';
+import $ from 'jquery'
 import SearchContainer from './SearchContainer.jsx';
 
 const URL = "http:\//localhost:3001/filters";
-const mapURL = "http:\//localhost:3001/map";
 
 class Filters extends Component {
   constructor(props){
@@ -13,7 +12,6 @@ class Filters extends Component {
       filters : []
     }
     this.addFilter = this.addFilter.bind(this);
-    this.getMapResults = this.getMapResults.bind(this);
   }
 
   componentDidMount() {
@@ -41,26 +39,6 @@ class Filters extends Component {
     e.preventDefault();
   }
 
-  getMapResults(e) {
-    const destination = this.destination.value;
-    if (!destination) {
-      alert("Must input destination");
-    } else {
-      $.post(mapURL, {user: localStorage.getItem('token'), destination: destination})
-        .done((data) => {
-          console.log(data);
-        })
-        .fail((error) => {
-          console.log(error.responseText);
-        });
-    }
-    e.preventDefault();
-  }
-
-  getDestination(dest) {
-    console.log(dest);
-  }
-
   render() {
     const style = {
       width: 'auto',
@@ -73,21 +51,7 @@ class Filters extends Component {
 
     return (
       <div style={style}>
-        <form onSubmit={this.getMapResults}>
-          <h1> Where are you going? </h1>
-          <SearchContainer getDest={this.getDestination} />
-          <h2> How are you getting around? </h2>
-          <div>
-            <input type='radio' value="Walking" />Walking distance
-          </div>
-          <div>
-            <input type='radio' value="Biking" />Biking distance
-          </div>
-          <div>
-            <input type='radio' value="Driving" />Driving distance
-          </div>
-          <button type="submit">See Map</button>
-        </form>
+        <SearchContainer />
         <h2>What are you interested in?</h2>
         <form onSubmit={this.addFilter}>
           <input type='text' name="filter" placeholder="Tacos" ref={(filter) => this.filter = filter}/>
