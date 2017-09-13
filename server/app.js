@@ -53,7 +53,7 @@ app.use('/users', users);
 app.use('/login', login(knex));
 app.use('/register', register(knex));
 app.use('/filters', filters(knex));
-app.use('/map', map);
+app.use('/map', map(knex));
 
 
 // // catch 404 and forward to error handler
