@@ -54,12 +54,6 @@ app.use('/register', register(knex));
 app.use('/filters', filters(knex));
 app.use('/map', map);
 
-// app.post("/map", (req, res) => {
-//   console.log("in map");
-//   const destination = req.body.destination;
-//   res.json(res.redirect(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${destination}&key=AIzaSyBR9a87huIRF93xhp5VcW57S7mBjfFGEKk`));
-// })
-
 
 // // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
