@@ -62,7 +62,7 @@ export class Container extends React.Component {
             visible={this.state.showingInfoWindow}
             onClose={this.onInfoWindowClose}>
             <div>
-              <h1>Fuck</h1>
+              <h1>Header</h1>
             </div>
           </InfoWindow>
         </Map>
