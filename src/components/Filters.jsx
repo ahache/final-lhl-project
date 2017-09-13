@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import $ from 'jquery';
-
+import SearchContainer from './SearchContainer.jsx';
 const URL = "http:\//localhost:3001/filters";
 
 class Filters extends Component {
@@ -51,7 +51,7 @@ class Filters extends Component {
     return (
       <div style={style}>
         <h1> Where are you going? </h1>
-        <input type='text' name="destination" placeholder="Vancouver" />
+        <SearchContainer />
         <h2> How are you getting around? </h2>
         <form>
           <div>
