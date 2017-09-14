@@ -65,33 +65,31 @@ export class Container extends React.Component {
   addFavorite () {
    this.buttonId = '';
    this.buttonText = 'Adding...';
-   axios.get('/favorites', {
+   axios.post('/favorites/add', {
     params: {
       user: localStorage.getItem('token'),
-      location: place_id
     }
   })
   .then(result => {
-    if (Number(result.data[0].count) > 0) {
-      this.buttonId = 'remove';
-      this.buttonText = 'Remove from Favorites'
-    }
-    else {
-      this.buttonId = 'add';
-      this.buttonText = 'Add to Favorites'
-    }
+    this.buttonId = 'remove';
+    this.buttonText = 'Remove from Favorites';
     this.setState({showingInfoWindow:true});
   });
-
-
-   this.setState({showingInfoWindow:true});
   }
 
   removeFavorite () {
+   this.buttonId = '';
+   this.buttonText = 'Removing...';
+   axios.post('/favorites/remove', {
+    params: {
+      user: localStorage.getItem('token'),
+    }
+  })
+  .then(result => {
     this.buttonId = 'add';
     this.buttonText = 'Add to Favorites';
-
     this.setState({showingInfoWindow:true});
+  });
   }
 
   onInfoWindowClose() {

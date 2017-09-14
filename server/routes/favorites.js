@@ -19,6 +19,17 @@ module.exports = (knex) => {
       });
   })
 
+  router.post("/add", (req, res) => {
+    console.log("Success!");
+    res.json({works: true});
+  });
+
+
+  router.post("/remove", (req, res) => {
+    console.log("Success!");
+    res.json({works: true});
+  });
+
   // router.post("/", (req, res) => {
   //   const decoded = jwt.verify(req.body.user, 'CBFC');
   //   const user_id = decoded.user;
