@@ -1,6 +1,7 @@
 const express = require('express');
 const router  = express.Router();
 const request = require('request');
+const jwt = require('jsonwebtoken');
 
 const API = process.env['GOOGLE_API_KEY'];
 const mapsClient = require('@google/maps').createClient({
@@ -31,16 +32,16 @@ module.exports = (knex) => {
   const getFiltersPromise = (user_id) => {
     return new Promise((resolve, reject) => {
       knex('users_filters')
-        .join('filters', 'filters.id', '=', 'users_filters.filter_id')
-        .join('users', 'users.id', '=', 'users_filters.user_id')
-        .select('filters.name')
-        .where('users.id', '=', user_id)
-        .then((filters) => {
-          resolve(filters);
-        })
-        .catch((err) => {
-          reject(err);
-        });
+      .join('filters', 'filters.id', '=', 'users_filters.filter_id')
+      .join('users', 'users.id', '=', 'users_filters.user_id')
+      .select('filters.name')
+      .where('users.id', '=', user_id)
+      .then((filters) => {
+        resolve(filters);
+      })
+      .catch((err) => {
+        reject(err);
+      });
     });
   }
 
@@ -84,13 +85,7 @@ module.exports = (knex) => {
 
     res.json(mapResults);
   });
-});
 
-let array = [];
-for (result in results) {
-  mapsClient.places({...}, (err, res) => {
-    array.append(res.json.results[0])
-  })
+  return router;
+
 }
-
-module.exports = router;
