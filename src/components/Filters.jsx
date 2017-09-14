@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import $ from 'jquery';
-
+import SearchContainer from './SearchContainer.jsx';
 const URL = "http:\//localhost:3001/filters";
 const mapURL = "http:\//localhost:3001/map";
 
@@ -17,10 +17,10 @@ class Filters extends Component {
 
   componentDidMount() {
     $.get(URL, {user: localStorage.getItem('token')})
-      .done((data) => {
-        const newFilters = this.state.filters.concat(data);
-        this.setState({filters: newFilters});
-      });
+    .done((data) => {
+      const newFilters = this.state.filters.concat(data);
+      this.setState({filters: newFilters});
+    });
   }
 
   addFilter(e) {
@@ -30,12 +30,12 @@ class Filters extends Component {
       alert("Fields must not be empty");
     } else {
       $.post(URL, {user: localStorage.getItem('token'), filter: newFilter.name})
-        .done((data) => {
-          this.setState({filters: newFilters});
-        })
-        .fail((error) => {
-          console.log(error.responseText);
-        });
+      .done((data) => {
+        this.setState({filters: newFilters});
+      })
+      .fail((error) => {
+        console.log(error.responseText);
+      });
     }
     e.preventDefault();
   }
@@ -46,12 +46,12 @@ class Filters extends Component {
       alert("Must input destination");
     } else {
       $.post(mapURL, {user: localStorage.getItem('token'), destination: destination})
-        .done((data) => {
-          console.log(data);
-        })
-        .fail((error) => {
-          console.log(error.responseText);
-        });
+      .done((data) => {
+        console.log(data);
+      })
+      .fail((error) => {
+        console.log(error.responseText);
+      });
     }
 
     e.preventDefault();
@@ -71,28 +71,28 @@ class Filters extends Component {
       <div style={style}>
         <form onSubmit={this.getMapResults}>
           <h1> Where are you going? </h1>
-          <input type='text' placeholder="Vancouver" ref={(destination) => this.destination = destination}/>
+          <SearchContainer />
           <h2> How are you getting around? </h2>
           <div>
             <input type='radio' value="Walking" />Walking distance
-          </div>
-          <div>
-            <input type='radio' value="Biking" />Biking distance
-          </div>
-          <div>
-            <input type='radio' value="Driving" />Driving distance
-          </div>
-          <button type="submit">See Map</button>
-        </form>
-        <h2>What are you interested in?</h2>
-        <form onSubmit={this.addFilter}>
-          <input type='text' name="filter" placeholder="Tacos" ref={(filter) => this.filter = filter}/>
-          <button type="submit">Add</button>
-        </form>
-        {filterSpan}
-      </div>
-    );
-  }
-}
+            </div>
+            <div>
+              <input type='radio' value="Biking" />Biking distance
+              </div>
+              <div>
+                <input type='radio' value="Driving" />Driving distance
+                </div>
+                <button type="submit">See Map</button>
+              </form>
+              <h2>What are you interested in?</h2>
+              <form onSubmit={this.addFilter}>
+                <input type='text' name="filter" placeholder="Tacos" ref={(filter) => this.filter = filter}/>
+                <button type="submit">Add</button>
+              </form>
+              {filterSpan}
+            </div>
+          );
+        }
+      }
 
-export default Filters;
+      export default Filters;
