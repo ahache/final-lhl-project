@@ -59,7 +59,7 @@ export class PlacesSearch extends React.Component {
     return (
       <form onSubmit={this.getMapResults}>
         <h1> Where are you going? </h1>
-          <input ref='autocomplete' id="pac-input" className="controls" type="text" placeholder="Search Box" />  
+          <input ref='autocomplete' id="pac-input" className="controls" type="text" placeholder="Search Box" />
         <h2> How are you getting around? </h2>
         <div>
           <input type='radio' name="radius" value="1000" />Walking distance
@@ -72,10 +72,10 @@ export class PlacesSearch extends React.Component {
         </div>
         <button type="submit">See Map</button>
       </form>
-      
+
     )
   }
 
 }
 
-  export default PlacesSearch;
+export default PlacesSearch;
