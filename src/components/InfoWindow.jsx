@@ -28,17 +28,25 @@ class InfoWindow extends React.Component {
 
   openWindow() {
     this.infowindow.open(this.props.map, this.props.marker);
-    let buttonFind = document.getElementById("favorite");
-    if (buttonFind) {
-      buttonFind.addEventListener("click", this.props.addFavorite, false)
+    let buttonAdd = document.getElementById("add");
+    if (buttonAdd) {
+      buttonAdd.addEventListener("click", this.props.addFavorite, false)
+    }
+    let buttonRemove = document.getElementById("remove");
+    if (buttonRemove) {
+      buttonRemove.addEventListener('click', this.props.removeFavorite, false);
     }
   }
 
   closeWindow() {
-    let buttonFind = document.getElementById("favorite");
-    if(buttonFind)
+    let buttonAdd = document.getElementById("favorite");
+    if(buttonAdd)
     {
-      buttonFind.removeEventListener("click", this.props.addFavorite, false)
+      buttonAdd.removeEventListener("click", this.props.addFavorite, false)
+    }
+    let buttonRemove = document.getElementById("remove");
+    if (buttonRemove) {
+      buttonRemove.removeEventListener('click', this.props.removeFavorite, false);
     }
     this.infowindow.close();
   }
@@ -50,7 +58,14 @@ class InfoWindow extends React.Component {
     // component to define what the instance should be
     const content = this.renderChildren();
     this.infowindow.setContent(content);
-
+    let buttonAdd = document.getElementById("add");
+    if (buttonAdd) {
+      buttonAdd.addEventListener("click", this.props.addFavorite, false)
+    }
+    let buttonRemove = document.getElementById("remove");
+    if (buttonRemove) {
+      buttonRemove.addEventListener('click', this.props.removeFavorite, false);
+    }
     // add event listener to table
   }
 
