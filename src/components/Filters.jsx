@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import $ from 'jquery'
 import SearchContainer from './SearchContainer.jsx';
 
@@ -40,6 +40,13 @@ class Filters extends Component {
   }
 
   render() {
+
+    if (!localStorage.getItem('token')) {
+      return(
+        <Redirect to="/login" />
+      )
+    }
+
     const style = {
       width: 'auto',
       textAlign: 'center'

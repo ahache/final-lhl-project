@@ -8,17 +8,17 @@ class Login extends Component {
   constructor(props){
     super(props)
     this.state = {
-      current_user: "none",
+      // current_user: "none",
       loggedIn: false
     }
 
-    this.updateCurrentUser = this.updateCurrentUser.bind(this);
+    // this.updateCurrentUser = this.updateCurrentUser.bind(this);
     this.login = this.login.bind(this);
   }
 
-  updateCurrentUser(user) {
-    this.setState({current_user: user});
-  }
+  // updateCurrentUser(user) {
+  //   this.setState({current_user: user});
+  // }
 
   login() {
     this.setState({loggedIn: true});
@@ -36,13 +36,12 @@ class Login extends Component {
     }
     return (
       <div>
-        <LoginForm login={this.login} current_user={this.updateCurrentUser} />
+        <LoginForm login={this.login} />
         <div style={style}>
           <a href='#'>Forgot Password?</a>
           <br/>
           <Link to='/register'>Need an account? Register here</Link>
         </div>
-        <p>current user: {this.state.current_user}</p>
       </div>
     );
   }

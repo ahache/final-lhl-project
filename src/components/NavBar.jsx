@@ -1,12 +1,24 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import Logout from './Logout.jsx'
 
 class NavBar extends Component {
   render() {
-    return (
-      <nav>
-      🏠
-      </nav>
-    );
+    if (localStorage.getItem('token')) {
+      return (
+        <nav>
+        🏠
+        <Logout />
+        </nav>
+      );  
+    } else {
+      return (
+        <nav>
+        🏠
+        </nav>
+      );      
+    }
+
   }
 }
 
