@@ -11,8 +11,7 @@ export class Container extends React.Component {
     this.state = {
       showingInfoWindow: false,
       activeMarker: {},
-      selectedPlace: {},
-      activeFavorite: false
+      selectedPlace: {}
     };
     this.onMarkerClick = this.onMarkerClick.bind(this);
 		this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
@@ -31,8 +30,7 @@ export class Container extends React.Component {
   onInfoWindowClose() {
     this.setState({
       showingInfoWindow: false,
-      activeMarker: null,
-      activeFavorite: false
+      activeMarker: null
     });
   }
 
@@ -40,17 +38,9 @@ export class Container extends React.Component {
     if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
-        activeMarker: null,
-        activeFavorite: false
+        activeMarker: null
       });
     }
-  }
-
-  onAddToFavorites() {
-    console.log("Will you work?");
-      // axios.post('/favorites', { user: localStorage.getItem('token'), location: this.state.selectedPlace })
-      // .then(response => console.log('we did it'))
-      // .catch(errror => console.log('we fucked up', error))
   }
 
   render() {
