@@ -4,25 +4,116 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (knex) => {
 
-  router.get("/", (req, res) => {
-
-    const decoded = jwt.verify(req.query.user, 'CBFC');
-    const user = decoded.user;
-
-    knex('users_filters')
+  const getFiltersPromise = (user_id) => {
+    return new Promise((resolve, reject) => {
+      knex('users_filters')
       .join('filters', 'filters.id', '=', 'users_filters.filter_id')
       .join('users', 'users.id', '=', 'users_filters.user_id')
       .select('filters.name')
-      .where('users.id', '=', user)
-      .then((results) => {
-        res.json(results);
+      .where('users.id', '=', user_id)
+      .then((filters) => {
+        resolve(filters);
+      })
+      .catch((err) => {
+        reject(err);
       });
-  })
+    });
+  }
 
-  router.post("/", (req, res) => {
+  async function getFilters(user_id) {
+    const filters = await getFiltersPromise(user_id);
+    return filters;
+  }
+
+  // const getFilterIdPromise = (filter) => {
+  //   return new Promise((resolve, reject) => {
+  //     if (filter) {
+  //       knex('filters')
+  //       .select('id')
+  //       .where('name', '=', filter)
+  //       .then((result) => {
+  //         resolve(result);
+  //       })
+  //       .catch((error) => {
+  //         reject(error);
+  //       })
+  //     }
+  //   });
+  // }
+
+  // async function getFilterId(filter) {
+  //   const filter_id = await getFilterIdPromise(filter);
+  //   return filter_id;
+  // }
+
+  // const insertIntoFiltersPromise = (user_id, filter)=> {
+  //   return new Promise((resolve, reject) => {
+  //     knex('filters')
+  //     .returning('id')
+  //     .insert({name: filter})
+  //     .then((id) => {
+  //       resolve(id);
+  //       filter_id = id[0];
+  //       knex('users_filters')
+  //       .insert({user_id: user_id, filter_id: filter_id})
+  //       .then((results) => {
+  //         resolve(results);
+  //       })
+  //       .catch((error) => {
+  //         reject(error);
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       reject(error);
+  //     });
+  //   });
+  // }
+  //
+  // async function insertIntoFilters(user_id, filter) {
+  //   const returned_id = await insertIntoFiltersPromise(user_id, filter);
+  //   return returned_id;
+  // }
+  //
+  // const insertIntoUserFiltersPromise = (user_id, filter, filter_id) => {
+  //   return new Promise((resolve, reject) => {
+  //     knex('users_filters')
+  //     .insert({user_id: user_id, filter_id: filter_id})
+  //     .then((results) => {
+  //       resolve(results);
+  //     })
+  //     .catch((error) => {
+  //       reject(error);
+  //     });
+  //   });
+  // }
+  //
+  // async function insertIntoUserFilters(user_id, filter, filter_id) {
+  //   const returned_id = await insertIntoUserFiltersPromise(user_id, filter, filter_id);
+  //   return returned_id;
+  // }
+
+  router.get("/",  async (req, res) => {
+
+    const decoded = jwt.verify(req.query.user, 'CBFC');
+    const user_id = decoded.user;
+
+    const filters = await getFilters(user_id);
+    res.json(filters);
+  });
+
+  router.post("/", async (req, res) => {
     const decoded = jwt.verify(req.body.user, 'CBFC');
     const user_id = decoded.user;
     const filter = req.body.filter.toLowerCase();
+
+    // const retrievedId = await getFilterId(filter);
+    //
+    // if (retrievedId) {
+    //   const filterInsert = await insertIntoUserFilters(user_id, filter, filter_id);
+    // } else {
+    //   const filterInsert = await insertIntoFilters(user_id, filter);
+    // }
+
     let filter_id;
     if (filter) {
       knex('filters')
@@ -54,6 +145,6 @@ module.exports = (knex) => {
     } else {
       res.status(400).send("No filter in request");
     }
-  })
+  });
   return router;
 }

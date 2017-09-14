@@ -30,10 +30,11 @@ class Filters extends Component {
     } else {
       $.post(URL, {user: localStorage.getItem('token'), filter: newFilter.name})
         .done((data) => {
+          $(".submit-button").closest('form').find("input[name=filter]").val("");
           this.setState({filters: newFilters});
         })
         .fail((error) => {
-          console.log(error.responseText);
+          alert(error.responseText);
         });
     }
     e.preventDefault();
@@ -53,9 +54,9 @@ class Filters extends Component {
       <div style={style}>
         <SearchContainer />
         <h2>What are you interested in?</h2>
-        <form onSubmit={this.addFilter}>
+        <form className="filters" onSubmit={this.addFilter}>
           <input type='text' name="filter" placeholder="Tacos" ref={(filter) => this.filter = filter}/>
-          <button type="submit">Add</button>
+          <button className="submit-button" type="submit">Add</button>
         </form>
         {filterSpan}
       </div>
