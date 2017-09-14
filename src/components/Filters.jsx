@@ -5,6 +5,7 @@ import SearchContainer from './SearchContainer.jsx';
 
 const URL = "http:\//localhost:3001/filters";
 
+
 class Filters extends Component {
   constructor(props){
     super(props)
@@ -12,6 +13,7 @@ class Filters extends Component {
       filters : []
     }
     this.addFilter = this.addFilter.bind(this);
+    this.deleteFilter = this.deleteFilter.bind(this);
   }
 
   componentDidMount() {
@@ -40,6 +42,12 @@ class Filters extends Component {
     e.preventDefault();
   }
 
+  deleteFilter(e) {
+    const filter = {name: this.filter.value};
+    // const deleteURL = URL + `/${key}`;
+    // $.delete(deleteURL, {filter: })
+  }
+
   render() {
     const style = {
       width: 'auto',
@@ -47,7 +55,9 @@ class Filters extends Component {
     }
 
     const filterSpan = this.state.filters.map((filter, i) => {
-      return (<p key={i}>{filter.name}</p>);
+      return (<p key={i}>{filter.name}
+      </p><button className='delete-button' type='button' onClick={this.deleteFilter}>Delete</button>
+      );
     })
 
     return (
