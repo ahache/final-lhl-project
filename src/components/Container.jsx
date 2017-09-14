@@ -1,5 +1,6 @@
 import React from 'react'
-import {GoogleApiWrapper} from 'google-maps-react';
+import {GoogleApiWrapper} from 'google-maps-react'
+import axios from 'axios'
 import Map from './Map.jsx'
 import Marker from './Marker.jsx'
 import InfoWindow from './InfoWindow.jsx'
@@ -10,11 +11,13 @@ export class Container extends React.Component {
     this.state = {
       showingInfoWindow: false,
       activeMarker: {},
-      selectedPlace: {}
+      selectedPlace: {},
+      activeFavorite: false
     };
     this.onMarkerClick = this.onMarkerClick.bind(this);
 		this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
 		this.onMapClick = this.onMapClick.bind(this);
+    this.onAddToFavorites = this.onAddToFavorites.bind(this);
   }
 
   onMarkerClick(props, marker, e) {
@@ -23,13 +26,13 @@ export class Container extends React.Component {
 			activeMarker: marker,
 			showingInfoWindow: true
 		});
-    console.log("Selected place", this.state.selectedPlace);
 	}
 
   onInfoWindowClose() {
     this.setState({
       showingInfoWindow: false,
-      activeMarker: null
+      activeMarker: null,
+      activeFavorite: false
     });
   }
 
@@ -37,9 +40,17 @@ export class Container extends React.Component {
     if (this.state.showingInfoWindow) {
       this.setState({
         showingInfoWindow: false,
-        activeMarker: null
+        activeMarker: null,
+        activeFavorite: false
       });
     }
+  }
+
+  onAddToFavorites() {
+    console.log("Will you work?");
+      // axios.post('/favorites', { user: localStorage.getItem('token'), location: this.state.selectedPlace })
+      // .then(response => console.log('we did it'))
+      // .catch(errror => console.log('we fucked up', error))
   }
 
   render() {
@@ -75,10 +86,11 @@ export class Container extends React.Component {
           <InfoWindow
             marker={this.state.activeMarker}
             visible={this.state.showingInfoWindow}
-            onClose={this.onInfoWindowClose}>
+            onClose={this.onInfoWindowClose}
+            addFavorite={this.onAddToFavorites}>
               <div>
                 <h1>{this.state.selectedPlace.name}</h1>
-                <button>Add to Favorites</button>
+                <button id="favorite">Add to Favorites</button>
               </div>
           </InfoWindow>
         </Map>

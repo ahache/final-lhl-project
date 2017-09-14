@@ -16,7 +16,6 @@ export class Marker extends React.Component {
       }
       // The relevant props have changed so our marker needs to be updated
       this.renderMarker();
-      console.log("marker props", this.props);
     }
   }
 
