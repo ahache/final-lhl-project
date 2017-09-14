@@ -32,16 +32,16 @@ module.exports = (knex) => {
   const getFiltersPromise = (user_id) => {
     return new Promise((resolve, reject) => {
       knex('users_filters')
-        .join('filters', 'filters.id', '=', 'users_filters.filter_id')
-        .join('users', 'users.id', '=', 'users_filters.user_id')
-        .select('filters.name')
-        .where('users.id', '=', user_id)
-        .then((filters) => {
-          resolve(filters);
-        })
-        .catch((err) => {
-          reject(err);
-        });
+      .join('filters', 'filters.id', '=', 'users_filters.filter_id')
+      .join('users', 'users.id', '=', 'users_filters.user_id')
+      .select('filters.name')
+      .where('users.id', '=', user_id)
+      .then((filters) => {
+        resolve(filters);
+      })
+      .catch((err) => {
+        reject(err);
+      });
     });
   }
 
