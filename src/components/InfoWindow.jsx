@@ -28,11 +28,21 @@ class InfoWindow extends React.Component {
 
   openWindow() {
     this.infowindow.open(this.props.map, this.props.marker);
+    let buttonFind = document.getElementById("favorite");
+    if (buttonFind) {
+      buttonFind.addEventListener("click", this.props.addFavorite, false)
+    }
   }
 
   closeWindow() {
+    let buttonFind = document.getElementById("favorite");
+    if(buttonFind)
+    {
+      buttonFind.removeEventListener("click", this.props.addFavorite, false)
+    }
     this.infowindow.close();
   }
+
 
   updateContent() {
     // InfoWindow requires us to set content in order for us to show in the browser
@@ -40,7 +50,10 @@ class InfoWindow extends React.Component {
     // component to define what the instance should be
     const content = this.renderChildren();
     this.infowindow.setContent(content);
+
+    // add event listener to table
   }
+
 
   renderChildren() {
     const {children} = this.props;
