@@ -20,6 +20,8 @@ const login = require('./routes/login');
 const register = require('./routes/register');
 const filters = require('./routes/filters');
 const favorites = require('./routes/favorites');
+const map = require('./routes/map');
+const request = require('request');
 
 
 const app = express();
@@ -53,6 +55,7 @@ app.use('/login', login(knex));
 app.use('/register', register(knex));
 app.use('/filters', filters(knex));
 app.use('/favorites', favorites(knex));
+app.use('/map', map(knex));
 
 
 // // catch 404 and forward to error handler

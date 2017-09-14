@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import $ from 'jquery';
+import $ from 'jquery'
 import SearchContainer from './SearchContainer.jsx';
+
 const URL = "http:\//localhost:3001/filters";
 
 class Filters extends Component {
@@ -21,7 +22,7 @@ class Filters extends Component {
       });
   }
 
-  addFilter(e){
+  addFilter(e) {
     const newFilter = {name: this.filter.value};
     const newFilters = this.state.filters.concat(newFilter);
     if (!newFilter) {
@@ -50,20 +51,7 @@ class Filters extends Component {
 
     return (
       <div style={style}>
-        <h1> Where are you going? </h1>
         <SearchContainer />
-        <h2> How are you getting around? </h2>
-        <form>
-          <div>
-            <input type='radio' value="Walking" />Walking distance
-          </div>
-          <div>
-            <input type='radio' value="Biking" />Biking distance
-          </div>
-          <div>
-            <input type='radio' value="Driving" />Driving distance
-          </div>
-        </form>
         <h2>What are you interested in?</h2>
         <form onSubmit={this.addFilter}>
           <input type='text' name="filter" placeholder="Tacos" ref={(filter) => this.filter = filter}/>

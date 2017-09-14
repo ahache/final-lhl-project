@@ -15,7 +15,6 @@ module.exports = (knex) => {
       .select('filters.name')
       .where('users.id', '=', user)
       .then((results) => {
-        console.log('results', results);
         res.json(results);
       });
   })
