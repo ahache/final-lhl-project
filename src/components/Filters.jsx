@@ -5,6 +5,7 @@ import SearchContainer from './SearchContainer.jsx';
 
 const URL = "http:\//localhost:3001/filters";
 
+
 class Filters extends Component {
   constructor(props){
     super(props)
@@ -12,6 +13,7 @@ class Filters extends Component {
       filters : []
     }
     this.addFilter = this.addFilter.bind(this);
+    this.deleteFilter = this.deleteFilter.bind(this);
   }
 
   componentDidMount() {
@@ -30,13 +32,20 @@ class Filters extends Component {
     } else {
       $.post(URL, {user: localStorage.getItem('token'), filter: newFilter.name})
         .done((data) => {
+          $(".submit-button").closest('form').find("input[name=filter]").val("");
           this.setState({filters: newFilters});
         })
         .fail((error) => {
-          console.log(error.responseText);
+          alert(error.responseText);
         });
     }
     e.preventDefault();
+  }
+
+  deleteFilter(e) {
+    const filter = {name: this.filter.value};
+    // const deleteURL = URL + `/${key}`;
+    // $.delete(deleteURL, {filter: })
   }
 
   render() {
@@ -53,16 +62,18 @@ class Filters extends Component {
     }
 
     const filterSpan = this.state.filters.map((filter, i) => {
-      return (<p key={i}>{filter.name}</p>);
+      return (<p key={i}>{filter.name}
+      </p><button className='delete-button' type='button' onClick={this.deleteFilter}>Delete</button>
+      );
     })
 
     return (
       <div style={style}>
         <SearchContainer />
         <h2>What are you interested in?</h2>
-        <form onSubmit={this.addFilter}>
+        <form className="filters" onSubmit={this.addFilter}>
           <input type='text' name="filter" placeholder="Tacos" ref={(filter) => this.filter = filter}/>
-          <button type="submit">Add</button>
+          <button className="submit-button" type="submit">Add</button>
         </form>
         {filterSpan}
       </div>

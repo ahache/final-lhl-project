@@ -53,7 +53,7 @@ export class Marker extends React.Component {
       }
       timeout = setTimeout(() => {
         if (this.props.onClick) {
-          this.props.onClick(this.props, this.marker, e)
+          this.props.onClick(this.props.locationInfo, this.marker, e)
         }
       }, 0);
     };
