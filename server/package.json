@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon -L ./bin/www"
+    "start": "nodemon -L --harmony ./bin/www"
   },
   "dependencies": {
     "@google/maps": "^0.4.3",
