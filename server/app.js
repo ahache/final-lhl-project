@@ -52,18 +52,9 @@ app.use('/users', users);
 app.use('/login', login(knex));
 app.use('/register', register(knex));
 app.use('/filters', filters(knex));
-<<<<<<< HEAD
-app.use('/map', map);
 
-// app.post("/map", (req, res) => {
-//   console.log("in map");
-//   const destination = req.body.destination;
-//   res.json(res.redirect(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${destination}&key=AIzaSyBR9a87huIRF93xhp5VcW57S7mBjfFGEKk`));
-// })
-=======
 app.use('/favorites', favorites(knex));
 app.use('/map', map(knex));
->>>>>>> bfcd6e3f6f21b223f1fc249ef1614ae61b19ca04
 
 
 // // catch 404 and forward to error handler

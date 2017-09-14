@@ -2,18 +2,6 @@ const express = require('express');
 const router  = express.Router();
 const request = require('request');
 
-<<<<<<< HEAD
-router.post("/", (req, res) => {
-  console.log("in map");
-  const destination = req.body.destination;
-  const URL = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${destination}&key=AIzaSyBR9a87huIRF93xhp5VcW57S7mBjfFGEKk`
-  request(URL, function (err, response, body) {
-    if (err || response.statusCode !== 200) {
-      return res.sendStatus(500);
-    } else {
-      res.json(body["results"]);
-    }
-=======
 const API = process.env['GOOGLE_API_KEY'];
 const mapsClient = require('@google/maps').createClient({
   key: API
@@ -95,7 +83,6 @@ module.exports = (knex) => {
     }
 
     res.json(mapResults);
->>>>>>> bfcd6e3f6f21b223f1fc249ef1614ae61b19ca04
   });
 });
 
