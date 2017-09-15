@@ -5,6 +5,7 @@ import Login from './Login.jsx'
 import Register from './Register.jsx'
 import Filters from './Filters.jsx'
 import Container from './Container.jsx'
+import UpdateUserInfoContainer from './UpdateUserInfoContainer.jsx'
 
 // The Main component renders one of the three provided
 // Routes (provided that one matches). Both the /roster
@@ -18,6 +19,7 @@ const Main = () => (
       <Route path='/map' component={Container}/>
       <Route path='/register' component={Register}/>
       <Route path='/filters' component={Filters}/>
+      <Route path='/user' component={UpdateUserInfoContainer}/>
     </Switch>
   </main>
 )
