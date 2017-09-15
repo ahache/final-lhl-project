@@ -129,6 +129,7 @@ module.exports = (knex) => {
   router.get("/",  async (req, res) => {
     const decoded = jwt.verify(req.query.user, 'CBFC');
     const user_id = decoded.user;
+    console.log('user_id: ', user_id, ' type: ', typeof user_id);
 
     const filters = await getFilters(user_id);
     res.json(filters);
@@ -137,6 +138,7 @@ module.exports = (knex) => {
   router.post("/", async (req, res) => {
 
     const user_id = jwt.verify(req.body.user, 'CBFC').user;
+    console.log('user_id: ', user_id, ' type: ', typeof user_id);
 
     const filter = req.body.filter.toLowerCase();
 
