@@ -31,8 +31,11 @@ module.exports = (knex) => {
       .select('id')
       .where('name', '=', filter)
       .then((result) => {
-        console.log("result in filterIdPromise ", result);
-        resolve(result);
+        if(result.length > 0){
+          resolve(result[0].id);
+        } else {
+          resolve(0);
+        }
       })
       .catch((error) => {
         reject(error);
@@ -43,6 +46,67 @@ module.exports = (knex) => {
   async function getFilterId(filter) {
     const filter_id = await getFilterIdPromise(filter);
     return filter_id;
+  }
+
+  const insertIntoFiltersPromise = (filter) => {
+    return new Promise((resolve, reject) => {
+      knex('filters')
+        .returning('id')
+        .insert({name: filter})
+        .then((id) => {
+          resolve(id);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async function insertIntoFilters(filter) {
+    const filter_id = await insertIntoFiltersPromise(filter);
+    return filter_id;
+  }
+
+  const getUsersFiltersIdPromise = (filter_id, user_id) => {
+    return new Promise((resolve, reject) => {
+      knex('users_filters')
+      .select('id')
+      .where('user_id', '=', user_id)
+      .andWhere('filter_id', '=', filter_id)
+      .then((result) => {
+        if(result.length > 0){
+          resolve(result[0].id);
+        } else {
+          resolve(0);
+        }
+      })
+      .catch((error) => {
+        reject(error);
+      })
+    });
+  }
+
+  async function getUsersFiltersId(filter_id, user_id) {
+    const users_filters_id = await getUsersFiltersIdPromise(filter_id, user_id);
+    return users_filters_id;
+  }
+
+  const insertIntoUsersFiltersPromise = (filter_id, user_id) => {
+    return new Promise((resolve, reject) => {
+      knex('users_filters')
+        .insert({user_id: user_id, filter_id: Number(filter_id)})
+        .then(() => {
+          resolve(filter_id);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async function insertIntoUsersFilters(filter_id, user_id) {
+    const filt_id = await insertIntoUsersFiltersPromise(filter_id, user_id);
+    return filt_id;
   }
 
   // const insertIntoFiltersPromise = (user_id, filter)=> {
@@ -124,8 +188,23 @@ module.exports = (knex) => {
 
     const filter = req.body.filter.toLowerCase();
 
-    const id = await getFilterId(filter);
-    console.log(id);
+    let filter_id = await getFilterId(filter);
+
+    if (filter_id === 0) {
+      filter_id = await insertIntoFilters(filter);
+    }
+
+    const users_filters_id = await getUsersFiltersId(Number(filter_id), user_id);
+
+    let filt_id;
+
+    if (users_filters_id === 0) {
+      filt_id = await insertIntoUsersFilters(Number(filter_id), user_id);
+    } else {
+      filt_id = 0;
+    }
+
+    res.json(filt_id);
 
     // const retrievedId = await getFilterId(filter);
     //

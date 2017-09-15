@@ -31,13 +31,17 @@ class Filters extends Component {
     } else {
       $.post(URL, {user: localStorage.getItem('token'), filter: newFilter.name})
         .done((data) => {
-          newFilter['id'] = data;
-          const newFilters = this.state.filters.concat(newFilter);
-          $(".submit-button").closest('form').find("input[name=filter]").val("");
-          this.setState({filters: newFilters});
+          if (data) {
+            newFilter['id'] = data;
+            const newFilters = this.state.filters.concat(newFilter);
+            $(".submit-button").closest('form').find("input[name=filter]").val("");
+            this.setState({filters: newFilters});
+          } else {
+            alert('you already did it');
+          }
         })
         .fail((error) => {
-          alert(error.responseText);
+          // alert(error.responseText);
         });
     }
     e.preventDefault();
