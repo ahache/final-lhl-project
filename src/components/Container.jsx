@@ -4,6 +4,7 @@ import axios from 'axios'
 import Map from './Map.jsx'
 import Marker from './Marker.jsx'
 import InfoWindow from './InfoWindow.jsx'
+import querystring from 'querystring'
 
 export class Container extends React.Component {
   constructor(props){
@@ -32,14 +33,14 @@ export class Container extends React.Component {
 			selectedPlace: props,
 			activeMarker: marker
 		});
-    this.checkFavorite(props.price_level);
+    this.checkFavorite(props.place_id);
 	}
 
   checkFavorite(place_id) {
   axios.get('/favorites', {
     params: {
       user: localStorage.getItem('token'),
-      location: place_id
+      place_id: place_id
     }
   })
   .then(result => {
@@ -53,23 +54,22 @@ export class Container extends React.Component {
     }
     this.setState({showingInfoWindow:true});
   });
-  //  select count from favorites join users_favorites where place_id = place_id and user_id = user_id
-    // if true
-    //   buttonId = 'remove';
-    //   buttonText = "Remove from Favorites"
-    // else
-    //   buttonId = 'add';
-    //   buttonText = "Add to Favorites"
   }
 
   addFavorite () {
    this.buttonId = '';
    this.buttonText = 'Adding...';
-   axios.post('/favorites/add', {
-    params: {
+   axios.post('/favorites/add', querystring.stringify({
       user: localStorage.getItem('token'),
-    }
-  })
+      address: this.state.selectedPlace.formatted_address,
+      name: this.state.selectedPlace.name,
+      place_id: this.state.selectedPlace.place_id,
+      price_level: this.state.selectedPlace.price_level,
+      rating: this.state.selectedPlace.rating,
+      latitude: this.state.selectedPlace.geometry.location.lat,
+      longitude: this.state.selectedPlace.geometry.location.lng,
+      query: "default"
+    }))
   .then(result => {
     this.buttonId = 'remove';
     this.buttonText = 'Remove from Favorites';
@@ -80,9 +80,10 @@ export class Container extends React.Component {
   removeFavorite () {
    this.buttonId = '';
    this.buttonText = 'Removing...';
-   axios.post('/favorites/remove', {
-    params: {
+   axios.delete('/favorites/remove/', {params:
+    {
       user: localStorage.getItem('token'),
+      place_id: this.state.selectedPlace.place_id
     }
   })
   .then(result => {
@@ -125,10 +126,10 @@ export class Container extends React.Component {
     geometry: { location: {lat: 37.774929, lng: -122.419416}, viewport: [Object] },
     icon: 'https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png',
     id: 'db3a1e206138a3253716bf6887d85c3e6ca9d6c4',
-    name: 'Taco Del Mar',
+    name: 'HOLY SHIT IT WORKS',
     opening_hours: { open_now: true, weekday_text: [] },
     photos: [ [Object] ],
-    place_id: 'ChIJxakRgUoVkFQRsa7zEea5agM',
+    place_id: 'bfuccfkJIJIJI88sd11gUoVkFQRsaKKK7zEsaa5ag4',
     price_level: 6,
     rating: 3.5,
     reference: 'CmRRAAAAmxPORwYQOikEwxqgokDgVPH06lKOUfssTMV9aXwyh9eGZ88KnZ3CHIZMXdbhq6DrBi2Ukmbihh5SBQC9ED1547TAQvx26Ujr1B2_0V0brZYaa458UgoEmfSu7KxtzLyXEhC-lRmFbwxOE3D0fb8hvaYUGhQndLBFcBzkecxb2qlaGipnM_KwMQ',

@@ -48,7 +48,7 @@ module.exports = (knex) => {
         })
         .catch(() => res.status(400).send("Failed to add fav"))
         } else {
-          favorite_id = result[0];
+          favorite_id = result[0].id;
           knex('users_favorites')
           .insert({user_id: user_id, favorite_id: favorite_id})
           .then(() => res.status(200).send("Added favorite for user"))
@@ -58,9 +58,27 @@ module.exports = (knex) => {
       .catch(() => res.status(400).send("Error accessing favorites"))
   })
 
-  router.post("/remove", (req, res) => {
-    console.log("Success!");
-    res.json({works: true});
+  router.delete("/remove/", (req, res) => {
+    const decoded = jwt.verify(req.query.user, 'CBFC');
+    const user_id = Number(decoded.user);
+    knex('favorites')
+    .where('place_id', '=', req.query.place_id)
+    .select('id')
+    .then((result) => {
+      favorite_id = result[0].id;
+      knex('users_favorites')
+      .select('*')
+      .where('favorite_id', favorite_id)
+      .andWhere('user_id', user_id)
+      .del()
+      .then(result2 => console.log(result2));
+      // .andWhere('user_id', "=", user_id)
+      })
+      // .then((result) => {
+      //   console.log(result);
+      // })
+    .then(() => res.status(200).send("Removed favorite for user"))
+    .catch(() => res.status(400).send("Failed to remove fav for user"));
   });
 
   // router.post("/", (req, res) => {
