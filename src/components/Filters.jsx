@@ -26,12 +26,13 @@ class Filters extends Component {
 
   addFilter(e) {
     const newFilter = {name: this.filter.value};
-    const newFilters = this.state.filters.concat(newFilter);
     if (!newFilter) {
       alert("Fields must not be empty");
     } else {
       $.post(URL, {user: localStorage.getItem('token'), filter: newFilter.name})
         .done((data) => {
+          newFilter['id'] = data;
+          const newFilters = this.state.filters.concat(newFilter);
           $(".submit-button").closest('form').find("input[name=filter]").val("");
           this.setState({filters: newFilters});
         })
@@ -43,10 +44,21 @@ class Filters extends Component {
   }
 
   deleteFilter(e) {
-    const filter = {name: this.filter.value};
-    // const deleteURL = URL + `/${key}`;
-    // $.delete(deleteURL, {filter: })
+    const deleteURL = URL + `/${e.target.name}`;
+    let newFilters = this.state.filters;
+    $.ajax({
+      url: deleteURL,
+      type: 'DELETE',
+      data: {user: localStorage.getItem('token')},
+    }).done((data) => {
+      newFilters = data;
+      this.setState({filters: newFilters});  
+    }).fail((error) => {
+      alert(error.responseText);
+    });
+    e.preventDefault();
   }
+
 
   render() {
 
@@ -62,8 +74,11 @@ class Filters extends Component {
     }
 
     const filterSpan = this.state.filters.map((filter, i) => {
-      return (<p key={i}>{filter.name}
-      </p><button className='delete-button' type='button' onClick={this.deleteFilter}>Delete</button>
+      return (
+        <div>
+          <p key={i}>{filter.name}</p>
+          <input className='delete-button' name={filter.id} type='button' value="X" onClick={this.deleteFilter} />
+        </div>
       );
     })
 

@@ -13,6 +13,8 @@ const knexLogger  = require('knex-logger');
 const cors = require('cors');
 const expressJWT = require('express-jwt');
 const jwt = require('jsonwebtoken');
+const request = require('request');
+const methodOverride = require('method-override');
 
 const index = require('./routes/index');
 const users = require('./routes/users');
@@ -21,10 +23,12 @@ const register = require('./routes/register');
 const filters = require('./routes/filters');
 const favorites = require('./routes/favorites');
 const map = require('./routes/map');
-const request = require('request');
+
 
 
 const app = express();
+
+app.use(methodOverride('_method'));
 
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
