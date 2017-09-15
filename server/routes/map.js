@@ -86,6 +86,25 @@ module.exports = (knex) => {
     return result;
   }
 
+  const getLastSearchPromise = (user_id) => {
+    return new Promise((resolve, reject) => {
+      knex('users')
+        .select('last_search')
+        .where('id', user_id)
+        .then((destination) => {
+          resolve(destination);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
+  async function getLastSearch(user_id) {
+    const destination = await getLastSearchPromise(user_id);
+    return destination;
+  }
+
   router.post("/", async (req, res) => {
 
     const { destination, user } = req.body;
@@ -102,10 +121,12 @@ module.exports = (knex) => {
 
   router.get("/", async (req, res) => {
 
-    const { destination, user } = req.query;
+    const { user } = req.query;
 
     const decoded = jwt.verify(user, 'CBFC');
     const user_id = decoded.user;
+
+    const destination = await getLastSearch(user_id);
 
     let mapResults = {};
 
@@ -117,8 +138,9 @@ module.exports = (knex) => {
       const places = await getPlaces(filter, latLong);
       mapResults[filter.name] = places;
     }
+    const results = [destination, mapResults];
 
-    res.json(mapResults);
+    res.json(results);
   });
 
   return router;

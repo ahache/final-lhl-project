@@ -46,7 +46,7 @@ export class PlacesSearch extends React.Component {
       $.post(mapURL, {user: localStorage.getItem('token'), destination: destination})
         .done((data) => {
           console.log(data);
-          window.location('/map');
+          window.location = '/map';
         })
         .fail((error) => {
           console.log(error.responseText);
