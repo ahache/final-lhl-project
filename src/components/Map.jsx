@@ -40,7 +40,7 @@ export class Map extends React.Component {
   }
 
   loadMap() {
-    if (this.props && this.props.google) {
+    if (this.props && this.props.google && this.props.mapReady) {
       // if google is available
       const {google} = this.props;
       const maps = google.maps;

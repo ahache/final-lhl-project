@@ -12,7 +12,8 @@ export class Container extends React.Component {
     this.state = {
       showingInfoWindow: false,
       activeMarker: {},
-      selectedPlace: {}
+      selectedPlace: {},
+      dataLoaded: false
     };
     this.onMarkerClick = this.onMarkerClick.bind(this);
 		this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
@@ -20,11 +21,25 @@ export class Container extends React.Component {
     this.addFavorite = this.addFavorite.bind(this);
     this.removeFavorite = this.removeFavorite.bind(this);
     this.checkFavorite = this.checkFavorite.bind(this);
+    this.getGoogleSearch = this.getGoogleSearch.bind(this);
     this.buttonId = '';
     this.buttonText = ''
   }
 
-  componentDidUpdate(){
+  componentWillMount(){
+    this.getGoogleSearch();
+  }
+
+  getGoogleSearch() {
+    axios.get('/map', {
+    params: {
+      user: localStorage.getItem('token')
+    }
+  })
+    .then(result => {
+      console.log(result);
+      this.setState({dataLoaded: true})
+  });
 
   }
 
@@ -137,7 +152,7 @@ export class Container extends React.Component {
 
     return (
       <div style={style}>
-        <Map google={this.props.google} onClick={this.onMapClick}>
+        <Map google={this.props.google} onClick={this.onMapClick} mapReady={this.state.dataLoaded}>
           <Marker locationInfo={testData} position={testData.geometry.location} checkFavorite={this.checkFavorite} onClick={this.onMarkerClick} />
           <InfoWindow
             marker={this.state.activeMarker}
