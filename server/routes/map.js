@@ -120,13 +120,12 @@ module.exports = (knex) => {
   });
 
   router.get("/", async (req, res) => {
-
-    const { user } = req.query;
-
+    const user = req.query.user;
     const decoded = jwt.verify(user, 'CBFC');
     const user_id = decoded.user;
 
-    const destination = await getLastSearch(user_id);
+    const getSearch = await getLastSearch(user_id);
+    const destination = getSearch[0].last_search;
 
     let mapResults = {};
 
