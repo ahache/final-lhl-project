@@ -17,6 +17,8 @@ class RegisterForm extends Component {
     const password = this.password.value;
     if (!first || !last || !email || !password) {
       alert("Please fill out every field");
+    } else if (email.search(/[\w\.]+\@[\w\.]+\.\w+/) < 0) {
+      alert("Must enter valid email");
     } else {
       if (password !== this.confirmation.value) {
         alert("Passwords must match");
@@ -29,6 +31,7 @@ class RegisterForm extends Component {
         })
           .done((data) => {
             localStorage.setItem('token', data);
+            this.props.login();
           });
       }
     }
