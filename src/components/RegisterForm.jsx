@@ -26,42 +26,93 @@ class RegisterForm extends Component {
         $.post(URL, {
           first: first,
           last: last,
-          email: email, 
+          email: email,
           password: password
         })
-          .done((data) => {
-            localStorage.setItem('token', data);
-            this.props.login();
-          });
+        .done((data) => {
+          localStorage.setItem('token', data);
+          this.props.login();
+        });
       }
     }
     event.preventDefault();
-  }    
+  }
 
   render() {
     return (
       <form className="register-form" onSubmit={this.handleSubmit}>
-        <label>
-          First name:
-          <input type="text" ref={(first) => this.first = first} />
-        </label>
-        <label>
-          Last name:
-          <input type="text" ref={(last) => this.last = last} />
-        </label>
-        <label>
-          Email:
-          <input type="text" ref={(email) => this.email = email} />
-        </label>
-        <label>
-          Password:
-          <input type="password" ref={(password) => this.password = password} />
-        </label>
-        <label>
-          Confirmation:
-          <input type="password" ref={(confirmation) => this.confirmation = confirmation} />
-        </label>
-        <input type="submit" value="Register" />
+        <div className="level-item has-text-centered hero-buttons">
+          <div className="field">
+            <label className="label is-medium">First Name</label>
+            <div className="control has-icons-left">
+              <input className="input" type="text" required ref={(first) => this.first = first} />
+              <span className="icon is-small is-left">
+                <i className="fa fa-pencil"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="level-item has-text-centered hero-buttons">
+          <div className="field">
+            <label className="label is-medium">Last Name</label>
+            <div className="control has-icons-left">
+              <input className="input" type="text" required ref={(last) => this.last = last} />
+              <span className="icon is-small is-left">
+                <i className="fa fa-pencil"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="level-item has-text-centered hero-buttons">
+          <div className="field">
+            <label className="label is-medium">Email</label>
+            <div className="control has-icons-left">
+              <input className="input" type="text" required ref={(email) => this.email = email} />
+              <span className="icon is-small is-left">
+                <i className="fa fa-envelope"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="level-item has-text-centered hero-buttons">
+          <div className="field">
+            <label className="label is-medium">Password</label>
+            <div className="control has-icons-left">
+              <input className="input" type="password" required ref={(password) => this.password = password} />
+              <span className="icon is-small is-left">
+                <i className="fa fa-unlock-alt"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="level-item has-text-centered hero-buttons">
+          <div className="field">
+            <label className="label is-medium">Confirm Password</label>
+            <div className="control has-icons-left">
+              <input className="input" type="password" required ref={(confirmation) => this.confirmation = confirmation}/>
+              <span className="icon is-small is-left">
+                <i className="fa fa-unlock-alt"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="level-item has-text-centered hero-buttons">
+          <div className="field">
+            <div className="field-label"></div>
+            <div className="field-body">
+              <div className="field">
+                <div className="control">
+                  <input type="submit" value="Register" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </form>
     );
   }
