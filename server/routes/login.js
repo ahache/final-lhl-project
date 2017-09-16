@@ -21,6 +21,8 @@ module.exports = (knex) => {
         } else {
           res.status(400).send("Wrong Password");
         }
+      }).catch((error) => {
+        res.send(error.responseText);
       });
   })
   return router;

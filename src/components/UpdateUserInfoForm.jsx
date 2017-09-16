@@ -43,9 +43,9 @@ export class UpdateUserInfoForm extends React.Component {
       type: 'PUT',
       data: {user: localStorage.getItem('token'), first_name: first_name, last_name: last_name, email: email, password: password}
     }).done((data) => {
-      const userInfo = data;
+      const userInfo = data[0];
       this.clearForm();
-      this.setState({user_info: userInfo});
+      this.props.update(userInfo);
     }).fail((error) => {
       alert(error.responseText);
     });
