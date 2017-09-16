@@ -80,7 +80,7 @@ class Filters extends Component {
     const filterSpan = this.state.filters.map((filter, i) => {
       return (
         <div>
-          <p key={i}>{filter.name}</p>
+          <p className='button is-info' key={i}>{filter.name}</p>
           <input className='delete-button' name={filter.id} type='button' value="X" onClick={this.deleteFilter} />
         </div>
       );
