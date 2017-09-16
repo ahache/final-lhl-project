@@ -40,7 +40,7 @@ export class Map extends React.Component {
   }
 
   loadMap() {
-    if (this.props && this.props.google && this.props.mapReady) {
+    if (this.props && this.props.google) {
       // if google is available
       const {google} = this.props;
       const maps = google.maps;
@@ -167,20 +167,20 @@ Map.propTypes = {
   google: React.PropTypes.object,
   zoom: React.PropTypes.number,
   initialCenter: React.PropTypes.object,
-  centerAroundCurrentLocation: React.PropTypes.bool,
-  onMove: React.PropTypes.func
+  // centerAroundCurrentLocation: React.PropTypes.bool,
+  // onMove: React.PropTypes.func
 }
 
 // Setting default values on my props
 Map.defaultProps = {
-  onMove: function() {},
+  // onMove: function() {},
   zoom: 13,
   // Vancouver, by default
   initialCenter: {
     lat: 37.774929,
     lng: -122.419416
   },
-  centerAroundCurrentLocation: false
+  // centerAroundCurrentLocation: false
 }
 
 export default Map;

@@ -13,7 +13,10 @@ export class Container extends React.Component {
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
-      dataLoaded: false
+      dataLoaded: false,
+      mapCoords: [],
+      searchQuery: '',
+      resultSet: {}
     };
     this.onMarkerClick = this.onMarkerClick.bind(this);
 		this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
@@ -22,12 +25,17 @@ export class Container extends React.Component {
     this.removeFavorite = this.removeFavorite.bind(this);
     this.checkFavorite = this.checkFavorite.bind(this);
     this.getGoogleSearch = this.getGoogleSearch.bind(this);
+    this.renderMarkers = this.renderMarkers.bind(this);
     this.buttonId = '';
     this.buttonText = ''
   }
 
   componentWillMount(){
     this.getGoogleSearch();
+  }
+
+  componentDidUpdate(){
+    this.makeMarkers(this.state.resultSet);
   }
 
   getGoogleSearch() {
@@ -37,11 +45,27 @@ export class Container extends React.Component {
     }
   })
     .then(result => {
-      console.log(result);
-      this.setState({dataLoaded: true})
+      this.setState({
+        dataLoaded: true,
+        mapCoords: result.data[0],
+        searchQuery: result.data[1],
+        resultSet: result.data[2]
+      })
   });
-
   }
+
+
+  makeMarkers(result) {
+    for (let filter in result) {
+      result[filter].map((place, i) => {
+        return (
+          <Marker key={i} keyword={filter} locationInfo={place} position={place.geometry.location} checkFavorite={this.checkFavorite} onClick={this.onMarkerClick} />
+        )
+      })
+  }
+}
+
+
 
   onMarkerClick(props, marker, e) {
     this.setState({
@@ -172,6 +196,6 @@ export class Container extends React.Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyBR9a87huIRF93xhp5VcW57S7mBjfFGEKk',
+  apiKey: process.env['GOOGLE_API_KEY'],
   version: '3.29'
 })(Container)

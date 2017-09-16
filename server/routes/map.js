@@ -126,19 +126,16 @@ module.exports = (knex) => {
 
     const getSearch = await getLastSearch(user_id);
     const destination = getSearch[0].last_search;
-
     let mapResults = {};
 
     const latLong = await getGeocode(destination);
 
     const filters = await getFilters(user_id);
-
     for (filter of filters) {
       const places = await getPlaces(filter, latLong);
       mapResults[filter.name] = places;
     }
-    const results = [destination, mapResults];
-
+    const results = [latLong, destination, mapResults];
     res.json(results);
   });
 
