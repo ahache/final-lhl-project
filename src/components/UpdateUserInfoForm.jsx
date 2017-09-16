@@ -42,7 +42,7 @@ export class UpdateUserInfoForm extends React.Component {
     const password_confirmation = this.password_confirmation.value;
 
     if (password !== password_confirmation) {
-      alert("Passwords don't match!")
+      alert("Passwords don't match!");
       $(".input.password").toggleClass("is-danger");
       $(".input.password_confirmation").toggleClass("is-danger");
       e.preventDefault();
