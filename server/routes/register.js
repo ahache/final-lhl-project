@@ -23,10 +23,11 @@ module.exports = (knex) => {
         first_name: first,
         last_name: last,
         email: email,
-        password: hashedPassword
+        password: hashedPassword,
+        last_search: 'Vancouver'
       })
       .then((id) => {
-        const token = jwt.sign({ user: id }, 'CBFC');
+        const token = jwt.sign({ user: id[0] }, 'CBFC');
         res.status(200).json(token);
       })
       .catch((error) => {

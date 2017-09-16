@@ -12,6 +12,7 @@ export class UpdateUserInfoForm extends React.Component {
     this.clearForm = this.clearForm.bind(this);
   }
 
+  // Not sure if a get is nece
   componentWillMount() {
     $.get(URL, {user: localStorage.getItem('token')})
     .done((data) => {

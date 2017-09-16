@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import {Link, Redirect } from 'react-router-dom';
 import Logout from './Logout.jsx'
 
 class NavBar extends Component {
@@ -9,14 +9,15 @@ class NavBar extends Component {
         <nav>
         🏠
         <Logout />
+        <Link to='/user'>Update Profile</Link>
         </nav>
-      );  
+      );
     } else {
       return (
         <nav>
         🏠
         </nav>
-      );      
+      );
     }
 
   }
