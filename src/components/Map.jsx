@@ -18,19 +18,9 @@ export class Map extends React.Component {
 
   renderChildren() {
     const {children} = this.props;
-    // return null so that if we use the map w/o children
-    // our component won't blow up
     if (!children) return;
 
     return React.Children.map(children, c => {
-      /*
-      cloneElement() accepts an element and creates a copy,
-      which gives us the opportunity to append props and/or children
-      to the child. We can use this to append map instance plus the google prop.
-      Now each of the Map component's children will receive the original props they
-      were passed plus the map instance, google api instance and mapCenter from the
-      <Map /> component.
-      */
       return React.cloneElement(c, {
         map: this.map,
         google: this.props.google,
@@ -58,34 +48,15 @@ export class Map extends React.Component {
       })
       this.map = new maps.Map(node, mapConfig);
       this.setState({mapLoaded: true});
-      /* MESSAGES FROM MATT:
-      This code deals with dragging the map and having a callback for it,
-      when the user finishes dragging the map, we can do something with that!
-      One issue is that we don't to be handling the callback that many times
-      since the user is likely to drag A LOT. So we can set the callback to only
-      be called at the end. We can create a limit to the times we'll call onMove()
-      and can do this for many different types of events!
-      */
-      // let centerChangedTimeout;
-      /*
-      If we wanted to deal with many types of events that get handled the same we
-      can do something like const eventNames = ['click', 'dragend']
-      */
+
       const eventNames = ['ready', 'click', 'dragend'];
       eventNames.forEach(e => {
         this.map.addListener(e, this.handleEvent(e));
       });
-      // After the map is ready, can use a trigger function on the map instance
-      // and because we've already set up the rest of the event handlers, this will just work.
       maps.event.trigger(this.map, 'ready');
     }
   }
 
-  /*
-  Basically any time we pass a prop with an event name (such as click) it will
-  get called whenever we click on the map itself. Note: This is not very React-like (or JS-like).
-  Going meta here.
-  */
   handleEvent(eventName) {
     let timeout;
     const handlerName = `on${camelize(eventName)}`;
@@ -122,6 +93,11 @@ export class Map extends React.Component {
   componentWillMount() {
     this.loadMap();
   }
+
+  // componentDidMount() {
+  //   this.loadMap();
+  // }
+
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.google !== this.props.google) {
@@ -162,7 +138,6 @@ export class Map extends React.Component {
   }
 }
 
-// Here I'm explicitly saying what types my props will be, this is supposedly good practice!
 Map.propTypes = {
   google: React.PropTypes.object,
   zoom: React.PropTypes.number,
@@ -171,7 +146,6 @@ Map.propTypes = {
   // onMove: React.PropTypes.func
 }
 
-// Setting default values on my props
 Map.defaultProps = {
   // onMove: function() {},
   zoom: 13,

@@ -54,7 +54,7 @@ app.use(expressJWT({
 }));
 
 app.use('/', index);
-app.use('/users', users);
+app.use('/users', users(knex));
 app.use('/login', login(knex));
 app.use('/register', register(knex));
 app.use('/filters', filters(knex));

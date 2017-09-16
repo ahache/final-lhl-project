@@ -22,7 +22,7 @@ class Logout extends Component {
       )
     }
     return (
-      <input type="button" value="Logout" onClick={this.logoutUser} />
+      <a onClick={this.logoutUser}>Logout</a>
     );
   }
 }

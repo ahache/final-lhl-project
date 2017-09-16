@@ -13,10 +13,7 @@ export class Container extends React.Component {
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
-      dataLoaded: false,
-      mapCoords: [],
-      searchQuery: '',
-      resultSet: {}
+      dataLoaded: false
     };
     this.onMarkerClick = this.onMarkerClick.bind(this);
 		this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
@@ -26,8 +23,14 @@ export class Container extends React.Component {
     this.checkFavorite = this.checkFavorite.bind(this);
     this.getGoogleSearch = this.getGoogleSearch.bind(this);
     this.renderMarkers = this.renderMarkers.bind(this);
+    this.getMapCoordinates = this.getMapCoordinates.bind(this);
+    this.triggerRender = this.triggerRender.bind(this);
     this.buttonId = '';
-    this.buttonText = ''
+    this.buttonText = '';
+    this.mapMarkers;
+    this.mapCoords;
+    this.searchQuery;
+    this.resultSet;
   }
 
   componentWillMount(){
@@ -35,7 +38,7 @@ export class Container extends React.Component {
   }
 
   componentDidUpdate(){
-    this.makeMarkers(this.state.resultSet);
+    this.triggerRender;
   }
 
   getGoogleSearch() {
@@ -45,27 +48,48 @@ export class Container extends React.Component {
     }
   })
     .then(result => {
-      this.setState({
-        dataLoaded: true,
-        mapCoords: result.data[0],
-        searchQuery: result.data[1],
-        resultSet: result.data[2]
-      })
-  });
+      console.log("Route result:", result, "Data", result.data);
+      this.getMapCoordinates(result.data[0]);
+      this.getSearchQuery(result.data[1]);
+      this.getResultSet(result.data[2]);
+  })
+    .then(() => {
+      this.mapMarkers = this.renderMarkers(this.resultSet);
+    })
+    .then(() => {
+    })
   }
 
+  triggerRender() {
+    this.setState({dataLoaded:true})
+  }
 
-  makeMarkers(result) {
+  getMapCoordinates(mapCoords) {
+    this.mapCoords = mapCoords;
+  }
+
+  getSearchQuery(searchQuery) {
+    this.searchQuery = searchQuery;
+  }
+
+  getResultSet(resultSet) {
+    this.resultSet = resultSet;
+  }
+
+  renderMarkers(result) {
+    let markers = [];
+    let newResult;
     for (let filter in result) {
-      result[filter].map((place, i) => {
+      newResult = result[filter].map((place, i) => {
         return (
           <Marker key={i} keyword={filter} locationInfo={place} position={place.geometry.location} checkFavorite={this.checkFavorite} onClick={this.onMarkerClick} />
         )
       })
+      markers = markers.concat(newResult);
+    }
+    console.log("new markers", markers);
+    return markers;
   }
-}
-
-
 
   onMarkerClick(props, marker, e) {
     this.setState({
@@ -153,49 +177,36 @@ export class Container extends React.Component {
       width: '100vw',
       height: '100vh'
     }
-    // const pos = {lat: 37.759703, lng: -122.428093}
-    // const pos_one = {lat: 38.759703, lng: -122.428093}
-    // const pos_two = {lat: 39.759703, lng: -122.428093}
-          //     <Marker position={pos} onClick={this.onMarkerClick} />
-          // <Marker position={pos_one} onClick={this.onMarkerClick} />
-          // <Marker position={pos_two} onClick={this.onMarkerClick} />
-
-    const testData =
-    { formatted_address: '908 Stewart St, Seattle, WA 98101, United States',
-    geometry: { location: {lat: 37.774929, lng: -122.419416}, viewport: [Object] },
-    icon: 'https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png',
-    id: 'db3a1e206138a3253716bf6887d85c3e6ca9d6c4',
-    name: 'FUCK YA',
-    opening_hours: { open_now: true, weekday_text: [] },
-    photos: [ [Object] ],
-    place_id: 'DSKLDSKLDFKLSKLSD',
-    price_level: 6,
-    rating: 3.5,
-    reference: 'CmRRAAAAmxPORwYQOikEwxqgokDgVPH06lKOUfssTMV9aXwyh9eGZ88KnZ3CHIZMXdbhq6DrBi2Ukmbihh5SBQC9ED1547TAQvx26Ujr1B2_0V0brZYaa458UgoEmfSu7KxtzLyXEhC-lRmFbwxOE3D0fb8hvaYUGhQndLBFcBzkecxb2qlaGipnM_KwMQ',
-    types: [ 'restaurant', 'food', 'point_of_interest', 'establishment' ] }
-
-    return (
-      <div style={style}>
-        <Map google={this.props.google} onClick={this.onMapClick} mapReady={this.state.dataLoaded}>
-          <Marker locationInfo={testData} position={testData.geometry.location} checkFavorite={this.checkFavorite} onClick={this.onMarkerClick} />
-          <InfoWindow
-            marker={this.state.activeMarker}
-            visible={this.state.showingInfoWindow}
-            onClose={this.onInfoWindowClose}
-            addFavorite={this.addFavorite}
-            removeFavorite={this.removeFavorite}>
-              <div>
-                <h1>{this.state.selectedPlace.name}</h1>
-                <button id={this.buttonId}>{this.buttonText}</button>
-              </div>
-          </InfoWindow>
-        </Map>
-      </div>
-    )
+    console.log(this.state);
+    if (this.state.dataLoaded === true) {
+      return (
+        <div style={style}>
+          <Map google={this.props.google} onClick={this.onMapClick}>
+            { this.mapMarkers }
+            <InfoWindow
+              marker={this.state.activeMarker}
+              visible={this.state.showingInfoWindow}
+              onClose={this.onInfoWindowClose}
+              addFavorite={this.addFavorite}
+              removeFavorite={this.removeFavorite}>
+                <div>
+                  <h1>{this.state.selectedPlace.name}</h1>
+                  <button id={this.buttonId}>{this.buttonText}</button>
+                </div>
+            </InfoWindow>
+          </Map>
+        </div>
+      )
+    }
+    else {
+      return (
+      <div>Loading map...</div>
+      )
+    }
   }
 }
 
 export default GoogleApiWrapper({
-  apiKey: process.env['GOOGLE_API_KEY'],
+  apiKey: process.env['API_KEY'],
   version: '3.29'
 })(Container)

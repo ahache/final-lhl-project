@@ -23,7 +23,7 @@
   to { transform: rotate(360deg); }
 }
 
-nav {
+/*nav {
   width: 100%;
   text-align: center;
   background-color: blue;
@@ -31,7 +31,7 @@ nav {
   height: 2em;
   line-height: 2em;
   font-size: 3em;
-}
+}*/
 
 .login-form {
   width: 12em;
@@ -120,7 +120,7 @@ body {
   font-weight: 700;
 }
 
-.navbar {
+/*.navbar {
   background: tomato;
   border-bottom: 1px solid black;
   height: 60px;
@@ -129,7 +129,7 @@ body {
   position: fixed;
   right: 0;
   top: 0;
-}
+}*/
 
 .navbar-brand {
   color: inherit;

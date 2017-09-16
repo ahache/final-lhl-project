@@ -16,11 +16,14 @@ module.exports = (knex) => {
           return;
         }
         if (bcrypt.compareSync(req.body.password, results[0].password)) {
+          console.log("user id: ", results[0].id, ' type: ', typeof results[0].id);
           const token = jwt.sign({ user: results[0].id }, 'CBFC');
           res.status(200).json(token);
         } else {
           res.status(400).send("Wrong Password");
         }
+      }).catch((error) => {
+        res.send(error.responseText);
       });
   })
   return router;

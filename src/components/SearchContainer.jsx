@@ -29,6 +29,6 @@ export class SearchContainer extends React.Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: process.env['GOOGLE_API_KEY'],
+  apiKey: process.env['API_KEY'],
   version: '3.29'
 })(SearchContainer)
