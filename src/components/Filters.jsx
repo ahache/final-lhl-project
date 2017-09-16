@@ -56,7 +56,7 @@ class Filters extends Component {
       data: {user: localStorage.getItem('token')},
     }).done((data) => {
       newFilters = data;
-      this.setState({filters: newFilters});  
+      this.setState({filters: newFilters});
     }).fail((error) => {
       alert(error.responseText);
     });
