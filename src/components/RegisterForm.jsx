@@ -43,7 +43,7 @@ class RegisterForm extends Component {
       <form className="register-form" onSubmit={this.handleSubmit}>
         <div className="level-item has-text-centered hero-buttons">
           <div className="field">
-            <label className="label is-medium">First Name</label>
+            <label className="label is-small">First Name</label>
             <div className="control has-icons-left">
               <input className="input" type="text" required ref={(first) => this.first = first} />
               <span className="icon is-small is-left">
@@ -55,7 +55,7 @@ class RegisterForm extends Component {
 
         <div className="level-item has-text-centered hero-buttons">
           <div className="field">
-            <label className="label is-medium">Last Name</label>
+            <label className="label is-small">Last Name</label>
             <div className="control has-icons-left">
               <input className="input" type="text" required ref={(last) => this.last = last} />
               <span className="icon is-small is-left">
@@ -67,7 +67,7 @@ class RegisterForm extends Component {
 
         <div className="level-item has-text-centered hero-buttons">
           <div className="field">
-            <label className="label is-medium">Email</label>
+            <label className="label is-small">Email</label>
             <div className="control has-icons-left">
               <input className="input" type="text" required ref={(email) => this.email = email} />
               <span className="icon is-small is-left">
@@ -79,7 +79,7 @@ class RegisterForm extends Component {
 
         <div className="level-item has-text-centered hero-buttons">
           <div className="field">
-            <label className="label is-medium">Password</label>
+            <label className="label is-small">Password</label>
             <div className="control has-icons-left">
               <input className="input" type="password" required ref={(password) => this.password = password} />
               <span className="icon is-small is-left">
@@ -91,7 +91,7 @@ class RegisterForm extends Component {
 
         <div className="level-item has-text-centered hero-buttons">
           <div className="field">
-            <label className="label is-medium">Confirm Password</label>
+            <label className="label is-small">Confirm Password</label>
             <div className="control has-icons-left">
               <input className="input" type="password" required ref={(confirmation) => this.confirmation = confirmation}/>
               <span className="icon is-small is-left">
