@@ -26,9 +26,10 @@ class Filters extends Component {
 
   addFilter(e) {
     const newFilter = {name: this.filter.value};
-    if (!newFilter) {
-      alert("Fields must not be empty");
+    if (!newFilter.name) {
+      alert("Please enter something");
     } else {
+      this.filter.value = '';
       $.post(URL, {user: localStorage.getItem('token'), filter: newFilter.name})
         .done((data) => {
           if (data) {
@@ -37,7 +38,7 @@ class Filters extends Component {
             $(".submit-button").closest('form').find("input[name=filter]").val("");
             this.setState({filters: newFilters});
           } else {
-            alert('you already did it');
+            alert('You already have that filter');
           }
         })
         .fail((error) => {
@@ -63,7 +64,6 @@ class Filters extends Component {
     e.preventDefault();
   }
 
-
   render() {
 
     if (!localStorage.getItem('token')) {
@@ -77,24 +77,40 @@ class Filters extends Component {
       textAlign: 'center'
     }
 
+    const filterStyle = {
+      margin: '18.76px 5px 0 5px'
+    }
+
+    const inputStyle = {
+      width: '35%'
+    }
+
     const filterSpan = this.state.filters.map((filter, i) => {
+      const normalized = filter.name[0].toUpperCase().concat(filter.name.slice(1).toLowerCase());
       return (
-        <div>
-          <p className='button is-info' key={i}>{filter.name}</p>
-          <input className='delete-button' name={filter.id} type='button' value="X" onClick={this.deleteFilter} />
-        </div>
+        <span className='tag is-large is-danger is-rounded' key={i} style={filterStyle} >
+          {normalized}
+          <button className='delete is-medium' name={filter.id} onClick={this.deleteFilter}></button>
+        </span>
       );
     })
 
     return (
-      <div style={style}>
-        <SearchContainer />
-        <h2>What are you interested in?</h2>
+      <div className='field' style={style}>
+        <h1>What Are You Looking For?</h1>
         <form className="filters" onSubmit={this.addFilter}>
-          <input type='text' name="filter" placeholder="Tacos" ref={(filter) => this.filter = filter}/>
-          <button className="submit-button" type="submit">Add</button>
+          <input 
+            className='input is-primary' 
+            style={inputStyle} 
+            type='text' 
+            name="filter" 
+            placeholder="Food, Fashion, Fitness..." 
+            ref={(filter) => this.filter = filter}
+          />
+          <input className="button is-info" type="submit" value='Add Filter' />
         </form>
         {filterSpan}
+        <SearchContainer />
       </div>
     );
   }

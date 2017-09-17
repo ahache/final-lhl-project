@@ -41,7 +41,7 @@ export class PlacesSearch extends React.Component {
   getMapResults(e) {
     const destination = this.refs.autocomplete.value;
     if (!destination) {
-      alert("Must input destination and distance ");
+      alert("Input Destination");
     } else {
       $.post(mapURL, {user: localStorage.getItem('token'), destination: destination})
         .done((data) => {
@@ -56,11 +56,16 @@ export class PlacesSearch extends React.Component {
   }
 
   render(){
+
+    const inputStyle = {
+      width: '35%'
+    }
+
     return (
       <form onSubmit={this.getMapResults}>
-        <h1> Where are you going? </h1>
-          <input ref='autocomplete' id="pac-input" className="controls" type="text" placeholder="Search Box" />
-        <button type="submit">See Map</button>
+        <h1>Where are you going?</h1>
+        <input ref='autocomplete' id="pac-input" style={inputStyle} className="input is-primary controls" type="text" placeholder="Enter any location" />
+        <input type="submit" className='button is-info' value='See Results' />
       </form>
 
     )
