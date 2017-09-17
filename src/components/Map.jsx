@@ -6,13 +6,8 @@ export class Map extends React.Component {
   constructor(props){
     super(props);
 
-    const {lat, lng} = this.props.initialCenter;
     this.state = {
-      mapLoaded: false,
-      currentLocation: {
-        lat: lat,
-        lng: lng,
-      }
+      mapLoaded: false
     }
   }
 
@@ -24,7 +19,7 @@ export class Map extends React.Component {
       return React.cloneElement(c, {
         map: this.map,
         google: this.props.google,
-        mapCenter: this.state.currentLocation
+        mapCenter: this.props.initialCenter
       });
     });
   }
@@ -40,7 +35,7 @@ export class Map extends React.Component {
       const node = ReactDOM.findDOMNode(mapRef);
 
       let {initialCenter, zoom} = this.props;
-      const {lat, lng} = this.state.currentLocation;
+      const {lat, lng} = this.props.initialCenter;
       const center = new maps.LatLng(lat, lng);
       const mapConfig = Object.assign({}, {
         center: center,
@@ -90,7 +85,7 @@ export class Map extends React.Component {
   //   this.loadMap();
   // }
 
-  componentWillMount() {
+  componentDidMount() {
     this.loadMap();
   }
 
@@ -137,19 +132,19 @@ Map.propTypes = {
   google: React.PropTypes.object,
   zoom: React.PropTypes.number,
   initialCenter: React.PropTypes.object,
-  centerAroundCurrentLocation: React.PropTypes.bool,
-  onMove: React.PropTypes.func
+  // centerAroundCurrentLocation: React.PropTypes.bool,
+  // onMove: React.PropTypes.func
 }
 
 Map.defaultProps = {
-  onMove: function() {},
-  zoom: 13,
+  // onMove: function() {},
+  // zoom: 13,
   // Vancouver, by default
-  initialCenter: {
-    lat: 37.774929,
-    lng: -122.419416
-  },
-  centerAroundCurrentLocation: false
+  // initialCenter: {
+  //   lat: this.props.initialCenter[0],
+  //   lng: this.props.initialCenter[1]
+  // },
+  // centerAroundCurrentLocation: false
 }
 
 export default Map;

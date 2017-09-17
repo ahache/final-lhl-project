@@ -39,19 +39,27 @@ export class UpdateUserInfoForm extends React.Component {
     const last_name = this.last_name.value;
     const email = this.email.value;
     const password = this.password.value;
+    const password_confirmation = this.password_confirmation.value;
 
-    $.ajax({
-      url: URL,
-      type: 'PUT',
-      data: {user: localStorage.getItem('token'), first_name: first_name, last_name: last_name, email: email, password: password}
-    }).done((data) => {
-      const userInfo = data[0];
-      this.clearForm();
-      this.props.update(userInfo);
-    }).fail((error) => {
-      alert(error.responseText);
-    });
-    e.preventDefault();
+    if (password !== password_confirmation) {
+      alert("Passwords don't match!");
+      $(".input.password").toggleClass("is-danger");
+      $(".input.password_confirmation").toggleClass("is-danger");
+      e.preventDefault();
+    } else {
+      $.ajax({
+        url: URL,
+        type: 'PUT',
+        data: {user: localStorage.getItem('token'), first_name: first_name, last_name: last_name, email: email, password: password}
+      }).done((data) => {
+        const userInfo = data[0];
+        this.clearForm();
+        this.props.update(userInfo);
+      }).fail((error) => {
+        alert(error.responseText);
+      });
+      e.preventDefault();
+    }
   }
 
   render() {
@@ -61,47 +69,78 @@ export class UpdateUserInfoForm extends React.Component {
 
     if (localStorage.getItem('token')) {
       return (
-        <div className="container is-fluid" style={extraDivStyle}>
-          <form className="updateUser" onSubmit={this.submitChanges}>
-            <div className="field is-grouped">
-              <label className="label">First name:</label>
-              <div className="control">
-                <input className="input" type="text" ref={(first_name) => this.first_name = first_name} placeholder={this.props.userInfo.first_name}/>
-              </div>
-              <label className="label">Last name:</label>
-              <div className="control">
-                <input className="input" type="text" ref={(last_name) => this.last_name = last_name} placeholder={this.props.userInfo.last_name}/>
-              </div>
-            </div>
+        <div class="columns is-mobile is-centered">
+          <div class="column is-third is-narrow">
+            <div className="container is-fluid box" style={extraDivStyle}>
+              <form className="updateUser" onSubmit={this.submitChanges}>
 
-            <div className="field">
-              <label className="label">Email:</label>
-              <div className="control has-icons-left">
-                <input className="input" type="text" ref={(email) => this.email = email} placeholder={this.props.userInfo.email}/>
-                <span className="icon is-small is-left">
-                  <i className="fa fa-envelope"></i>
-                </span>
-              </div>
-            </div>
+                <div className="level-item has-text-centered hero-buttons">
+                  <div className="field">
+                    <label className="label is-small">First name:</label>
+                    <div className="control">
+                      <input className="input" type="text" ref={(first_name) => this.first_name = first_name} placeholder={this.props.userInfo.first_name}/>
+                    </div>
+                  </div>
+                </div>
 
-            <div className="field">
-              <label className="label">Password:</label>
-              <div className="control has-icons-left">
-                <input className="input" type="password" ref={(password) => this.password = password} placeholder="Password"/>
-                <span className="icon is-small is-left">
-                  <i className="fa fa-lock"></i>
-                </span>
-              </div>
+                <div className="level-item has-text-centered hero-buttons">
+                  <div className="field">
+                    <label className="label is-small">Last name:</label>
+                    <div className="control">
+                      <input className="input" type="text" ref={(last_name) => this.last_name = last_name} placeholder={this.props.userInfo.last_name}/>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="level-item has-text-centered hero-buttons">
+                  <div className="field">
+                    <label className="label is-small">Email:</label>
+                    <div className="control has-icons-left">
+                      <input className="input" type="text" ref={(email) => this.email = email} placeholder={this.props.userInfo.email}/>
+                      <span className="icon is-small is-left">
+                        <i className="fa fa-envelope"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="level-item has-text-centered hero-buttons">
+
+                  <div className="field">
+                    <label className="label is-small">Password:</label>
+                    <div className="control has-icons-left">
+                      <input className="input password" type="password" ref={(password) => this.password = password} placeholder="Password"/>
+                      <span className="icon is-small is-left">
+                        <i className="fa fa-lock"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="level-item has-text-centered hero-buttons">
+                  <div className="field">
+                    <label className="label is-small">Password Confirmation:</label>
+                    <div className="control has-icons-left">
+                      <input className="input password_confirmation" type="password" ref={(password_confirmation) => this.password_confirmation = password_confirmation} placeholder="Password Confirmation"/>
+                      <span className="icon is-small is-left">
+                        <i className="fa fa-lock"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="field is-grouped is-grouped-centered">
+                  <p className="control">
+                    <button className="submit-button button is-primary" type="submit">Update Profile</button>
+                  </p>
+                  <p className="control">
+                    <button className="button" type="reset">Reset</button>
+                  </p>
+                </div>
+
+              </form>
             </div>
-            <div className="field is-grouped is-grouped-centered">
-              <p className="control">
-                <button className="submit-button button is-primary" type="submit">Update Profile</button>
-              </p>
-              <p className="control">
-                <button className="button" type="reset">Reset</button>
-              </p>
-            </div>
-          </form>
+          </div>
         </div>
       );
     } else {

@@ -23,6 +23,8 @@ module.exports = (knex) => {
     const decoded = jwt.verify(req.body.user, 'CBFC');
     const user_id = Number(decoded.user);
     const place_id = req.body.place_id;
+    const price_level = req.body.price_level || -1
+    const rating = req.body.rating || -1.0
     knex('favorites')
     .select('id')
     .where('place_id', place_id)
@@ -34,8 +36,8 @@ module.exports = (knex) => {
           place_id: req.body.place_id,
           address: req.body.address,
           name: req.body.name,
-          price_level: req.body.price_level,
-          rating: req.body.rating,
+          price_level: price_level,
+          rating: rating,
           query: req.body.query,
           latitude: req.body.latitude,
           longitude: req.body.longitude
