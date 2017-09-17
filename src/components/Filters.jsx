@@ -86,7 +86,7 @@ class Filters extends Component {
     }
 
     const filterSpan = this.state.filters.map((filter, i) => {
-      const normalized = filter.name[0].toUpperCase().concat(filter.name.slice(1));
+      const normalized = filter.name[0].toUpperCase().concat(filter.name.slice(1).toLowerCase());
       return (
         <span className='tag is-large is-danger is-rounded' key={i} style={filterStyle} >
           {normalized}

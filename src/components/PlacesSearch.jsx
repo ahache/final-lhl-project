@@ -41,7 +41,7 @@ export class PlacesSearch extends React.Component {
   getMapResults(e) {
     const destination = this.refs.autocomplete.value;
     if (!destination) {
-      alert("Must input destination and distance ");
+      alert("Input Destination");
     } else {
       $.post(mapURL, {user: localStorage.getItem('token'), destination: destination})
         .done((data) => {
