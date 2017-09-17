@@ -56,11 +56,16 @@ export class PlacesSearch extends React.Component {
   }
 
   render(){
+
+    const inputStyle = {
+      width: '35%'
+    }
+
     return (
       <form onSubmit={this.getMapResults}>
-        <h1> Where are you going? </h1>
-          <input ref='autocomplete' id="pac-input" className="controls" type="text" placeholder="Search Box" />
-        <button type="submit">See Map</button>
+        <h1>Where are you going?</h1>
+        <input ref='autocomplete' id="pac-input" style={inputStyle} className="input controls" type="text" placeholder="Enter any location" />
+        <input type="submit" className='button is-primary' value='See Results' />
       </form>
 
     )

@@ -14,6 +14,8 @@ class Filters extends Component {
     }
     this.addFilter = this.addFilter.bind(this);
     this.deleteFilter = this.deleteFilter.bind(this);
+    this.addClass = this.addClass.bind(this);
+    this.removeClass = this.removeClass.bind(this);
   }
 
   componentDidMount() {
@@ -26,9 +28,10 @@ class Filters extends Component {
 
   addFilter(e) {
     const newFilter = {name: this.filter.value};
-    if (!newFilter) {
-      alert("Fields must not be empty");
+    if (!newFilter.name) {
+      alert("Please enter something");
     } else {
+      this.filter.value = '';
       $.post(URL, {user: localStorage.getItem('token'), filter: newFilter.name})
         .done((data) => {
           if (data) {
@@ -37,7 +40,7 @@ class Filters extends Component {
             $(".submit-button").closest('form').find("input[name=filter]").val("");
             this.setState({filters: newFilters});
           } else {
-            alert('you already did it');
+            alert('You already have that filter');
           }
         })
         .fail((error) => {
@@ -63,6 +66,13 @@ class Filters extends Component {
     e.preventDefault();
   }
 
+  addClass(e) {
+    e.target.className = 'button is-danger';
+  }
+
+  removeClass(e) {
+    e.target.className = 'button is-info';
+  }
 
   render() {
 
@@ -77,24 +87,47 @@ class Filters extends Component {
       textAlign: 'center'
     }
 
+    const filterStyle = {
+      margin: '18.76px 5px 0 5px'
+    }
+
+    const inputStyle = {
+      width: '35%'
+    }
+
     const filterSpan = this.state.filters.map((filter, i) => {
       return (
-        <div>
-          <p className='button is-info' key={i}>{filter.name}</p>
-          <input className='delete-button' name={filter.id} type='button' value="X" onClick={this.deleteFilter} />
-        </div>
+        <input 
+          className='button is-info'
+          type='button' 
+          style={filterStyle} 
+          name={filter.id} 
+          value={filter.name} 
+          key={i} 
+          onMouseOver={this.addClass}
+          onMouseOut={this.removeClass}
+          onClick={this.deleteFilter} 
+        />
       );
     })
 
     return (
-      <div style={style}>
-        <SearchContainer />
-        <h2>What are you interested in?</h2>
+      <div className='field' style={style}>
+        <h1>What Are You Looking For?</h1>
         <form className="filters" onSubmit={this.addFilter}>
-          <input type='text' name="filter" placeholder="Tacos" ref={(filter) => this.filter = filter}/>
-          <button className="submit-button" type="submit">Add</button>
+          <input 
+            className='input' 
+            style={inputStyle} 
+            type='text' 
+            name="filter" 
+            placeholder="Food, Fashion, Fitness..." 
+            ref={(filter) => this.filter = filter}
+          />
+          <input className="button is-primary" type="submit" value='Add Filter' />
         </form>
+        <p className="help is-danger">Select filter to delete</p>
         {filterSpan}
+        <SearchContainer />
       </div>
     );
   }
