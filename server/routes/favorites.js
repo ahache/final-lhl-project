@@ -19,6 +19,21 @@ module.exports = (knex) => {
       });
   })
 
+  router.get("/all", (req, res) => {
+    const decoded = jwt.verify(req.query.user, 'CBFC');
+    const user = decoded.user;
+    knex
+      .select('*')
+      .from('users_favorites')
+      .join('favorites', 'favorites.id', '=', 'users_favorites.favorite_id')
+      .where('users_favorites.user_id', '=', user)
+      .orderBy('query', 'asc')
+      .then((results) => {
+        console.log(results);
+        res.json(results)
+      })
+  })
+
   router.post("/add", (req, res) => {
     const decoded = jwt.verify(req.body.user, 'CBFC');
     const user_id = Number(decoded.user);
@@ -38,14 +53,13 @@ module.exports = (knex) => {
           name: req.body.name,
           price_level: price_level,
           rating: rating,
-          query: req.body.query,
           latitude: req.body.latitude,
           longitude: req.body.longitude
         })
         .then((id) => {
           favorite_id = id[0];
           knex('users_favorites')
-          .insert({user_id: user_id, favorite_id: favorite_id})
+          .insert({user_id: user_id, favorite_id: favorite_id, query: req.body.query })
           .then(() => res.status(200).send("Added favorite for user"))
           .catch(() => res.status(400).send("Failed to add fav for user"));
         })
@@ -63,7 +77,7 @@ module.exports = (knex) => {
              .then((result) => {
                 favorite_id = result[0].id
                 knex('users_favorites')
-                  .insert({user_id: user_id, favorite_id: favorite_id})
+                  .insert({user_id: user_id, favorite_id: favorite_id, query: req.body.query })
                   .then(() => res.status(200).send("Added favorite for user"))
                   .catch(() => res.status(400).send("Failed to add fav for user"));
           })

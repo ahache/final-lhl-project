@@ -16,14 +16,15 @@ export class Container extends React.Component {
       dataLoaded: false
     };
     this.onMarkerClick = this.onMarkerClick.bind(this);
-		this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
-		this.onMapClick = this.onMapClick.bind(this);
+    this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
+    this.onMapClick = this.onMapClick.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
     this.removeFavorite = this.removeFavorite.bind(this);
     this.checkFavorite = this.checkFavorite.bind(this);
     this.getGoogleSearch = this.getGoogleSearch.bind(this);
     this.renderMarkers = this.renderMarkers.bind(this);
     this.getMapCoordinates = this.getMapCoordinates.bind(this);
+    this.createHomeMarker = this.createHomeMarker.bind(this);
     this.buttonId = '';
     this.buttonText = '';
     this.mapMarkers;
@@ -63,15 +64,23 @@ export class Container extends React.Component {
     this.resultSet = resultSet;
   }
 
+  createHomeMarker(location) {
+    const key = -1;
+    const colorKey = 0;
+    return <Marker key={key} colorKey={colorKey} position={location} />
+  }
+
   renderMarkers(result) {
     let markers = [];
     let newResult;
     let count = 0;
+    let filterNum = 0;
     for (let filter in result) {
+      filterNum += 1;
       newResult = result[filter].map((place, i) => {
         count += 1;
         return (
-          <Marker key={i} keyword={filter} locationInfo={place} position={place.geometry.location} checkFavorite={this.checkFavorite} onClick={this.onMarkerClick} />
+          <Marker key={count} colorKey={filterNum} keyword={filter} locationInfo={place} position={place.geometry.location} checkFavorite={this.checkFavorite} onClick={this.onMarkerClick} />
         )
       })
       markers = markers.concat(newResult);
@@ -81,11 +90,11 @@ export class Container extends React.Component {
 
   onMarkerClick(props, marker, e) {
     this.setState({
-			selectedPlace: props,
-			activeMarker: marker
-		});
+      selectedPlace: props,
+      activeMarker: marker
+    });
     this.checkFavorite(props.place_id);
-	}
+  }
 
   checkFavorite(place_id) {
   axios.get('/favorites', {
@@ -165,7 +174,7 @@ export class Container extends React.Component {
       width: '100vw',
       height: '100vh'
     }
-
+  const homeMarker = this.createHomeMarker(this.mapCoords);
   const mapMarkers = this.renderMarkers(this.resultSet);
   const rating = (this.state.selectedPlace.rating > 0) ? this.state.selectedPlace.rating + " / 5" : "No ratings available!"
 
@@ -173,7 +182,8 @@ export class Container extends React.Component {
       return (
       <div style={style}>
         <Map google={this.props.google} onClick={this.onMapClick} initialCenter={this.mapCoords} zoom={this.zoom}>
-        { mapMarkers }
+          { homeMarker }
+          { mapMarkers }
           <InfoWindow
             marker={this.state.activeMarker}
             visible={this.state.showingInfoWindow}

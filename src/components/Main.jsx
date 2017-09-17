@@ -5,6 +5,7 @@ import Login from './Login.jsx'
 import Register from './Register.jsx'
 import Filters from './Filters.jsx'
 import Container from './Container.jsx'
+import Favorites from './Favorites.jsx'
 import UpdateUserInfoContainer from './UpdateUserInfoContainer.jsx'
 
 // The Main component renders one of the three provided
@@ -20,6 +21,7 @@ const Main = () => (
       <Route path='/register' component={Register}/>
       <Route path='/filters' component={Filters}/>
       <Route path='/user' component={UpdateUserInfoContainer}/>
+      <Route path='/favorites' component={Favorites} />
     </Switch>
   </main>
 )

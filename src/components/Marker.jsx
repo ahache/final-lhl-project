@@ -28,19 +28,111 @@ export class Marker extends React.Component {
       return null;
     }
 
-    let pos = position || mapCenter;
-    if (!(pos instanceof google.maps.LatLng)) {
-      position = new google.maps.LatLng(pos.lat, pos.lng);
-    }
-    const pref = {
-      map: map,
-      position: position
-    };
-    this.marker = new google.maps.Marker(pref);
+    const homeMarker = 'https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_white!.png';
+    const markerOne = 'https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_green+.png';
+    const markerTwo = 'https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_orange+.png';
+    const markerThree = 'https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_blue+.png';
+    const markerFour = 'https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_yellow+.png';
+    const markerFive = 'https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_purple+.png';
 
-    eventNames.forEach(e => {
-      this.marker.addListener(e, this.handleEvent(e));
-    })
+    if (Number(this.props.colorKey) === 0) {
+      let pos = position || mapCenter;
+      if (!(pos instanceof google.maps.LatLng)) {
+        position = new google.maps.LatLng(pos.lat, pos.lng);
+      }
+      const pref = {
+        map: map,
+        position: position,
+        icon: homeMarker
+      };
+      this.marker = new google.maps.Marker(pref);
+    }
+
+    if (Number(this.props.colorKey) === 1) {
+      let pos = position || mapCenter;
+      if (!(pos instanceof google.maps.LatLng)) {
+        position = new google.maps.LatLng(pos.lat, pos.lng);
+      }
+      const pref = {
+        map: map,
+        position: position,
+        icon: markerOne
+      };
+      this.marker = new google.maps.Marker(pref);
+
+      eventNames.forEach(e => {
+        this.marker.addListener(e, this.handleEvent(e));
+      })
+    }
+
+    if (Number(this.props.colorKey) === 2) {
+      let pos = position || mapCenter;
+      if (!(pos instanceof google.maps.LatLng)) {
+        position = new google.maps.LatLng(pos.lat, pos.lng);
+      }
+      const pref = {
+        map: map,
+        position: position,
+        icon: markerTwo
+      };
+      this.marker = new google.maps.Marker(pref);
+
+      eventNames.forEach(e => {
+        this.marker.addListener(e, this.handleEvent(e));
+      })
+    }
+
+    if (Number(this.props.colorKey) === 3) {
+      let pos = position || mapCenter;
+      if (!(pos instanceof google.maps.LatLng)) {
+        position = new google.maps.LatLng(pos.lat, pos.lng);
+      }
+      const pref = {
+        map: map,
+        position: position,
+        icon: markerThree
+      };
+      this.marker = new google.maps.Marker(pref);
+
+      eventNames.forEach(e => {
+        this.marker.addListener(e, this.handleEvent(e));
+      })
+    }
+
+    if (Number(this.props.colorKey) === 4) {
+      let pos = position || mapCenter;
+      if (!(pos instanceof google.maps.LatLng)) {
+        position = new google.maps.LatLng(pos.lat, pos.lng);
+      }
+      const pref = {
+        map: map,
+        position: position,
+        icon: markerFour
+      };
+      this.marker = new google.maps.Marker(pref);
+
+      eventNames.forEach(e => {
+        this.marker.addListener(e, this.handleEvent(e));
+      })
+    }
+
+    if (Number(this.props.colorKey) === 5) {
+      let pos = position || mapCenter;
+      if (!(pos instanceof google.maps.LatLng)) {
+        position = new google.maps.LatLng(pos.lat, pos.lng);
+      }
+      const pref = {
+        map: map,
+        position: position,
+        icon: markerFive
+      };
+      this.marker = new google.maps.Marker(pref);
+
+      eventNames.forEach(e => {
+        this.marker.addListener(e, this.handleEvent(e));
+      })
+    }
+
   }
 
   handleEvent(eventName) {
