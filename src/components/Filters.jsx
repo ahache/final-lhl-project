@@ -14,6 +14,11 @@ class Filters extends Component {
     }
     this.addFilter = this.addFilter.bind(this);
     this.deleteFilter = this.deleteFilter.bind(this);
+    this.filterCount = this.filterCount.bind(this);
+  }
+
+  filterCount() {
+    return this.state.filters.length;
   }
 
   componentDidMount() {
@@ -110,7 +115,7 @@ class Filters extends Component {
           <input className="button is-info" type="submit" value='Add Filter' />
         </form>
         {filterSpan}
-        <SearchContainer />
+        <SearchContainer filterCount={this.filterCount}/>
       </div>
     );
   }

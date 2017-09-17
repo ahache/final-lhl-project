@@ -9,7 +9,8 @@ export class PlacesSearch extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      googleLoad: false
+      googleLoad: false,
+      lastSearch: ''
     }
     this.getMapResults = this.getMapResults.bind(this);
   }
@@ -38,11 +39,23 @@ export class PlacesSearch extends React.Component {
     }
   }
 
+  componentDidMount() {
+    $.get(`${mapURL}/last`, {user: localStorage.getItem('token')})
+      .done((data) => {
+        const lastSearch = data[0].last_search;
+        this.setState({lastSearch: lastSearch});
+      })
+      .fail((error) => {
+        console.log(error.responseText);
+      });
+
+  }
+
   getMapResults(e) {
-    const destination = this.refs.autocomplete.value;
-    if (!destination) {
-      alert("Input Destination");
+    if (this.props.filterCount() === 0) {
+      alert("Please Enter Some Filters");
     } else {
+    const destination = this.refs.autocomplete.value || this.state.lastSearch;
       $.post(mapURL, {user: localStorage.getItem('token'), destination: destination})
         .done((data) => {
           console.log(data);
@@ -50,12 +63,14 @@ export class PlacesSearch extends React.Component {
         })
         .fail((error) => {
           console.log(error.responseText);
-        });
+        });      
     }
     e.preventDefault();
   }
 
   render(){
+
+    // console.log(this.props.filterCount());
 
     const inputStyle = {
       width: '35%'
@@ -64,13 +79,18 @@ export class PlacesSearch extends React.Component {
     return (
       <form onSubmit={this.getMapResults}>
         <h1>Where are you going?</h1>
-        <input ref='autocomplete' id="pac-input" style={inputStyle} className="input is-primary controls" type="text" placeholder="Enter any location" />
+        <input 
+          ref='autocomplete' 
+          id="pac-input" 
+          style={inputStyle} 
+          className="input is-primary controls" 
+          type="text" 
+          placeholder={this.state.lastSearch}
+        />
         <input type="submit" className='button is-info' value='See Results' />
       </form>
-
     )
   }
-
 }
 
 export default PlacesSearch;

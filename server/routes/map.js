@@ -139,6 +139,15 @@ module.exports = (knex) => {
     res.json(results);
   });
 
+  router.get("/last", async (req, res) => {
+    const user = req.query.user;
+    const decoded = jwt.verify(user, 'CBFC');
+    const user_id = decoded.user;
+
+    const last_search = await getLastSearch(user_id);
+    res.json(last_search);
+  });
+
   return router;
 
 }
