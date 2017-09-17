@@ -30,6 +30,10 @@ class Filters extends Component {
   }
 
   addFilter(e) {
+    if (this.filterCount() === 5) {
+      alert("Please only use 5 filters at a time");
+      return;
+    }
     const newFilter = {name: this.filter.value};
     if (!newFilter.name) {
       alert("Please enter something");
