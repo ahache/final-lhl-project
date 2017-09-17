@@ -41,7 +41,6 @@ export class Map extends React.Component {
         center: center,
         zoom: zoom
       })
-      console.log("center", center, "zoom", zoom, "lat", lat, "lng", lng);
       this.map = new maps.Map(node, mapConfig);
       this.setState({mapLoaded: true});
 

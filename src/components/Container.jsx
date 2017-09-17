@@ -37,9 +37,6 @@ export class Container extends React.Component {
     this.getGoogleSearch();
   }
 
-  componentDidUpdate(){
-  }
-
   getGoogleSearch() {
     axios.get('/map', {
     params: {
@@ -47,11 +44,9 @@ export class Container extends React.Component {
     }
   })
     .then(result => {
-      console.log("Route result:", result, "Data", result.data);
       this.getMapCoordinates(result.data[0]);
       this.getSearchQuery(result.data[1]);
       this.getResultSet(result.data[2]);
-      //this.mapMarkers = this.renderMarkers(this.resultSet);
       this.setState({dataLoaded: true});
     })
   }
@@ -69,18 +64,19 @@ export class Container extends React.Component {
   }
 
   renderMarkers(result) {
-    // let markers = [];
-    // let newResult;
-    // for (let filter in result) {
-    //   newResult = result[filter].map((place, i) => {
-    //     return (
-    //       <Marker key={i} keyword={filter} locationInfo={place} position={place.geometry.location} checkFavorite={this.checkFavorite} onClick={this.onMarkerClick} />
-    //     )
-    //   })
-    //   markers = markers.concat(newResult);
-    // }
-    //console.log("new markers", markers);
-    // return markers;
+    let markers = [];
+    let newResult;
+    let count = 0;
+    for (let filter in result) {
+      newResult = result[filter].map((place, i) => {
+        count += 1;
+        return (
+          <Marker key={i} keyword={filter} locationInfo={place} position={place.geometry.location} checkFavorite={this.checkFavorite} onClick={this.onMarkerClick} />
+        )
+      })
+      markers = markers.concat(newResult);
+    }
+    return markers;
   }
 
   onMarkerClick(props, marker, e) {
@@ -123,7 +119,7 @@ export class Container extends React.Component {
       rating: this.state.selectedPlace.rating,
       latitude: this.state.selectedPlace.geometry.location.lat,
       longitude: this.state.selectedPlace.geometry.location.lng,
-      query: "default"
+      query: this.searchQuery
     }))
   .then(result => {
     this.buttonId = 'remove';
@@ -170,59 +166,14 @@ export class Container extends React.Component {
       height: '100vh'
     }
 
-    let markers = [];
-    let newResult;
-    let count = 0;
-    for (let filter in this.resultSet) {
-      newResult = this.resultSet[filter].map((place, i) => {
-        count += 1;
-        return (
-          <Marker keyword={filter} locationInfo={place} position={place.geometry.location} checkFavorite={this.checkFavorite} onClick={this.onMarkerClick} />
-        )
-      })
-      markers = markers.concat(newResult);
-    }
+  const mapMarkers = this.renderMarkers(this.resultSet);
+  const rating = (this.state.selectedPlace.rating > 0) ? this.state.selectedPlace.rating + " / 5" : "No ratings available!"
 
-    const finalMarkers = markers;
-
-
-
-
-    console.log('final markers', finalMarkers);
-
-    const testData =
-      { formatted_address: '908 Stewart St, Seattle, WA 98101, United States',
-      geometry: { location: {lat: 37.774929, lng: -122.419416}, viewport: [Object] },
-      icon: 'https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png',
-      id: 'db3a1e206138a3253716bf6887d85c3e6ca9d6c4',
-      name: 'FUCK YA',
-      opening_hours: { open_now: true, weekday_text: [] },
-      photos: [ [Object] ],
-      place_id: 'DSKLDSKLDFKLSKLSD',
-      price_level: 6,
-      rating: 3.5,
-      reference: 'CmRRAAAAmxPORwYQOikEwxqgokDgVPH06lKOUfssTMV9aXwyh9eGZ88KnZ3CHIZMXdbhq6DrBi2Ukmbihh5SBQC9ED1547TAQvx26Ujr1B2_0V0brZYaa458UgoEmfSu7KxtzLyXEhC-lRmFbwxOE3D0fb8hvaYUGhQndLBFcBzkecxb2qlaGipnM_KwMQ',
-      types: [ 'restaurant', 'food', 'point_of_interest', 'establishment' ] }
-
-    const testData2 =
-      { formatted_address: '908 Stewart St, Seattle, WA 98101, United States',
-      geometry: { location: {lat: 37.794929, lng: -122.419416}, viewport: [Object] },
-      icon: 'https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png',
-      id: 'db3a1e206138a3253716bf6887d85c3e6ca9d6c4',
-      name: 'FUCK YA',
-      opening_hours: { open_now: true, weekday_text: [] },
-      photos: [ [Object] ],
-      place_id: 'DSKLDSKLDFKLSKLSD',
-      price_level: 6,
-      rating: 3.5,
-      reference: 'CmRRAAAAmxPORwYQOikEwxqgokDgVPH06lKOUfssTMV9aXwyh9eGZ88KnZ3CHIZMXdbhq6DrBi2Ukmbihh5SBQC9ED1547TAQvx26Ujr1B2_0V0brZYaa458UgoEmfSu7KxtzLyXEhC-lRmFbwxOE3D0fb8hvaYUGhQndLBFcBzkecxb2qlaGipnM_KwMQ',
-      types: [ 'restaurant', 'food', 'point_of_interest', 'establishment' ] }
-
-    if (finalMarkers !== [] && this.mapCoords) {
+    if (mapMarkers !== [] && this.mapCoords) {
       return (
       <div style={style}>
         <Map google={this.props.google} onClick={this.onMapClick} initialCenter={this.mapCoords} zoom={this.zoom}>
-        { finalMarkers }
+        { mapMarkers }
           <InfoWindow
             marker={this.state.activeMarker}
             visible={this.state.showingInfoWindow}
@@ -231,6 +182,9 @@ export class Container extends React.Component {
             removeFavorite={this.removeFavorite}>
               <div>
                 <h1>{this.state.selectedPlace.name}</h1>
+                <h3>Address: {this.state.selectedPlace.formatted_address}</h3>
+                <h3>Rating: {rating}</h3>
+                <br />
                 <button id={this.buttonId}>{this.buttonText}</button>
               </div>
           </InfoWindow>
