@@ -24,13 +24,13 @@ export class Container extends React.Component {
     this.getGoogleSearch = this.getGoogleSearch.bind(this);
     this.renderMarkers = this.renderMarkers.bind(this);
     this.getMapCoordinates = this.getMapCoordinates.bind(this);
-    this.triggerRender = this.triggerRender.bind(this);
     this.buttonId = '';
     this.buttonText = '';
     this.mapMarkers;
     this.mapCoords;
     this.searchQuery;
     this.resultSet;
+    this.zoom = 13;
   }
 
   componentWillMount(){
@@ -38,7 +38,6 @@ export class Container extends React.Component {
   }
 
   componentDidUpdate(){
-    this.triggerRender;
   }
 
   getGoogleSearch() {
@@ -52,20 +51,13 @@ export class Container extends React.Component {
       this.getMapCoordinates(result.data[0]);
       this.getSearchQuery(result.data[1]);
       this.getResultSet(result.data[2]);
-  })
-    .then(() => {
-      this.mapMarkers = this.renderMarkers(this.resultSet);
+      //this.mapMarkers = this.renderMarkers(this.resultSet);
+      this.setState({dataLoaded: true});
     })
-    .then(() => {
-    })
-  }
-
-  triggerRender() {
-    this.setState({dataLoaded:true})
   }
 
   getMapCoordinates(mapCoords) {
-    this.mapCoords = mapCoords;
+    this.mapCoords = {lat: mapCoords[0], lng: mapCoords[1]}
   }
 
   getSearchQuery(searchQuery) {
@@ -77,18 +69,18 @@ export class Container extends React.Component {
   }
 
   renderMarkers(result) {
-    let markers = [];
-    let newResult;
-    for (let filter in result) {
-      newResult = result[filter].map((place, i) => {
-        return (
-          <Marker key={i} keyword={filter} locationInfo={place} position={place.geometry.location} checkFavorite={this.checkFavorite} onClick={this.onMarkerClick} />
-        )
-      })
-      markers = markers.concat(newResult);
-    }
-    console.log("new markers", markers);
-    return markers;
+    // let markers = [];
+    // let newResult;
+    // for (let filter in result) {
+    //   newResult = result[filter].map((place, i) => {
+    //     return (
+    //       <Marker key={i} keyword={filter} locationInfo={place} position={place.geometry.location} checkFavorite={this.checkFavorite} onClick={this.onMarkerClick} />
+    //     )
+    //   })
+    //   markers = markers.concat(newResult);
+    // }
+    //console.log("new markers", markers);
+    // return markers;
   }
 
   onMarkerClick(props, marker, e) {
@@ -177,31 +169,79 @@ export class Container extends React.Component {
       width: '100vw',
       height: '100vh'
     }
-    console.log(this.state);
-    if (this.state.dataLoaded === true) {
+
+    let markers = [];
+    let newResult;
+    let count = 0;
+    for (let filter in this.resultSet) {
+      newResult = this.resultSet[filter].map((place, i) => {
+        count += 1;
+        return (
+          <Marker keyword={filter} locationInfo={place} position={place.geometry.location} checkFavorite={this.checkFavorite} onClick={this.onMarkerClick} />
+        )
+      })
+      markers = markers.concat(newResult);
+    }
+
+    const finalMarkers = markers;
+
+
+
+
+    console.log('final markers', finalMarkers);
+
+    const testData =
+      { formatted_address: '908 Stewart St, Seattle, WA 98101, United States',
+      geometry: { location: {lat: 37.774929, lng: -122.419416}, viewport: [Object] },
+      icon: 'https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png',
+      id: 'db3a1e206138a3253716bf6887d85c3e6ca9d6c4',
+      name: 'FUCK YA',
+      opening_hours: { open_now: true, weekday_text: [] },
+      photos: [ [Object] ],
+      place_id: 'DSKLDSKLDFKLSKLSD',
+      price_level: 6,
+      rating: 3.5,
+      reference: 'CmRRAAAAmxPORwYQOikEwxqgokDgVPH06lKOUfssTMV9aXwyh9eGZ88KnZ3CHIZMXdbhq6DrBi2Ukmbihh5SBQC9ED1547TAQvx26Ujr1B2_0V0brZYaa458UgoEmfSu7KxtzLyXEhC-lRmFbwxOE3D0fb8hvaYUGhQndLBFcBzkecxb2qlaGipnM_KwMQ',
+      types: [ 'restaurant', 'food', 'point_of_interest', 'establishment' ] }
+
+    const testData2 =
+      { formatted_address: '908 Stewart St, Seattle, WA 98101, United States',
+      geometry: { location: {lat: 37.794929, lng: -122.419416}, viewport: [Object] },
+      icon: 'https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png',
+      id: 'db3a1e206138a3253716bf6887d85c3e6ca9d6c4',
+      name: 'FUCK YA',
+      opening_hours: { open_now: true, weekday_text: [] },
+      photos: [ [Object] ],
+      place_id: 'DSKLDSKLDFKLSKLSD',
+      price_level: 6,
+      rating: 3.5,
+      reference: 'CmRRAAAAmxPORwYQOikEwxqgokDgVPH06lKOUfssTMV9aXwyh9eGZ88KnZ3CHIZMXdbhq6DrBi2Ukmbihh5SBQC9ED1547TAQvx26Ujr1B2_0V0brZYaa458UgoEmfSu7KxtzLyXEhC-lRmFbwxOE3D0fb8hvaYUGhQndLBFcBzkecxb2qlaGipnM_KwMQ',
+      types: [ 'restaurant', 'food', 'point_of_interest', 'establishment' ] }
+
+    if (finalMarkers !== [] && this.mapCoords) {
       return (
-        <div style={style}>
-          <Map google={this.props.google} onClick={this.onMapClick}>
-            { this.mapMarkers }
-            <InfoWindow
-              marker={this.state.activeMarker}
-              visible={this.state.showingInfoWindow}
-              onClose={this.onInfoWindowClose}
-              addFavorite={this.addFavorite}
-              removeFavorite={this.removeFavorite}>
-                <div>
-                  <h1>{this.state.selectedPlace.name}</h1>
-                  <button id={this.buttonId}>{this.buttonText}</button>
-                </div>
-            </InfoWindow>
-          </Map>
-        </div>
-      )
+      <div style={style}>
+        <Map google={this.props.google} onClick={this.onMapClick} initialCenter={this.mapCoords} zoom={this.zoom}>
+        { finalMarkers }
+          <InfoWindow
+            marker={this.state.activeMarker}
+            visible={this.state.showingInfoWindow}
+            onClose={this.onInfoWindowClose}
+            addFavorite={this.addFavorite}
+            removeFavorite={this.removeFavorite}>
+              <div>
+                <h1>{this.state.selectedPlace.name}</h1>
+                <button id={this.buttonId}>{this.buttonText}</button>
+              </div>
+          </InfoWindow>
+        </Map>
+      </div>
+    )
     }
     else {
       return (
       <div>Loading map...</div>
-      )
+    )
     }
   }
 }
