@@ -14,8 +14,6 @@ class Filters extends Component {
     }
     this.addFilter = this.addFilter.bind(this);
     this.deleteFilter = this.deleteFilter.bind(this);
-    this.addClass = this.addClass.bind(this);
-    this.removeClass = this.removeClass.bind(this);
   }
 
   componentDidMount() {
@@ -66,14 +64,6 @@ class Filters extends Component {
     e.preventDefault();
   }
 
-  addClass(e) {
-    e.target.className = 'button is-danger';
-  }
-
-  removeClass(e) {
-    e.target.className = 'button is-info';
-  }
-
   render() {
 
     if (!localStorage.getItem('token')) {
@@ -96,18 +86,12 @@ class Filters extends Component {
     }
 
     const filterSpan = this.state.filters.map((filter, i) => {
+      const normalized = filter.name[0].toUpperCase().concat(filter.name.slice(1));
       return (
-        <input 
-          className='button is-info'
-          type='button' 
-          style={filterStyle} 
-          name={filter.id} 
-          value={filter.name} 
-          key={i} 
-          onMouseOver={this.addClass}
-          onMouseOut={this.removeClass}
-          onClick={this.deleteFilter} 
-        />
+        <span className='tag is-large is-danger is-rounded' key={i} style={filterStyle} >
+          {normalized}
+          <button className='delete is-medium' name={filter.id} onClick={this.deleteFilter}></button>
+        </span>
       );
     })
 
@@ -116,16 +100,15 @@ class Filters extends Component {
         <h1>What Are You Looking For?</h1>
         <form className="filters" onSubmit={this.addFilter}>
           <input 
-            className='input' 
+            className='input is-primary' 
             style={inputStyle} 
             type='text' 
             name="filter" 
             placeholder="Food, Fashion, Fitness..." 
             ref={(filter) => this.filter = filter}
           />
-          <input className="button is-primary" type="submit" value='Add Filter' />
+          <input className="button is-info" type="submit" value='Add Filter' />
         </form>
-        <p className="help is-danger">Select filter to delete</p>
         {filterSpan}
         <SearchContainer />
       </div>

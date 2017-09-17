@@ -64,8 +64,8 @@ export class PlacesSearch extends React.Component {
     return (
       <form onSubmit={this.getMapResults}>
         <h1>Where are you going?</h1>
-        <input ref='autocomplete' id="pac-input" style={inputStyle} className="input controls" type="text" placeholder="Enter any location" />
-        <input type="submit" className='button is-primary' value='See Results' />
+        <input ref='autocomplete' id="pac-input" style={inputStyle} className="input is-primary controls" type="text" placeholder="Enter any location" />
+        <input type="submit" className='button is-info' value='See Results' />
       </form>
 
     )
