@@ -30,7 +30,7 @@ class Login extends Component {
       backgroundColor: "white",
       padding: "20px",
       border: "0px solid",
-      borderRadius: "5px"
+      borderRadius: "5px",
     };
 
     const fontStyle = {

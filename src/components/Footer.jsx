@@ -4,8 +4,11 @@ import { Link, Route, Redirect } from 'react-router-dom';
 class Footer extends React.Component {
 
 render() {
+  const height = {
+    padding: "2.5rem 1.5rem 2rem"
+  }
   return (
-    <footer className="footer">
+    <footer className="footer" style={height}>
       <div className="container">
         <div className="content has-text-centered">
           <p>
