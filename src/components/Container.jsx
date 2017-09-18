@@ -42,10 +42,10 @@ export class Container extends React.Component {
 
   getGoogleSearch() {
     axios.get('/map', {
-    params: {
-      user: localStorage.getItem('token')
-    }
-  })
+      params: {
+        user: localStorage.getItem('token')
+      }
+    })
     .then(result => {
       this.getMapCoordinates(result.data[0]);
       this.getSearchQuery(result.data[1]);
