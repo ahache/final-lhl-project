@@ -14,6 +14,11 @@ class Filters extends Component {
     }
     this.addFilter = this.addFilter.bind(this);
     this.deleteFilter = this.deleteFilter.bind(this);
+    this.filterCount = this.filterCount.bind(this);
+  }
+
+  filterCount() {
+    return this.state.filters.length;
   }
 
   componentDidMount() {
@@ -26,7 +31,9 @@ class Filters extends Component {
 
   addFilter(e) {
     const newFilter = {name: this.filter.value};
-    if (!newFilter.name) {
+    if (this.filterCount() === 5) {
+      alert("Please only use 5 filters at a time");
+    } else if (!newFilter.name) {
       alert("Please enter something");
     } else {
       this.filter.value = '';
@@ -57,7 +64,9 @@ class Filters extends Component {
       data: {user: localStorage.getItem('token')},
     }).done((data) => {
       newFilters = data;
+      // This needs some love and some mentor help
       this.setState({filters: newFilters});
+      window.location = '/filters';
     }).fail((error) => {
       alert(error.responseText);
     });
@@ -110,7 +119,7 @@ class Filters extends Component {
           <input className="button is-info" type="submit" value='Add Filter' />
         </form>
         {filterSpan}
-        <SearchContainer />
+        <SearchContainer filterCount={this.filterCount}/>
       </div>
     );
   }

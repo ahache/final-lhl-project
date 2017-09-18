@@ -23,7 +23,7 @@ export class SearchContainer extends React.Component {
 
   render() {
     return(
-      <PlacesSearch google={this.props.google} getDest={this.props.getDest} />
+      <PlacesSearch google={this.props.google} getDest={this.props.getDest} filterCount={this.props.filterCount}/>
     );
   }
 }
