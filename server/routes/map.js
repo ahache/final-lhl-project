@@ -50,26 +50,39 @@ module.exports = (knex) => {
     return filters;
   }
 
-  const getFavoritesPromise = (user_id) => {
-    return new Promise((resolve, reject) => {
-      knex('users_favorites')
-      .join('favorites', 'favorites.id', '=', 'users_favorites.favorite_id')
-      .join('users', 'users.id', '=', 'users_favorites.user_id')
-      .select('favorites.latitude', 'favorites.longitude', 'favorites.name', 'favorites.address', 'favorites.place_id', 'favorites.price_level', 'favorites.rating', 'users_favorites.query')
-      .where('users.id', '=', user_id)
-      .then((favorites) => {
-        resolve(favorites);
-      })
-      .catch((err) => {
-        reject(err);
-      });
-    });
-  }
+  // async function getFavoritePromise(user_id) {
+  //   knex('users')
+  //   .select('favorite_search')
+  //   .where('id', user_id)
+  //   .then((result) => {
+  //     favorite_id = result[0];
+  //     knex('favorites')
+  //     .returning('id')
+  //     .insert({
+  //         place_id: req.body.place_id,
+  //         address: req.body.address,
+  //         name: req.body.name,
+  //         price_level: price_level,
+  //         rating: rating,
+  //         latitude: req.body.latitude,
+  //         longitude: req.body.longitude
+  //       })
 
-  async function getFavorites(user_id) {
-    const favorites = await getFavoritesPromise(user_id);
-    return favorites;
-  }
+  //   knex('users_favorites')
+  //   .join('favorites', 'favorites.id', '=', 'users_favorites.favorite_id')
+  //   .join('users', 'users.id', '=', 'users_favorites.user_id')
+  //   .where('users.id', '=', user_id)
+  //   .andWhere('favorites.place_id', '=', 'users.favorite_search')
+  //   .then((result) => {
+  //     return result;
+  //   })
+  //   .catch(() => res.status(400).send("Failed to add fav for user"));
+  // }
+
+  // async function getFavorite(user_id) {
+  //   const favorite = await getFavoritePromise(user_id);
+  //   return favorite;
+  // }
 
   const getPlacesPromise = (filter, latLong) => {
     return new Promise((resolve, reject) => {
@@ -179,23 +192,19 @@ module.exports = (knex) => {
     const user = req.query.user;
     const decoded = jwt.verify(user, 'CBFC');
     const user_id = decoded.user;
-
-    const favorites = await getFavorites(user_id);
-    console.log(favorites);
-
-    // const getSearch = await getLastSearch(user_id);
-    // const destination = getSearch[0].last_search;
-    // let mapResults = {};
-
-    // const latLong = await getGeocode(destination);
-
-    // const filters = await getFilters(user_id);
-    // for (filter of filters) {
-    //   const places = await getPlaces(filter, latLong);
-    //   mapResults[filter.name] = places;
-    // }
-    // const results = [latLong, destination, mapResults];
-    // res.json(results);
+    knex('users')
+    .select('favorite_search')
+    .where('id', user_id)
+    .then((result) => {
+      favorite_id = result[0].favorite_search;
+      knex('favorites')
+      .join('users_favorites', 'users_favorites.favorite_id', '=', 'favorites.id')
+      .where('place_id', favorite_id)
+      .then((result) => {
+        res.json(result);
+      })
+        .catch(() => res.status(400).send("Failed to add fav for user"));
+    })
   });
 
   router.get("/last", async (req, res) => {

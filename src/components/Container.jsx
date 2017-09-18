@@ -27,6 +27,8 @@ export class Container extends React.Component {
     this.renderMarkers = this.renderMarkers.bind(this);
     this.getMapCoordinates = this.getMapCoordinates.bind(this);
     this.createHomeMarker = this.createHomeMarker.bind(this);
+    this.getSearchQuery =   this.getSearchQuery.bind(this);
+    this.getResultSet = this.getResultSet.bind(this);
     this.buttonId = '';
     this.buttonText = '';
     this.mapMarkers;

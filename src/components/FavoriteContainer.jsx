@@ -1,61 +1,55 @@
 import React from 'react'
 import {GoogleApiWrapper} from 'google-maps-react'
 import axios from 'axios'
-import Map from './Map.jsx'
-import Marker from './Marker.jsx'
-import InfoWindow from './InfoWindow.jsx'
+import FavoriteMap from './FavoriteMap.jsx'
+import FavoriteMarker from './FavoriteMarker.jsx'
+import FavoriteInfoWindow from './FavoriteInfoWindow.jsx'
 import querystring from 'querystring'
 
 export class FavoriteContainer extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      showingInfoWindow: false,
+      showingInfoWindow: true,
       activeMarker: {},
       selectedPlace: {},
-      dataLoaded: false,
-      keyword: ''
+      dataLoaded: false
     };
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
     this.onInfoWindowOpen = this.onInfoWindowOpen.bind(this);
     this.onMapClick = this.onMapClick.bind(this);
-    this.addFavorite = this.addFavorite.bind(this);
-    this.removeFavorite = this.removeFavorite.bind(this);
-    this.checkFavorite = this.checkFavorite.bind(this);
-    this.getGoogleSearch = this.getGoogleSearch.bind(this);
-    this.renderMarkers = this.renderMarkers.bind(this);
+    this.getFavorite = this.getFavorite.bind(this);
+    this.renderMarker = this.renderMarker.bind(this);
     this.getMapCoordinates = this.getMapCoordinates.bind(this);
-    this.createHomeMarker = this.createHomeMarker.bind(this);
-    this.buttonId = '';
-    this.buttonText = '';
-    this.mapMarkers;
+    this.getSearchQuery = this.getSearchQuery.bind(this);
+    this.getResultSet = this.getResultSet.bind(this);
     this.mapCoords;
     this.searchQuery;
     this.resultSet;
-    this.zoom = 13;
+    this.zoom = 17;
   }
 
   componentWillMount(){
-    this.getGoogleSearch();
+    this.getFavorite();
   }
 
-  getGoogleSearch() {
+  getFavorite() {
     axios.get('/map/favorites', {
     params: {
       user: localStorage.getItem('token')
     }
   })
     .then(result => {
-      this.getMapCoordinates(result.data[0]);
-      this.getSearchQuery(result.data[1]);
-      this.getResultSet(result.data[2]);
+      this.getMapCoordinates(result.data[0].latitude, result.data[0].longitude);
+      this.getSearchQuery(result.data[0].query);
+      this.getResultSet(result.data[0]);
       this.setState({dataLoaded: true});
     })
   }
 
-  getMapCoordinates(mapCoords) {
-    this.mapCoords = {lat: mapCoords[0], lng: mapCoords[1]}
+  getMapCoordinates(lat, lng) {
+    this.mapCoords = {lat: lat, lng: lng}
   }
 
   getSearchQuery(searchQuery) {
@@ -66,94 +60,21 @@ export class FavoriteContainer extends React.Component {
     this.resultSet = resultSet;
   }
 
-  createHomeMarker(location) {
-    const key = -1;
-    const colorKey = 0;
-    return <Marker key={key} colorKey={colorKey} position={location} />
+  renderMarker(marker) {
+    const key = 0;
+    const colorKey = 1;
+    return (
+      <FavoriteMarker key={key} colorKey={colorKey} locationInfo={marker} position={this.mapCoords} onClick={this.onMarkerClick} />
+    )
   }
 
-  renderMarkers(result) {
-    let markers = [];
-    let newResult;
-    let count = 0;
-    let filterNum = 0;
-    for (let filter in result) {
-      filterNum += 1;
-      newResult = result[filter].map((place, i) => {
-        count += 1;
-        return (
-          <Marker key={count} colorKey={filterNum} keyword={filter} locationInfo={place} position={place.geometry.location} checkFavorite={this.checkFavorite} onClick={this.onMarkerClick} />
-        )
-      })
-      markers = markers.concat(newResult);
-    }
-    return markers;
-  }
-
-  onMarkerClick(props, keyword, marker, e) {
+  onMarkerClick(props, marker, e) {
     this.setState({
       selectedPlace: props,
-      keyword: keyword,
-      activeMarker: marker
+      activeMarker: marker,
+      dataLoaded: true,
+      showingInfoWindow: true
     });
-    this.checkFavorite(props.place_id);
-  }
-
-  checkFavorite(place_id) {
-  axios.get('/favorites', {
-    params: {
-      user: localStorage.getItem('token'),
-      place_id: place_id
-    }
-  })
-  .then(result => {
-    if (Number(result.data[0].count) > 0) {
-      this.buttonId = 'remove';
-      this.buttonText = 'Remove from Favorites'
-    }
-    else {
-      this.buttonId = 'add';
-      this.buttonText = 'Add to Favorites'
-    }
-    this.setState({showingInfoWindow:true});
-  });
-  }
-
-  addFavorite () {
-   this.buttonId = '';
-   this.buttonText = 'Adding...';
-   axios.post('/favorites/add', querystring.stringify({
-      user: localStorage.getItem('token'),
-      address: this.state.selectedPlace.formatted_address,
-      name: this.state.selectedPlace.name,
-      place_id: this.state.selectedPlace.place_id,
-      price_level: this.state.selectedPlace.price_level,
-      rating: this.state.selectedPlace.rating,
-      latitude: this.state.selectedPlace.geometry.location.lat,
-      longitude: this.state.selectedPlace.geometry.location.lng,
-      query: this.searchQuery
-    }))
-  .then(result => {
-    this.buttonId = 'remove';
-    this.buttonText = 'Remove from Favorites';
-    this.setState({showingInfoWindow:true});
-  });
-  }
-
-  removeFavorite () {
-   this.buttonId = '';
-   this.buttonText = 'Removing...';
-   axios.delete('/favorites/remove/', {params:
-    {
-      user: localStorage.getItem('token'),
-      place_id: this.state.selectedPlace.place_id
-    }
-  })
-  .then(result => {
-    this.buttonId = 'add';
-    this.buttonText = 'Add to Favorites';
-    this.setState({showingInfoWindow:true});
-  });
   }
 
   onInfoWindowClose() {
@@ -183,34 +104,25 @@ export class FavoriteContainer extends React.Component {
       width: '100vw',
       height: '100vh'
     }
-  const homeMarker = this.createHomeMarker(this.mapCoords);
-  const mapMarkers = this.renderMarkers(this.resultSet);
+  const mapMarker = this.renderMarker(this.resultSet);
   const rating = (this.state.selectedPlace.rating > 0) ? this.state.selectedPlace.rating + " / 5" : "No ratings available!"
-
-    if (mapMarkers !== [] && this.mapCoords) {
+    if (mapMarker && this.mapCoords && this.props.google) {
       return (
       <div style={style}>
-        <Map google={this.props.google} onClick={this.onMapClick} initialCenter={this.mapCoords} zoom={this.zoom}>
-          { homeMarker }
-          { mapMarkers }
-          <InfoWindow
+        <FavoriteMap google={this.props.google} onClick={this.onMapClick} initialCenter={this.mapCoords} zoom={this.zoom}>
+          { mapMarker }
+          <FavoriteInfoWindow
             marker={this.state.activeMarker}
             visible={this.state.showingInfoWindow}
             onClose={this.onInfoWindowClose}
-            addFavorite={this.addFavorite}
-            removeFavorite={this.removeFavorite}
             onOpen={this.onInfoWindowOpen}>
               <div>
                 <h1>{this.state.selectedPlace.name}</h1>
-                <h3>Address: {this.state.selectedPlace.formatted_address}</h3>
+                <h3>Address: {this.state.selectedPlace.address}</h3>
                 <h3>Rating: {rating}</h3>
-                <br />
-                <h3><em>This matches your search for:</em> <strong>{this.state.keyword}</strong></h3>
-                <br />
-                <button id={this.buttonId}>{this.buttonText}</button>
               </div>
-          </InfoWindow>
-        </Map>
+          </FavoriteInfoWindow>
+        </FavoriteMap>
       </div>
     )
     }
@@ -223,6 +135,6 @@ export class FavoriteContainer extends React.Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: process.env['API_KEY'],
+  apiKey: 'AIzaSyD1phNKmvb9u9qrUM_EGMW-EbfiANLLjbY',
   version: '3.29'
 })(FavoriteContainer)
