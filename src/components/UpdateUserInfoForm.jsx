@@ -69,8 +69,10 @@ export class UpdateUserInfoForm extends React.Component {
 
     if (localStorage.getItem('token')) {
       return (
-        <div class="columns is-mobile is-centered">
-          <div class="column is-third is-narrow">
+        <section className="hero is-large is-primary is-bold">
+          <div className="hero-body">
+        <div className="columns is-mobile is-centered">
+          <div className="column is-third is-narrow">
             <div className="container is-fluid box" style={extraDivStyle}>
               <form className="updateUser" onSubmit={this.submitChanges}>
 
@@ -142,6 +144,8 @@ export class UpdateUserInfoForm extends React.Component {
             </div>
           </div>
         </div>
+      </div>
+    </section>
       );
     } else {
       <Redirect to="/login" />

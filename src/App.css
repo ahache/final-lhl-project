@@ -1,4 +1,4 @@
-.App {
+/*.App {
   text-align: center;
 }
 
@@ -33,7 +33,7 @@
   font-size: 3em;
 }*/
 
-.login-form {
+/*.login-form {
   width: 12em;
   margin: auto;
   padding-top: 5em;
@@ -131,7 +131,7 @@ body {
   top: 0;
 }*/
 
-.navbar-brand {
+/*.navbar-brand {
   color: inherit;
   display: block;
   float: left;
@@ -159,7 +159,7 @@ body {
 }
 
 /* The actual popup */
-.popup .popuptext {
+/*.popup .popuptext {
     visibility: hidden;
     width: 160px;
     background-color: #555;
@@ -174,8 +174,7 @@ body {
     margin-left: -80px;
 }
 
-/* Popup arrow */
-.popup .popuptext::after {
+/*.popup .popuptext::after {
     content: "";
     float: right;
     top: 100%;
@@ -186,14 +185,12 @@ body {
     border-color: #555 transparent transparent transparent;
 }
 
-/* Toggle this class - hide and show the popup */
 .popup .show {
     visibility: visible;
     -webkit-animation: fadeIn 1s;
     animation: fadeIn 1s;
 }
 
-/* Add animation (fade in the popup) */
 @-webkit-keyframes fadeIn {
     from {opacity: 0;}
     to {opacity: 1;}
@@ -202,4 +199,4 @@ body {
 @keyframes fadeIn {
     from {opacity: 0;}
     to {opacity:1 ;}
-}
+}*/
