@@ -23,11 +23,14 @@ class Filters extends Component {
   }
 
   componentDidMount() {
-    $.get(URL, {user: localStorage.getItem('token')})
-      .done((data) => {
-        const newFilters = this.state.filters.concat(data);
-        this.setState({filters: newFilters});
-      });
+    $.ajax({
+      url: URL,
+      cache:false,
+      data: {user: localStorage.getItem('token')}
+    }).done((data) => {
+      const newFilters = this.state.filters.concat(data);
+      this.setState({filters: newFilters});
+    });
   }
 
   addFilter(e) {
@@ -65,9 +68,7 @@ class Filters extends Component {
       data: {user: localStorage.getItem('token')},
     }).done((data) => {
       newFilters = data;
-      // This needs some love and some mentor help
       this.setState({filters: newFilters});
-      // window.location = '/filters';
     }).fail((error) => {
       alert(error.responseText);
     });
