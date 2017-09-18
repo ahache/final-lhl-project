@@ -28,7 +28,8 @@ export class Marker extends React.Component {
       return null;
     }
 
-    const homeMarker = 'https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_white!.png';
+
+    const homeMarker = 'https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_red@.png';
     const markerOne = 'https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_green+.png';
     const markerTwo = 'https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_orange+.png';
     const markerThree = 'https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_blue+.png';

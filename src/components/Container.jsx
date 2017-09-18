@@ -194,6 +194,7 @@ export class Container extends React.Component {
                 <h1>{this.state.selectedPlace.name}</h1>
                 <h3>Address: {this.state.selectedPlace.formatted_address}</h3>
                 <h3>Rating: {rating}</h3>
+                <h3>This matches your search for: <strong>{this.searchQuery}</strong></h3>
                 <br />
                 <button id={this.buttonId}>{this.buttonText}</button>
               </div>
