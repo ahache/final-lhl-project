@@ -16,7 +16,6 @@ export class Favorites extends Component {
   }
 
   componentDidMount(){
-    console.log("favorites mounting");
     $.ajax({
       url: URL,
       cache:false,
