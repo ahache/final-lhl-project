@@ -73,7 +73,7 @@ export class PlacesSearch extends React.Component {
     // console.log(this.props.filterCount());
 
     const inputStyle = {
-      width: '35%'
+      // width: '35%'
     }
 
     return (

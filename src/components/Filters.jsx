@@ -83,6 +83,7 @@ class Filters extends Component {
 
     const style = {
       width: 'auto',
+      height: 'max-content',
       textAlign: 'center'
     }
 
@@ -91,7 +92,8 @@ class Filters extends Component {
     }
 
     const inputStyle = {
-      width: '35%'
+      // width: '35%'
+      
     }
 
     const filterSpan = this.state.filters.map((filter, i) => {
@@ -105,18 +107,22 @@ class Filters extends Component {
     })
 
     return (
-      <div className='field' style={style}>
+      <div className='box' style={style}>
         <h1>What Are You Looking For?</h1>
         <form className="filters" onSubmit={this.addFilter}>
-          <input 
-            className='input is-primary' 
-            style={inputStyle} 
-            type='text' 
-            name="filter" 
-            placeholder="Food, Fashion, Fitness..." 
-            ref={(filter) => this.filter = filter}
-          />
-          <input className="button is-info" type="submit" value='Add Filter' />
+          <div>
+            <input 
+              className='input is-primary' 
+              style={inputStyle} 
+              type='text' 
+              name="filter" 
+              placeholder="Food, Fashion, Fitness..." 
+              ref={(filter) => this.filter = filter}
+            />
+          </div>
+          <div>
+            <input className="button is-info" type="submit" value='Add Filter' />
+          </div>
         </form>
         {filterSpan}
         <SearchContainer filterCount={this.filterCount}/>
