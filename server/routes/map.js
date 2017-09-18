@@ -50,6 +50,27 @@ module.exports = (knex) => {
     return filters;
   }
 
+  const getFavoritesPromise = (user_id) => {
+    return new Promise((resolve, reject) => {
+      knex('users_favorites')
+      .join('favorites', 'favorites.id', '=', 'users_favorites.favorite_id')
+      .join('users', 'users.id', '=', 'users_favorites.user_id')
+      .select('favorites.latitude', 'favorites.longitude', 'favorites.name', 'favorites.address', 'favorites.place_id', 'favorites.price_level', 'favorites.rating', 'users_favorites.query')
+      .where('users.id', '=', user_id)
+      .then((favorites) => {
+        resolve(favorites);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+    });
+  }
+
+  async function getFavorites(user_id) {
+    const favorites = await getFavoritesPromise(user_id);
+    return favorites;
+  }
+
   const getPlacesPromise = (filter, latLong) => {
     return new Promise((resolve, reject) => {
       mapsClient.places({query: filter.name, location: latLong}, (err, response) => {
@@ -137,6 +158,29 @@ module.exports = (knex) => {
     }
     const results = [latLong, destination, mapResults];
     res.json(results);
+  });
+
+  router.get("/favorites", async (req, res) => {
+    const user = req.query.user;
+    const decoded = jwt.verify(user, 'CBFC');
+    const user_id = decoded.user;
+
+    const favorites = await getFavorites(user_id);
+    console.log(favorites);
+
+    // const getSearch = await getLastSearch(user_id);
+    // const destination = getSearch[0].last_search;
+    // let mapResults = {};
+
+    // const latLong = await getGeocode(destination);
+
+    // const filters = await getFilters(user_id);
+    // for (filter of filters) {
+    //   const places = await getPlaces(filter, latLong);
+    //   mapResults[filter.name] = places;
+    // }
+    // const results = [latLong, destination, mapResults];
+    // res.json(results);
   });
 
   router.get("/last", async (req, res) => {

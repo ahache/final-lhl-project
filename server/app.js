@@ -25,7 +25,6 @@ const favorites = require('./routes/favorites');
 const map = require('./routes/map');
 
 
-
 const app = express();
 
 app.use(methodOverride('_method'));
@@ -60,7 +59,7 @@ app.use('/register', register(knex));
 app.use('/filters', filters(knex));
 app.use('/favorites', favorites(knex));
 app.use('/map', map(knex));
-
+app.use('/favoritesmap', map(knex));
 
 // // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
