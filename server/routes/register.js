@@ -24,7 +24,8 @@ module.exports = (knex) => {
         last_name: last,
         email: email,
         password: hashedPassword,
-        last_search: 'Vancouver'
+        last_search: 'Vancouver',
+        favorite_search: 'ChIJs0-pQ_FzhlQRi_OBm-qWkbs'
       })
       .then((id) => {
         const token = jwt.sign({ user: id[0] }, 'CBFC');

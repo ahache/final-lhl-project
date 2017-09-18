@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import $ from 'jquery'
 import axios from 'axios'
+import querystring from 'querystring'
 
 const URL = 'http:\//localhost:3000/favorites/all';
 
@@ -30,7 +31,7 @@ export class Favorites extends Component {
   }
 
   deleteFavorite(e){
-    let favoriteID = e.target.name
+    let favoriteID = e.target.name;
     axios.delete('/favorites/remove/', {params:
       {
         user: localStorage.getItem('token'),
@@ -46,6 +47,16 @@ export class Favorites extends Component {
     })
   }
 
+  viewMap(e){
+    let favoriteID = e.target.name;
+    axios.post('/favorites/setfavorite', querystring.stringify({
+      user: localStorage.getItem('token'),
+      place_id: favoriteID
+    }))
+    .then(() => {
+      window.location = '/favoritesmap';
+    })
+  }
 
   //TODO: onClick={this.deleteFavorite},<input className='delete-button' name={favorite.id} type='button' value="X" />
   render(){
@@ -84,19 +95,20 @@ export class Favorites extends Component {
           <div className='box' style={boxStyle}>
             <h3>{favorite.name}</h3>
             <h6>{favorite.address}</h6>
-            <input 
+            <input
               style={buttonMargin}
-              className='button is-success' 
-              name={favorite.place_id} 
-              type='button' 
+              className='button is-success'
+              name={favorite.place_id}
+              type='button'
               value='View Map'
+              onClick={this.viewMap}
             />
-            <input 
-              className='button is-danger' 
-              name={favorite.place_id} 
-              type='button' 
-              value='Remove' 
-              onClick={this.deleteFavorite} 
+            <input
+              className='button is-danger'
+              name={favorite.place_id}
+              type='button'
+              value='Remove'
+              onClick={this.deleteFavorite}
             />
           </div>
         </div>

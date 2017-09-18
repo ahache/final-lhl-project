@@ -87,6 +87,17 @@ module.exports = (knex) => {
     })
   })
 
+router.post("/setfavorite", (req, res) => {
+  const decoded = jwt.verify(req.body.user, 'CBFC');
+  const user_id = Number(decoded.user);
+  const place_id = req.body.place_id;
+  knex('users')
+    .update('favorite_search', place_id)
+    .where('id', user_id)
+      .then(() => res.status(200).send("Set favorite for user"))
+      .catch(() => res.status(400).send("Failed to set favorite for user"));
+})
+
 
   router.delete("/remove/", (req, res) => {
     const decoded = jwt.verify(req.query.user, 'CBFC');
