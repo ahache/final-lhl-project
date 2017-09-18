@@ -30,12 +30,10 @@ class Filters extends Component {
   }
 
   addFilter(e) {
+    const newFilter = {name: this.filter.value};
     if (this.filterCount() === 5) {
       alert("Please only use 5 filters at a time");
-      return;
-    }
-    const newFilter = {name: this.filter.value};
-    if (!newFilter.name) {
+    } else if (!newFilter.name) {
       alert("Please enter something");
     } else {
       this.filter.value = '';
@@ -66,7 +64,9 @@ class Filters extends Component {
       data: {user: localStorage.getItem('token')},
     }).done((data) => {
       newFilters = data;
+      // This needs some love and some mentor help
       this.setState({filters: newFilters});
+      window.location = '/filters';
     }).fail((error) => {
       alert(error.responseText);
     });
