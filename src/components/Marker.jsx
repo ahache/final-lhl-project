@@ -28,7 +28,6 @@ export class Marker extends React.Component {
       return null;
     }
 
-
     const homeMarker = 'https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_red@.png';
     const markerOne = 'https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_green+.png';
     const markerTwo = 'https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_orange+.png';
@@ -48,8 +47,7 @@ export class Marker extends React.Component {
       };
       this.marker = new google.maps.Marker(pref);
     }
-
-    if (Number(this.props.colorKey) === 1) {
+    else if (Number(this.props.colorKey) === 1) {
       let pos = position || mapCenter;
       if (!(pos instanceof google.maps.LatLng)) {
         position = new google.maps.LatLng(pos.lat, pos.lng);
@@ -65,8 +63,7 @@ export class Marker extends React.Component {
         this.marker.addListener(e, this.handleEvent(e));
       })
     }
-
-    if (Number(this.props.colorKey) === 2) {
+    else if (Number(this.props.colorKey) === 2) {
       let pos = position || mapCenter;
       if (!(pos instanceof google.maps.LatLng)) {
         position = new google.maps.LatLng(pos.lat, pos.lng);
@@ -82,8 +79,7 @@ export class Marker extends React.Component {
         this.marker.addListener(e, this.handleEvent(e));
       })
     }
-
-    if (Number(this.props.colorKey) === 3) {
+    else if (Number(this.props.colorKey) === 3) {
       let pos = position || mapCenter;
       if (!(pos instanceof google.maps.LatLng)) {
         position = new google.maps.LatLng(pos.lat, pos.lng);
@@ -99,8 +95,7 @@ export class Marker extends React.Component {
         this.marker.addListener(e, this.handleEvent(e));
       })
     }
-
-    if (Number(this.props.colorKey) === 4) {
+    else if (Number(this.props.colorKey) === 4) {
       let pos = position || mapCenter;
       if (!(pos instanceof google.maps.LatLng)) {
         position = new google.maps.LatLng(pos.lat, pos.lng);
@@ -116,8 +111,7 @@ export class Marker extends React.Component {
         this.marker.addListener(e, this.handleEvent(e));
       })
     }
-
-    if (Number(this.props.colorKey) === 5) {
+    else if (Number(this.props.colorKey) === 5) {
       let pos = position || mapCenter;
       if (!(pos instanceof google.maps.LatLng)) {
         position = new google.maps.LatLng(pos.lat, pos.lng);
@@ -145,7 +139,7 @@ export class Marker extends React.Component {
       }
       timeout = setTimeout(() => {
         if (this.props.onClick) {
-          this.props.onClick(this.props.locationInfo, this.marker, e)
+          this.props.onClick(this.props.locationInfo, this.props.keyword, this.marker, e)
         }
       }, 0);
     };

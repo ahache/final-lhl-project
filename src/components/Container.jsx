@@ -13,10 +13,12 @@ export class Container extends React.Component {
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
-      dataLoaded: false
+      dataLoaded: false,
+      keyword: ''
     };
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
+    this.onInfoWindowOpen = this.onInfoWindowOpen.bind(this);
     this.onMapClick = this.onMapClick.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
     this.removeFavorite = this.removeFavorite.bind(this);
@@ -88,9 +90,10 @@ export class Container extends React.Component {
     return markers;
   }
 
-  onMarkerClick(props, marker, e) {
+  onMarkerClick(props, keyword, marker, e) {
     this.setState({
       selectedPlace: props,
+      keyword: keyword,
       activeMarker: marker
     });
     this.checkFavorite(props.place_id);
@@ -160,6 +163,12 @@ export class Container extends React.Component {
     });
   }
 
+  onInfoWindowOpen() {
+    this.setState({
+      showingInfoWindow: true
+    });
+  }
+
   onMapClick() {
     if (this.state.showingInfoWindow) {
       this.setState({
@@ -189,12 +198,14 @@ export class Container extends React.Component {
             visible={this.state.showingInfoWindow}
             onClose={this.onInfoWindowClose}
             addFavorite={this.addFavorite}
-            removeFavorite={this.removeFavorite}>
+            removeFavorite={this.removeFavorite}
+            onOpen={this.onInfoWindowOpen}>
               <div>
                 <h1>{this.state.selectedPlace.name}</h1>
                 <h3>Address: {this.state.selectedPlace.formatted_address}</h3>
                 <h3>Rating: {rating}</h3>
-                <h3>This matches your search for: <strong>{this.searchQuery}</strong></h3>
+                <br />
+                <h3><em>This matches your search for:</em> <strong>{this.state.keyword}</strong></h3>
                 <br />
                 <button id={this.buttonId}>{this.buttonText}</button>
               </div>
