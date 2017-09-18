@@ -93,12 +93,13 @@ class Filters extends Component {
       'margin-bottom': '18.76px'
     }
 
+    const filterStyle = {
+      margin: '18.76px 5px 0 5px'
+    }
+
     const filterSpan = this.state.filters.map((filter, i) => {
       const normalized = filter.name[0].toUpperCase().concat(filter.name.slice(1).toLowerCase());
-      const filterStyle = {
-        margin: '18.76px 5px 0 5px',
-        'background-color': this.state.colors[i]
-      }
+
       return (
         <span className='tag is-large is-danger' key={i} style={filterStyle} >
           {normalized}
