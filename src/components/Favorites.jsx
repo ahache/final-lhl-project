@@ -103,7 +103,7 @@ export class Favorites extends Component {
       );
     })
     return(
-      <div className='content' style={style}>
+      <div className='content box' style={style}>
         {favoritesList}
       </div>
     );
