@@ -152,10 +152,25 @@ module.exports = (knex) => {
     const latLong = await getGeocode(destination);
 
     const filters = await getFilters(user_id);
+
     for (filter of filters) {
       const places = await getPlaces(filter, latLong);
       mapResults[filter.name] = places;
     }
+
+    //// Jeremy thought this was faster.  He seems to have been wrong.  Who knew?
+    // var placesPromises = filters.map(f => getPlacesPromise(f, latLong));
+    // var promiseOfPlaceArrays = Promise.all(placesPromises);
+    // promiseOfPlaceArrays
+    // .then(placeArrayArray => {
+    //   for (var idx in filters) {
+    //     mapResults[filters[idx].name] = placeArrayArray[idx];
+    //   }
+    //   console.log(mapResults);
+    //   const results = [latLong, destination, mapResults];
+    //   res.json(results);
+    // });
+
     const results = [latLong, destination, mapResults];
     res.json(results);
   });

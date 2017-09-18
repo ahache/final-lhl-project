@@ -10,7 +10,8 @@ class Filters extends Component {
   constructor(props){
     super(props)
     this.state = {
-      filters : []
+      filters : [],
+      colors: ['#6DAD48', '#F2A435', '#2F8DF5', '#EEDE85', '#7D74F3']
     }
     this.addFilter = this.addFilter.bind(this);
     this.deleteFilter = this.deleteFilter.bind(this);
@@ -66,7 +67,7 @@ class Filters extends Component {
       newFilters = data;
       // This needs some love and some mentor help
       this.setState({filters: newFilters});
-      window.location = '/filters';
+      // window.location = '/filters';
     }).fail((error) => {
       alert(error.responseText);
     });
@@ -87,19 +88,19 @@ class Filters extends Component {
       textAlign: 'center'
     }
 
-    const filterStyle = {
-      margin: '18.76px 5px 0 5px'
-    }
-
     const inputStyle = {
       // width: '35%'
-      
+      'margin-bottom': '18.76px'
     }
 
     const filterSpan = this.state.filters.map((filter, i) => {
       const normalized = filter.name[0].toUpperCase().concat(filter.name.slice(1).toLowerCase());
+      const filterStyle = {
+        margin: '18.76px 5px 0 5px',
+        'background-color': this.state.colors[i]
+      }
       return (
-        <span className='tag is-large is-danger is-rounded' key={i} style={filterStyle} >
+        <span className='tag is-large is-danger' key={i} style={filterStyle} >
           {normalized}
           <button className='delete is-medium' name={filter.id} onClick={this.deleteFilter}></button>
         </span>

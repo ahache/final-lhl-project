@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Link, withRouter } from 'react-router-dom'
 import camelize from '../javascript/camelize.js'
 import $ from 'jquery'
 
@@ -55,11 +56,12 @@ export class PlacesSearch extends React.Component {
     if (this.props.filterCount() === 0) {
       alert("Please Enter Some Filters");
     } else {
-    const destination = this.refs.autocomplete.value || this.state.lastSearch;
+      const destination = this.refs.autocomplete.value || this.state.lastSearch;
       $.post(mapURL, {user: localStorage.getItem('token'), destination: destination})
         .done((data) => {
           console.log(data);
-          window.location = '/map';
+          this.props.history.push('/map');
+          // window.location = '/map';
         })
         .fail((error) => {
           console.log(error.responseText);
@@ -70,10 +72,9 @@ export class PlacesSearch extends React.Component {
 
   render(){
 
-    // console.log(this.props.filterCount());
-
     const inputStyle = {
       // width: '35%'
+      'margin-bottom': '18.76px'
     }
 
     return (
@@ -93,4 +94,4 @@ export class PlacesSearch extends React.Component {
   }
 }
 
-export default PlacesSearch;
+export default withRouter(PlacesSearch);

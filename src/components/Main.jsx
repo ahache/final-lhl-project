@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, BrowserRouter } from 'react-router-dom'
 import {GoogleApiWrapper} from 'google-maps-react';
 import Login from './Login.jsx'
 import Register from './Register.jsx'
@@ -16,15 +16,17 @@ import UpdateUserInfoContainer from './UpdateUserInfoContainer.jsx'
 // when the pathname is exactly the string "/"
 const Main = () => (
   <main>
-    <Switch>
-      <Route path='/login' component={Login}/>
-      <Route path='/map' component={Container}/>
-      <Route path='/register' component={Register}/>
-      <Route path='/filters' component={Filters}/>
-      <Route path='/user' component={UpdateUserInfoContainer}/>
-      <Route path='/favorites' component={Favorites} />
-      <Route path='/favoritesmap' component={FavoriteContainer} />
-    </Switch>
+    <BrowserRouter>
+      <Switch>
+        <Route path='/login' component={Login}/>
+        <Route path='/map' component={Container}/>
+        <Route path='/register' component={Register}/>
+        <Route path='/filters' component={Filters}/>
+        <Route path='/user' component={UpdateUserInfoContainer}/>
+        <Route path='/favorites' component={Favorites} />
+        <Route path='/favoritesmap' component={FavoriteContainer} />
+      </Switch>
+    </BrowserRouter>
   </main>
 )
 

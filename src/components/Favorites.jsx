@@ -16,13 +16,16 @@ export class Favorites extends Component {
   }
 
   componentDidMount(){
-    $.get(URL, {user: localStorage.getItem('token')})
-    .done((data) => {
+    console.log("favorites mounting");
+    $.ajax({
+      url: URL,
+      cache:false,
+      data: {user: localStorage.getItem('token')}
+    }).done((data) => {
       let userFavorites;
-      if(data.length > 0){
+      if(data.length > 0) {
         userFavorites = this.state.favorites.concat(data);
-      }
-      else{
+      } else {
         userFavorites = [];
       }
       this.setState({favorites: userFavorites});
