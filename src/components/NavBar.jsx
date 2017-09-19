@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import {Link, Redirect, Router} from 'react-router-dom';
-import Logout from './Logout.jsx'
-import $ from 'jquery'
-import logo from './static_html/explore-tool.png'
+import {NavLink, Link, Redirect, Router} from 'react-router-dom';
+import Logout from './Logout.jsx';
+import $ from 'jquery';
+import logo from './static_html/explore-tool.png';
 
 class NavBar extends Component {
   constructor(props){
@@ -22,19 +22,19 @@ class NavBar extends Component {
 
             <div className="navbar-dropdown">
               <div className="navbar-item">
-                <Link to={`/map`} >Map</Link>
+                <Link to="/map">Map</Link>
               </div>
 
               <div className="navbar-item">
-                <Link to={`/filters`} >Filters</Link>
+                <Link to="/filters">Filters</Link>
               </div>
 
               <div className="navbar-item">
-                <Link to={`/favorites`} >Favorites</Link>
+                <Link to="/favorites">Favorites</Link>
               </div>
 
               <div className="navbar-item">
-                <Link to={`/user`} >Update Profile</Link>
+                <Link to="/user">Update Profile</Link>
               </div>
 
               <div className="navbar-item">

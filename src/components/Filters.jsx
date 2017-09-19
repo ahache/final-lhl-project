@@ -114,12 +114,12 @@ class Filters extends Component {
         <h1>What Are You Looking For?</h1>
         <form className="filters" onSubmit={this.addFilter}>
           <div>
-            <input 
-              className='input is-primary' 
-              style={inputStyle} 
-              type='text' 
-              name="filter" 
-              placeholder="Food, Fashion, Fitness..." 
+            <input
+              className='input is-primary'
+              style={inputStyle}
+              type='text'
+              name="filter"
+              placeholder="Food, Fashion, Fitness..."
               ref={(filter) => this.filter = filter}
             />
           </div>

@@ -14,13 +14,13 @@ export class UpdateUserInfoForm extends React.Component {
   }
 
   // Not sure if a get is nece
-  componentWillMount() {
-    $.get(URL, {user: localStorage.getItem('token')})
-    .done((data) => {
-      const userInfo = data[0];
-      this.props.update(userInfo);
-    });
-  }
+  // componentWillMount() {
+  //   $.get(URL, {user: localStorage.getItem('token')})
+  //   .done((data) => {
+  //     const userInfo = data[0];
+  //     this.props.update(userInfo);
+  //   });
+  // }
 
   componentDidMount() {
     $.get(URL, {user: localStorage.getItem('token')})
@@ -68,37 +68,57 @@ export class UpdateUserInfoForm extends React.Component {
     };
 
     if (localStorage.getItem('token')) {
+
+      const containerStyle = {
+        backgroundColor: "white",
+        padding: "20px",
+        border: "2px solid",
+        borderRadius: "5px",
+      };
+
+      const fontStyle = {
+        "color": "#00d1b2"
+      }
+
       return (
-        <section className="hero is-large is-primary is-bold">
+
+        <section className="hero is-medium is-primary is-bold">
           <div className="hero-body">
-        <div className="columns is-mobile is-centered">
-          <div className="column is-third is-narrow">
-            <div className="container is-fluid box" style={extraDivStyle}>
+            <div className="column is-offset-one-quarter is-half is-fluid" style={containerStyle}>
+
+
+              <h2 className="subtitle is-8 has-text-centered" style={fontStyle}>
+                Update your account information
+              </h2>
+
               <form className="updateUser" onSubmit={this.submitChanges}>
 
                 <div className="level-item has-text-centered hero-buttons">
                   <div className="field">
-                    <label className="label is-small">First name:</label>
-                    <div className="control">
-                      <input className="input" type="text" ref={(first_name) => this.first_name = first_name} placeholder={this.props.userInfo.first_name}/>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="level-item has-text-centered hero-buttons">
-                  <div className="field">
-                    <label className="label is-small">Last name:</label>
-                    <div className="control">
-                      <input className="input" type="text" ref={(last_name) => this.last_name = last_name} placeholder={this.props.userInfo.last_name}/>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="level-item has-text-centered hero-buttons">
-                  <div className="field">
-                    <label className="label is-small">Email:</label>
                     <div className="control has-icons-left">
-                      <input className="input" type="text" ref={(email) => this.email = email} placeholder={this.props.userInfo.email}/>
+                      <input className="input is-small" type="text" ref={(first_name) => this.first_name = first_name} placeholder={this.props.userInfo.first_name}/>
+                        <span className="icon is-small is-left">
+                          <i className="fa fa-user"></i>
+                        </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="level-item has-text-centered hero-buttons">
+                  <div className="field">
+                    <div className="control has-icons-left">
+                      <input className="input is-small" type="text" ref={(last_name) => this.last_name = last_name} placeholder={this.props.userInfo.last_name}/>
+                        <span className="icon is-small is-left">
+                          <i className="fa fa-user"></i>
+                        </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="level-item has-text-centered hero-buttons">
+                  <div className="field">
+                    <div className="control has-icons-left">
+                      <input className="input is-small" type="text" ref={(email) => this.email = email} placeholder={this.props.userInfo.email}/>
                       <span className="icon is-small is-left">
                         <i className="fa fa-envelope"></i>
                       </span>
@@ -109,9 +129,8 @@ export class UpdateUserInfoForm extends React.Component {
                 <div className="level-item has-text-centered hero-buttons">
 
                   <div className="field">
-                    <label className="label is-small">Password:</label>
                     <div className="control has-icons-left">
-                      <input className="input password" type="password" ref={(password) => this.password = password} placeholder="Password"/>
+                      <input className="input is-small password" type="password" ref={(password) => this.password = password} placeholder="Password"/>
                       <span className="icon is-small is-left">
                         <i className="fa fa-lock"></i>
                       </span>
@@ -121,9 +140,8 @@ export class UpdateUserInfoForm extends React.Component {
 
                 <div className="level-item has-text-centered hero-buttons">
                   <div className="field">
-                    <label className="label is-small">Password Confirmation:</label>
                     <div className="control has-icons-left">
-                      <input className="input password_confirmation" type="password" ref={(password_confirmation) => this.password_confirmation = password_confirmation} placeholder="Password Confirmation"/>
+                      <input className="input is-small password_confirmation" type="password" ref={(password_confirmation) => this.password_confirmation = password_confirmation} placeholder="Password Confirmation"/>
                       <span className="icon is-small is-left">
                         <i className="fa fa-lock"></i>
                       </span>
@@ -131,7 +149,7 @@ export class UpdateUserInfoForm extends React.Component {
                   </div>
                 </div>
 
-                <div className="field is-grouped is-grouped-centered">
+                <div className="field is-grouped is-grouped-centered" style={{paddingTop: "20px"}}>
                   <p className="control">
                     <button className="submit-button button is-primary" type="submit">Update Profile</button>
                   </p>
@@ -139,13 +157,11 @@ export class UpdateUserInfoForm extends React.Component {
                     <button className="button" type="reset">Reset</button>
                   </p>
                 </div>
-
               </form>
+
             </div>
           </div>
-        </div>
-      </div>
-    </section>
+        </section>
       );
     } else {
       <Redirect to="/login" />
