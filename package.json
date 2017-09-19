@@ -2,6 +2,9 @@
   "name": "chris-bosh-fan-club",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "8.4.0"
+  },
   "dependencies": {
     "axios": "^0.16.2",
     "bulma": "^0.5.1",
