@@ -28,7 +28,6 @@ class LoginForm extends Component {
       $.post(URL, {email: email, password: password})
       .done((data) => {
         localStorage.setItem('token', data);
-        // this.props.current_user(email);
         this.props.login();
       });
     }

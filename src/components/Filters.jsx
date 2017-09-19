@@ -6,13 +6,11 @@ import AlertContainer from 'react-alert';
 
 const URL = "http:\//localhost:3001/filters";
 
-
 class Filters extends Component {
   constructor(props){
     super(props)
     this.state = {
-      filters : [],
-      colors: ['#6DAD48', '#F2A435', '#2F8DF5', '#EEDE85', '#7D74F3']
+      filters : []
     }
     this.addFilter = this.addFilter.bind(this);
     this.deleteFilter = this.deleteFilter.bind(this);
@@ -55,14 +53,13 @@ class Filters extends Component {
           if (data) {
             newFilter['id'] = data;
             const newFilters = this.state.filters.concat(newFilter);
-            $(".submit-button").closest('form').find("input[name=filter]").val("");
             this.setState({filters: newFilters});
           } else {
             this.msg.error('You already have that filter');
           }
         })
         .fail((error) => {
-          // alert(error.responseText);
+          console.log(error.responseText);
         });
     }
     e.preventDefault();
@@ -79,7 +76,7 @@ class Filters extends Component {
       newFilters = data;
       this.setState({filters: newFilters});
     }).fail((error) => {
-      alert(error.responseText);
+      console.log(error.responseText);
     });
     e.preventDefault();
   }
@@ -96,12 +93,12 @@ class Filters extends Component {
       // width: 'auto',
       height: 'max-content',
       // textAlign: 'center',
-      'text-align': '-webkit-center'
+      textAlign: '-webkit-center',
+      backgroundColor: '#e6fff2'
     }
 
     const inputStyle = {
-      'margin-bottom': '18.76px',
-      // width: '90%'
+      marginBottom: '18.76px'
     }
 
     const filterStyle = {
@@ -109,7 +106,7 @@ class Filters extends Component {
     }
 
     const headerStyle = {
-      'margin-top': '18.76px'
+      marginTop: '18.76px'
     }
 
     const filterSpan = this.state.filters.map((filter, i) => {
