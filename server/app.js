@@ -36,7 +36,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 // app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public')));
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+} else {
+  app.use(express.static(path.join(__dirname, 'public')));
+}
+
 app.use(cors());
 
 app.use(expressJWT({
