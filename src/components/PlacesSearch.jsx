@@ -87,11 +87,11 @@ export class PlacesSearch extends React.Component {
           ref='autocomplete' 
           id="pac-input" 
           style={inputStyle} 
-          className="input is-primary controls column is-half is-offset-one-quarter" 
+          className="input is-primary controls column is-11" 
           type="text" 
           placeholder={this.state.lastSearch}
         />
-        <input type="submit" className='button is-info' value='See Results' />
+        <input type="submit" className='button is-success' value='See Results' />
       </form>
     )
   }

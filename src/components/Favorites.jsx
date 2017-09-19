@@ -90,12 +90,11 @@ export class Favorites extends Component {
       else{
         newQuery = null
       }
-      // Temporarily removed -- <p>Rating: {favorite.rating}</p>
       return (
         <div>
           <h2 className='query_header' style={headerStyle}>{newQuery}</h2>
           <div className='box' style={boxStyle}>
-            <h3>{favorite.name}</h3>
+            <h4>{favorite.name}</h4>
             <h6>{favorite.address}</h6>
             <input
               style={buttonMargin}
@@ -117,9 +116,13 @@ export class Favorites extends Component {
       );
     })
     return(
-      <div className='content box' style={style}>
-        {favoritesList}
-      </div>
+      <section className="hero is-medium is-primary is-bold">
+        <div className="hero-body">
+          <div className='content box' style={style}>
+            {favoritesList}
+          </div>
+        </div>
+      </section>
     );
   }
 }
