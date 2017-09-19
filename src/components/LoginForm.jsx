@@ -29,6 +29,9 @@ class LoginForm extends Component {
       .done((data) => {
         localStorage.setItem('token', data);
         this.props.login();
+      })
+      .fail(() => {
+        this.msg.error('Please check your credentials');
       });
     }
     event.preventDefault();
