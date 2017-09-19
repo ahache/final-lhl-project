@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import RegisterForm from './RegisterForm.jsx';
-import { Link, Redirect } from 'react-router-dom'
-import logo from './static_html/LOGO_CONCEPT.png'
-import video from './static_html/hero-video-2.mp4'
+import { Link, Redirect } from 'react-router-dom';
 
 class Register extends Component {
   constructor(props){
