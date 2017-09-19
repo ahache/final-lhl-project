@@ -8,6 +8,7 @@ import Container from './Container.jsx'
 import Favorites from './Favorites.jsx'
 import FavoriteContainer from './FavoriteContainer.jsx'
 import UpdateUserInfoContainer from './UpdateUserInfoContainer.jsx'
+import Index from './Index.jsx'
 
 // The Main component renders one of the three provided
 // Routes (provided that one matches). Both the /roster
@@ -17,6 +18,7 @@ import UpdateUserInfoContainer from './UpdateUserInfoContainer.jsx'
 const Main = () => (
   <main>
     <Switch>
+      <Route path='/' component={Index}/>
       <Route path='/login' component={Login}/>
       <Route path='/map' component={Container}/>
       <Route path='/register' component={Register}/>
