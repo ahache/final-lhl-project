@@ -54,14 +54,14 @@ class Index extends Component {
         <div className="column is-centered">
           <div className="field is-grouped is-grouped-centered">
           <p className="control">
-            <Link to='/login'>LOGIN</Link>
+            <Link to='/login'><input className="button is-primary" type="submit" value="Login" /></Link>
           </p>
           </div>
         </div>
         <div className="column is-centered">
           <div className="field is-grouped is-grouped-centered">
            <p className="control">
-              <Link to='/register'>REGISTER</Link>
+              <Link to='/register'><input className="button is-primary" type="submit" value="Register" /></Link>
           </p>
           </div>
         </div>

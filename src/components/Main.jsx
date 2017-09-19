@@ -18,7 +18,6 @@ import Index from './Index.jsx'
 const Main = () => (
   <main>
     <Switch>
-      <Route path='/' component={Index}/>
       <Route path='/login' component={Login}/>
       <Route path='/map' component={Container}/>
       <Route path='/register' component={Register}/>
@@ -26,6 +25,7 @@ const Main = () => (
       <Route path='/user' component={UpdateUserInfoContainer}/>
       <Route path='/favorites' component={Favorites} />
       <Route path='/favoritesmap' component={FavoriteContainer} />
+      <Route exact path='/' component={Index}/>
     </Switch>
   </main>
 )
