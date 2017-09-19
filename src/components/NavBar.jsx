@@ -9,24 +9,41 @@ class NavBar extends Component {
     super(props)
   }
 
+  toggle() {
+    $('.navbar-menu').toggleClass('is-active');
+  }
+
   render() {
+
+    const style = {
+      backgroundColor: 'rgb(230, 255, 242)'
+    }
+
     if (localStorage.getItem('token')) {
       return (
-        <nav className="navbar" role="navigation" aria-label="dropdown navigation">
+        <nav className='navbar' style={style} role='navigation' aria-label='main navigation'>
 
-          <div className="navbar-item has-dropdown is-hoverable">
-            <a className="navbar-link">
+          <div className="navbar-brand">
+            <a className="navbar-item">
               <img src={logo}  height="10" width="30" />
-               Menu
             </a>
+            <button className="button navbar-burger" onClick={this.toggle}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+          </div>
 
-            <div className="navbar-dropdown">
-              <div className="navbar-item">
-                <Link to="/map">Map</Link>
-              </div>
+          <div className="navbar-menu">
+
+            <div className="navbar-start">
 
               <div className="navbar-item">
                 <Link to="/filters">Filters</Link>
+              </div>
+
+              <div className="navbar-item">
+                <Link to="/map">Map</Link>
               </div>
 
               <div className="navbar-item">
@@ -37,10 +54,14 @@ class NavBar extends Component {
                 <Link to="/user">Update Profile</Link>
               </div>
 
+            </div>
+
+            <div className="navbar-end">
               <div className="navbar-item">
-              <Logout />
+                <Logout />
               </div>
             </div>
+
           </div>
         </nav>
       );
