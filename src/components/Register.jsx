@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import RegisterForm from './RegisterForm.jsx';
 import { Link, Redirect } from 'react-router-dom';
+import logo from './static_html/logo-nearhere-bulma-green.png'
 
 class Register extends Component {
   constructor(props){
@@ -36,6 +37,10 @@ class Register extends Component {
       textAlign: 'center'
     }
 
+    const bottompadding = {
+      paddingBottom: "2.0rem"
+    }
+
     if(this.state.loggedIn){
       return(
         <Redirect to="/filters" />
@@ -47,14 +52,18 @@ class Register extends Component {
         <section className="hero is-fullheight is-primary is-bold">
           <div className="hero-body">
             <div className="column is-offset-one-quarter is-half is-fluid" style={containerStyle}>
-              <h2 className="subtitle is-4 has-text-centered" style={fontStyle}>
-                Create an account
-              </h2>
-              <RegisterForm login={this.login} />
+                <div className="has-text-centered" style={bottompadding}>
+                <img src={logo} alt="NearHere" width="135" height="98" />
+                 </div>
+                   <RegisterForm login={this.login} />
               <div className="tile is-info">
                 <div className="container">
                   <div className="content has-text-centered" style={padding}>
-                    <Link to='/login' style={fontStyle}>Have an account already? Login!</Link>
+                    <Link to='/login' style={fontStyle}>
+                      <a className="button is-primary is-outlined">
+                        Have an account already? Login!
+                      </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -62,27 +71,8 @@ class Register extends Component {
           </div>
         </section>
       </div>
-
     );
   }
 }
 
 export default Register;
-
-
-      // <div>
-      //   <div className="columns is-mobile is-large is-centered">
-      //     <div className="column is-third is-narrow">
-      //       <section className="hero is-fullheight video">
-      //         <div className="hero-body">
-      //           <div className="container is-fluid box">
-      //             <RegisterForm login={this.login} />
-      //             <div className="level-item has-text-centered hero-buttons">
-      //               <Link to='/login'>Have an account already? Login!</Link>
-      //             </div>
-      //           </div>
-      //         </div>
-      //       </section>
-      //     </div>
-      //   </div>
-      // </div>
