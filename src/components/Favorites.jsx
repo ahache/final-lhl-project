@@ -12,7 +12,6 @@ export class Favorites extends Component {
     this.state = {
       favorites: []
     }
-
     this.deleteFavorite = this.deleteFavorite.bind(this);
   }
 
@@ -44,8 +43,7 @@ export class Favorites extends Component {
       let newFavorites = this.state.favorites.filter((favorite) => {
         return (favorite.place_id !== favoriteID);
       })
-      this.setState({favorites: newFavorites})
-      // console.log(this.state.favorites);
+      this.setState({favorites: newFavorites});
     })
   }
 
@@ -60,12 +58,13 @@ export class Favorites extends Component {
     })
   }
 
-  //TODO: onClick={this.deleteFavorite},<input className='delete-button' name={favorite.id} type='button' value="X" />
-  render(){
+  render() {
+
     const style = {
       margin: 'auto',
       width: 'fit-content',
-      textAlign: 'left'
+      textAlign: 'left',
+      backgroundColor: '#e6fff2'
     }
 
     const boxStyle = {
@@ -73,29 +72,27 @@ export class Favorites extends Component {
     }
 
     const buttonMargin = {
-      'margin-right': '4px'
+      marginRight: '4px'
     }
 
     const headerStyle = {
-      'margin-top': '14px'
+      marginTop: '14px'
     }
 
     let newQuery = '';
     let currQuery = '';
     const favoritesList = this.state.favorites.map((favorite, i) => {
-      if(currQuery !== this.state.favorites[i].query){
+      if(currQuery !== this.state.favorites[i].query) {
         newQuery = favorite.query;
         currQuery = favorite.query;
-      }
-      else{
+      } else {
         newQuery = null
       }
-      // Temporarily removed -- <p>Rating: {favorite.rating}</p>
       return (
         <div>
           <h2 className='query_header' style={headerStyle}>{newQuery}</h2>
           <div className='box' style={boxStyle}>
-            <h3>{favorite.name}</h3>
+            <h4>{favorite.name}</h4>
             <h6>{favorite.address}</h6>
             <input
               style={buttonMargin}
@@ -117,9 +114,13 @@ export class Favorites extends Component {
       );
     })
     return(
-      <div className='content box' style={style}>
-        {favoritesList}
-      </div>
+      <section className="hero is-medium is-primary is-bold">
+        <div className="hero-body">
+          <div className='content box' style={style}>
+            {favoritesList}
+          </div>
+        </div>
+      </section>
     );
   }
 }

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { Link } from 'react-router-dom'
 import camelize from '../javascript/camelize.js'
 import $ from 'jquery'
+import AlertContainer from 'react-alert';
 
 const mapURL = "http:\//localhost:3001/map";
 
@@ -14,6 +15,14 @@ export class PlacesSearch extends React.Component {
       lastSearch: ''
     }
     this.getMapResults = this.getMapResults.bind(this);
+  }
+
+  alertOptions = {
+    offset: 50,
+    position: 'top right',
+    theme: 'light',
+    time: 3000,
+    transition: 'scale'
   }
 
   loadSearch(){
@@ -54,12 +63,11 @@ export class PlacesSearch extends React.Component {
 
   getMapResults(e) {
     if (this.props.filterCount() === 0) {
-      alert("Please Enter Some Filters");
+      this.msg.error('Please Enter Some Filters');
     } else {
       const destination = this.refs.autocomplete.value || this.state.lastSearch;
       $.post(mapURL, {user: localStorage.getItem('token'), destination: destination})
         .done((data) => {
-          // this.props.history.push('/map');
           window.location = '/map';
         })
         .fail((error) => {
@@ -87,11 +95,12 @@ export class PlacesSearch extends React.Component {
           ref='autocomplete' 
           id="pac-input" 
           style={inputStyle} 
-          className="input is-primary controls column is-half is-offset-one-quarter" 
+          className="input is-primary controls column is-11" 
           type="text" 
           placeholder={this.state.lastSearch}
         />
-        <input type="submit" className='button is-info' value='See Results' />
+        <input type="submit" className='button is-success' value='See Results' />
+        <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
       </form>
     )
   }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import jwt from 'jsonwebtoken';
+import AlertContainer from 'react-alert';
 
 const URL = "http:\//localhost:3001/login";
 
@@ -10,16 +11,23 @@ class LoginForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  alertOptions = {
+    offset: 50,
+    position: 'top right',
+    theme: 'light',
+    time: 3000,
+    transition: 'scale'
+  }
+
   handleSubmit(event) {
     const email = this.email.value;
     const password = this.password.value;
     if (!email || !password) {
-      alert("Fields must not be empty");
+      this.msg.error('Please fill out both fields');
     } else {
       $.post(URL, {email: email, password: password})
       .done((data) => {
         localStorage.setItem('token', data);
-        // this.props.current_user(email);
         this.props.login();
       });
     }
@@ -49,11 +57,13 @@ class LoginForm extends Component {
           </p>
         </div>
 
-          <div className="field is-grouped is-grouped-centered">
-            <p className="control">
-              <input className="button is-primary" type="submit" value="Login" />
-            </p>
-          </div>
+        <div className="field is-grouped is-grouped-centered">
+          <p className="control">
+            <input className="button is-primary" type="submit" value="Login" />
+          </p>
+        </div>
+
+        <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
 
       </form>
     );
