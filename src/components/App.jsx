@@ -3,6 +3,7 @@ import {GoogleApiWrapper} from 'google-maps-react';
 import '../App.css';
 import NavBar from './NavBar.jsx';
 import Main from './Main.jsx';
+import Footer from './Footer.jsx';
 import { Link } from 'react-router-dom'
 
 class App extends Component {
@@ -21,6 +22,7 @@ class App extends Component {
       <div>
         <NavBar />
         <Main />
+        <Footer />
       </div>
     );
   }

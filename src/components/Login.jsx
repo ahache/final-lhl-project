@@ -49,15 +49,13 @@ class Login extends Component {
 
     return (
       <div>
-        <section className="hero is-medium is-primary is-bold">
+        <section className="hero is-fullheight is-primary is-bold">
           <div className="hero-body">
-
             <div className="column is-offset-one-quarter is-half is-fluid" style={containerStyle}>
               <h2 className="subtitle is-4 has-text-centered" style={fontStyle}>
                 Login to your account
               </h2>
               <LoginForm login={this.login} />
-
               <div className="tile is-info">
                 <div className="container">
                   <div className="content has-text-centered" style={padding}>
@@ -67,10 +65,7 @@ class Login extends Component {
               </div>
             </div>
           </div>
-
         </section>
-
-        <Footer />
       </div>
     );
   }

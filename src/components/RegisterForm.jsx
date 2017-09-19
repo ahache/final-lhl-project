@@ -53,77 +53,56 @@ class RegisterForm extends Component {
   render() {
     return (
       <form className="register-form" onSubmit={this.handleSubmit}>
-        <div className="level-item has-text-centered hero-buttons">
-          <div className="field">
-            <label className="label is-small">First Name</label>
-            <div className="control has-icons-left">
-              <input className="input" type="text" required ref={(first) => this.first = first} />
-              <span className="icon is-small is-left">
-                <i className="fa fa-pencil"></i>
-              </span>
-            </div>
-          </div>
+
+        <div className="field">
+          <p className="control has-icons-left has-icons-right">
+            <input className='input' type="text" placeholder="First Name" ref={(first) => this.first = first}/>
+            <span className="icon is-small is-left">
+              <i className="fa fa-pencil"></i>
+            </span>
+          </p>
         </div>
 
-        <div className="level-item has-text-centered hero-buttons">
-          <div className="field">
-            <label className="label is-small">Last Name</label>
-            <div className="control has-icons-left">
-              <input className="input" type="text" required ref={(last) => this.last = last} />
-              <span className="icon is-small is-left">
-                <i className="fa fa-pencil"></i>
-              </span>
-            </div>
-          </div>
+        <div className="field">
+          <p className="control has-icons-left has-icons-right">
+            <input className='input' type="text" placeholder="Last Name" ref={(last) => this.last = last} />
+            <span className="icon is-small is-left">
+              <i className="fa fa-pencil"></i>
+            </span>
+          </p>
         </div>
 
-        <div className="level-item has-text-centered hero-buttons">
-          <div className="field">
-            <label className="label is-small">Email</label>
-            <div className="control has-icons-left">
-              <input className="input" type="text" required ref={(email) => this.email = email} />
-              <span className="icon is-small is-left">
-                <i className="fa fa-envelope"></i>
-              </span>
-            </div>
-          </div>
+        <div className="field">
+          <p className="control has-icons-left has-icons-right">
+            <input className='input' type="text" placeholder="Email" ref={(email) => this.email = email} />
+            <span className="icon is-small is-left">
+              <i className="fa fa-envelope"></i>
+            </span>
+          </p>
         </div>
 
-        <div className="level-item has-text-centered hero-buttons">
-          <div className="field">
-            <label className="label is-small">Password</label>
-            <div className="control has-icons-left">
-              <input className="input" type="password" required ref={(password) => this.password = password} />
-              <span className="icon is-small is-left">
-                <i className="fa fa-unlock-alt"></i>
-              </span>
-            </div>
-          </div>
+        <div className="field">
+          <p className="control has-icons-left has-icons-right">
+            <input className='input' type="text" placeholder="Password" ref={(password) => this.password = password} />
+            <span className="icon is-small is-left">
+              <i className="fa fa-unlock-alt"></i>
+            </span>
+          </p>
         </div>
 
-        <div className="level-item has-text-centered hero-buttons">
-          <div className="field">
-            <label className="label is-small">Confirm Password</label>
-            <div className="control has-icons-left">
-              <input className="input" type="password" required ref={(confirmation) => this.confirmation = confirmation}/>
-              <span className="icon is-small is-left">
-                <i className="fa fa-unlock-alt"></i>
-              </span>
-            </div>
-          </div>
+        <div className="field">
+          <p className="control has-icons-left has-icons-right">
+            <input className='input' type="text" placeholder="Confirm Password" ref={(confirmation) => this.confirmation = confirmation} />
+            <span className="icon is-small is-left">
+              <i className="fa fa-unlock-alt"></i>
+            </span>
+          </p>
         </div>
 
-        <div className="level-item has-text-centered hero-buttons">
-          <div className="field">
-            <div className="field-label"></div>
-            <div className="field-body">
-              <div className="field">
-                <div className="control">
-                  <input type="submit" value="Register" />
-                </div>
-              </div>
-            </div>
-          </div>
+        <div className="field is-grouped is-grouped-centered">
+          <p className="control">
+            <input className="button is-primary" type="submit" value="Register" />
+          </p>
         </div>
 
         <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
