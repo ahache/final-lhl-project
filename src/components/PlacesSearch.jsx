@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Link, withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import camelize from '../javascript/camelize.js'
 import $ from 'jquery'
 
@@ -59,9 +59,8 @@ export class PlacesSearch extends React.Component {
       const destination = this.refs.autocomplete.value || this.state.lastSearch;
       $.post(mapURL, {user: localStorage.getItem('token'), destination: destination})
         .done((data) => {
-          console.log(data);
-          this.props.history.push('/map');
-          // window.location = '/map';
+          // this.props.history.push('/map');
+          window.location = '/map';
         })
         .fail((error) => {
           console.log(error.responseText);
@@ -77,14 +76,18 @@ export class PlacesSearch extends React.Component {
       'margin-bottom': '18.76px'
     }
 
+    const headerStyle = {
+      'margin-top': '18.76px'
+    }
+
     return (
       <form onSubmit={this.getMapResults}>
-        <h1>Where are you going?</h1>
+        <h2 style={headerStyle}>Where are you going?</h2>
         <input 
           ref='autocomplete' 
           id="pac-input" 
           style={inputStyle} 
-          className="input is-primary controls" 
+          className="input is-primary controls column is-half is-offset-one-quarter" 
           type="text" 
           placeholder={this.state.lastSearch}
         />
@@ -94,4 +97,4 @@ export class PlacesSearch extends React.Component {
   }
 }
 
-export default withRouter(PlacesSearch);
+export default PlacesSearch;
