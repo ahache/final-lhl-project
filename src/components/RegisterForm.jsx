@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import AlertContainer from 'react-alert';
 
 const URL = "http:\//localhost:3001/register";
 
@@ -10,18 +11,26 @@ class RegisterForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  alertOptions = {
+    offset: 50,
+    position: 'top right',
+    theme: 'light',
+    time: 3000,
+    transition: 'scale'
+  }
+
   handleSubmit(event) {
     const first = this.first.value;
     const last = this.last.value;
     const email = this.email.value;
     const password = this.password.value;
     if (!first || !last || !email || !password) {
-      alert("Please fill out every field");
+      this.msg.error('Please fill out every field');
     } else if (email.search(/[\w\.]+\@[\w\.]+\.\w+/) < 0) {
-      alert("Must enter valid email");
+      this.msg.error('Must enter valid email');
     } else {
       if (password !== this.confirmation.value) {
-        alert("Passwords must match");
+        this.msg.error('Passwords must match');
       } else {
         $.post(URL, {
           first: first,
@@ -32,6 +41,9 @@ class RegisterForm extends Component {
         .done((data) => {
           localStorage.setItem('token', data);
           this.props.login();
+        })
+        .fail(() => {
+          this.msg.error('Account is already registered', {time: 7000});
         });
       }
     }
@@ -113,6 +125,9 @@ class RegisterForm extends Component {
             </div>
           </div>
         </div>
+
+        <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
+
       </form>
     );
   }

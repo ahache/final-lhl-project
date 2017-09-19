@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom'
 import $ from 'jquery'
 import SearchContainer from './SearchContainer.jsx';
+import AlertContainer from 'react-alert';
 
 const URL = "http:\//localhost:3001/filters";
 
@@ -16,6 +17,14 @@ class Filters extends Component {
     this.addFilter = this.addFilter.bind(this);
     this.deleteFilter = this.deleteFilter.bind(this);
     this.filterCount = this.filterCount.bind(this);
+  }
+
+  alertOptions = {
+    offset: 50,
+    position: 'top right',
+    theme: 'light',
+    time: 3000,
+    transition: 'scale'
   }
 
   filterCount() {
@@ -36,11 +45,9 @@ class Filters extends Component {
   addFilter(e) {
     const newFilter = {name: this.filter.value};
     if (this.filterCount() === 5) {
-      alert("Please only use 5 filters at a time");
+      this.msg.error('Please only use 5 filters at a time');
     } else if (!newFilter.name) {
-      alert("Please enter something");
-      // $('#filter-input').notify("Please Enter Something");
-      // return;
+      this.msg.error('Please enter something');
     } else {
       this.filter.value = '';
       $.post(URL, {user: localStorage.getItem('token'), filter: newFilter.name})
@@ -51,7 +58,7 @@ class Filters extends Component {
             $(".submit-button").closest('form').find("input[name=filter]").val("");
             this.setState({filters: newFilters});
           } else {
-            alert('You already have that filter');
+            this.msg.error('You already have that filter');
           }
         })
         .fail((error) => {
@@ -107,7 +114,6 @@ class Filters extends Component {
 
     const filterSpan = this.state.filters.map((filter, i) => {
       const normalized = filter.name[0].toUpperCase().concat(filter.name.slice(1).toLowerCase());
-
       return (
         <span className='tag is-medium is-danger' key={i} style={filterStyle} >
           {normalized}
@@ -139,6 +145,7 @@ class Filters extends Component {
             </form>
             {filterSpan}
             <SearchContainer filterCount={this.filterCount}/>
+            <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
           </div>
         </div>
       </section>
