@@ -16,6 +16,9 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.13"
   },
+  "engines": {
+    "node": "8.4.0"
+  },
   "scripts": {
     "start": "npm run build && node ./server/bin/www",
     "dev": "react-scripts start",

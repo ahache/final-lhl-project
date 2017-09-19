@@ -5,6 +5,9 @@
   "scripts": {
     "start": "nodemon -L ./bin/www"
   },
+  "engines": {
+    "node": "8.4.0"
+  },
   "dependencies": {
     "@google/maps": "^0.4.3",
     "bcrypt": "^1.0.3",
