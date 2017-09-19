@@ -36,7 +36,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 // app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../build')));
 app.use(cors());
 
 app.use(expressJWT({
