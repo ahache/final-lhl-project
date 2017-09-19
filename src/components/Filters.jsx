@@ -45,7 +45,7 @@ class Filters extends Component {
     if (this.filterCount() === 5) {
       this.msg.error('Please only use 5 filters at a time');
     } else if (!newFilter.name) {
-      this.msg.error('Please enter something');
+      this.msg.error('Please enter a filter');
     } else {
       this.filter.value = '';
       $.post(URL, {user: localStorage.getItem('token'), filter: newFilter.name})
