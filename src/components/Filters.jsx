@@ -90,7 +90,6 @@ class Filters extends Component {
     }
 
     const inputStyle = {
-      // width: '35%'
       'margin-bottom': '18.76px'
     }
 
@@ -110,12 +109,12 @@ class Filters extends Component {
     })
 
     return (
-      <div className='box' style={style}>
-        <h1>What Are You Looking For?</h1>
+      <div className='box content' style={style}>
+        <h2>What Are You Looking For?</h2>
         <form className="filters" onSubmit={this.addFilter}>
           <div>
             <input 
-              className='input is-primary' 
+              className='input is-primary column is-half is-offset-one-quarter' 
               style={inputStyle} 
               type='text' 
               name="filter" 
