@@ -3,6 +3,7 @@ import LoginForm from './LoginForm.jsx';
 import { Link, Route, Redirect } from 'react-router-dom';
 import Filters from './Filters.jsx';
 import Footer from './Footer.jsx';
+import logo from './static_html/logo-nearhere-bulma-green.png'
 
 
 class Login extends Component {
@@ -41,6 +42,10 @@ class Login extends Component {
       paddingTop: "10px"
     }
 
+    const bottompadding = {
+      paddingBottom: "2.0rem"
+    }
+
     if(this.state.loggedIn){
       return(
         <Redirect to="/filters" />
@@ -48,18 +53,22 @@ class Login extends Component {
     }
 
     return (
-      <div>
+        <div>
         <section className="hero is-fullheight is-primary is-bold">
           <div className="hero-body">
             <div className="column is-offset-one-quarter is-half is-fluid" style={containerStyle}>
-              <h2 className="subtitle is-4 has-text-centered" style={fontStyle}>
-                Login to your account
-              </h2>
-              <LoginForm login={this.login} />
+                <div className="has-text-centered" style={bottompadding}>
+                <img src={logo} alt="NearHere" width="135" height="98" />
+                 </div>
+                   <LoginForm login={this.login} />
               <div className="tile is-info">
                 <div className="container">
                   <div className="content has-text-centered" style={padding}>
-                      <Link to='/register' style={fontStyle}>Need an account? Register here</Link>
+                      <Link to='/register' style={fontStyle}>
+                        <a className="button is-primary is-outlined">
+                          Need an account? Register here
+                        </a>
+                      </Link>
                   </div>
                 </div>
               </div>
