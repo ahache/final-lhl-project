@@ -3,7 +3,7 @@ import $ from 'jquery'
 import axios from 'axios'
 import querystring from 'querystring'
 
-const URL = 'http:\//localhost:3000/favorites/all';
+const URL = 'http:\//chrisboshfanclub.herokuapp.com/favorites/all';
 
 export class Favorites extends Component {
 

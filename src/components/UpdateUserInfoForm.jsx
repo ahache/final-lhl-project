@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom'
 import $ from 'jquery'
 
 
-const URL = "http:\//localhost:3001/users";
+const URL = "http:\//chrisboshfanclub.herokuapp.com/users";
 
 export class UpdateUserInfoForm extends React.Component {
   constructor(props){

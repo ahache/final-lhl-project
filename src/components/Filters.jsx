@@ -4,7 +4,7 @@ import $ from 'jquery'
 import SearchContainer from './SearchContainer.jsx';
 import AlertContainer from 'react-alert';
 
-const URL = "http:\//localhost:3001/filters";
+const URL = "http:\//chrisboshfanclub.herokuapp.com/filters";
 
 class Filters extends Component {
   constructor(props){
@@ -126,13 +126,13 @@ class Filters extends Component {
             <h2 style={headerStyle}>What Are You Looking For?</h2>
             <form className="filters" onSubmit={this.addFilter}>
               <div>
-                <input 
+                <input
                   className='input is-primary column is-11'
                   id='filter-input'
-                  style={inputStyle} 
-                  type='text' 
-                  name="filter" 
-                  placeholder="Food, Fashion, Fitness..." 
+                  style={inputStyle}
+                  type='text'
+                  name="filter"
+                  placeholder="Food, Fashion, Fitness..."
                   ref={(filter) => this.filter = filter}
                 />
               </div>
