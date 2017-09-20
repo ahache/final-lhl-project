@@ -5,6 +5,7 @@ import Map from './Map.jsx'
 import Marker from './Marker.jsx'
 import InfoWindow from './InfoWindow.jsx'
 import querystring from 'querystring'
+import { Redirect } from 'react-router-dom';
 
 export class Container extends React.Component {
   constructor(props){
@@ -113,12 +114,12 @@ export class Container extends React.Component {
     if (Number(result.data[0].count) > 0) {
       this.buttonId = 'remove';
       this.buttonText = 'Remove from Favorites'
-      this.buttonClass = 'button is-danger is-outlined is-small'
+      this.buttonClass = 'button is-danger is-small'
     }
     else {
       this.buttonId = 'add';
       this.buttonText = 'Add to Favorites'
-      this.buttonClass = 'button is-primary is-outlined is-small'
+      this.buttonClass = 'button is-primary is-small'
     }
     this.setState({showingInfoWindow:true});
   });
@@ -141,7 +142,7 @@ export class Container extends React.Component {
   .then(result => {
     this.buttonId = 'remove';
     this.buttonText = 'Remove from Favorites';
-    this.buttonClass = 'button is-danger is-small is-outlined';
+    this.buttonClass = 'button is-danger is-small';
     this.setState({showingInfoWindow:true});
   });
   }
@@ -158,7 +159,7 @@ export class Container extends React.Component {
   .then(result => {
     this.buttonId = 'add';
     this.buttonText = 'Add to Favorites';
-    this.buttonClass = 'button is-primary is-small is-outlined';
+    this.buttonClass = 'button is-primary is-small';
     this.setState({showingInfoWindow:true});
   });
   }
@@ -193,6 +194,12 @@ export class Container extends React.Component {
   const homeMarker = this.createHomeMarker(this.mapCoords);
   const mapMarkers = this.renderMarkers(this.resultSet);
   const rating = (this.state.selectedPlace.rating > 0) ? this.state.selectedPlace.rating + " / 5" : "No ratings available!"
+
+  if (!localStorage.getItem('token')) {
+      return(
+        <Redirect to="/" />
+      )
+    }
 
     if (mapMarkers !== [] && this.mapCoords) {
       return (

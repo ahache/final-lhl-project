@@ -46,7 +46,7 @@ class Login extends Component {
       paddingBottom: "2.0rem"
     }
 
-    if(this.state.loggedIn){
+    if((this.state.loggedIn) || (localStorage.getItem('token'))){
       return(
         <Redirect to="/filters" />
       )

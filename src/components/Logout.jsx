@@ -18,7 +18,7 @@ class Logout extends Component {
   render() {
     if (!this.state.loggedIn) {
       return (
-        <Redirect to='/login' />
+        <Redirect to='/' />
       )
     }
     return (

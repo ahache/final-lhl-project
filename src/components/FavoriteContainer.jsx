@@ -5,6 +5,7 @@ import FavoriteMap from './FavoriteMap.jsx'
 import FavoriteMarker from './FavoriteMarker.jsx'
 import FavoriteInfoWindow from './FavoriteInfoWindow.jsx'
 import querystring from 'querystring'
+import { Redirect } from 'react-router-dom';
 
 export class FavoriteContainer extends React.Component {
   constructor(props){
@@ -135,6 +136,12 @@ export class FavoriteContainer extends React.Component {
   const homeMarker = this.marker;
   const mapMarker = this.renderMarker(this.resultSet);
   const rating = (this.state.selectedPlace.rating > 0) ? this.state.selectedPlace.rating + " / 5" : "No ratings available!";
+
+  if (!localStorage.getItem('token')) {
+      return(
+        <Redirect to="/" />
+      )
+    }
 
   if (!mapMarker || !this.mapCoords || !this.props.google || !homeMarker) {
     return (
