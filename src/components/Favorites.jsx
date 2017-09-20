@@ -10,8 +10,11 @@ export class Favorites extends Component {
   constructor(props){
     super(props)
     this.state = {
-      favorites: []
+      favorites: [],
+      favoritesObj: {},
+      selection: ''
     }
+    this.changeSelection = this.changeSelection.bind(this);
     this.deleteFavorite = this.deleteFavorite.bind(this);
   }
 
@@ -21,18 +24,23 @@ export class Favorites extends Component {
       cache:false,
       data: {user: localStorage.getItem('token')}
     }).done((data) => {
-      let userFavorites;
-      if(data.length > 0) {
-        userFavorites = this.state.favorites.concat(data);
-      } else {
-        userFavorites = [];
+      // Build the incoming data into an object keyed by search query
+      let favoritesObj = {};
+      for (let result of data) {
+        if(favoritesObj[result['query']]) {
+          favoritesObj[result['query']].push(result);
+        } else {
+          favoritesObj[result['query']] = [result];
+        }
       }
-      this.setState({favorites: userFavorites});
+      const selection = Object.keys(favoritesObj)[0];
+      this.setState({favoritesObj: favoritesObj, selection: selection});
     });
   }
 
   deleteFavorite(e){
     let favoriteID = e.target.name;
+    let query = e.target.dataset.query;
     axios.delete('/favorites/remove/', {params:
       {
         user: localStorage.getItem('token'),
@@ -40,10 +48,11 @@ export class Favorites extends Component {
       }
     })
     .then((result) => {
-      let newFavorites = this.state.favorites.filter((favorite) => {
+      let favoritesObj = this.state.favoritesObj;
+      favoritesObj[query] = favoritesObj[query].filter((favorite) => {
         return (favorite.place_id !== favoriteID);
-      })
-      this.setState({favorites: newFavorites});
+      });
+      this.setState({favoritesObj: favoritesObj});
     })
   }
 
@@ -58,6 +67,17 @@ export class Favorites extends Component {
     })
   }
 
+  toggle() {
+    $('.dropdown').toggleClass('is-active');
+  }
+
+  changeSelection(event) {
+    const query = event.target.value;
+    this.setState({selection: query});
+    this.toggle();
+    event.preventDefault();
+  }
+
   render() {
 
     const style = {
@@ -68,7 +88,7 @@ export class Favorites extends Component {
     }
 
     const boxStyle = {
-      // width: '50%'
+      marginTop: '14px'
     }
 
     const buttonMargin = {
@@ -79,44 +99,69 @@ export class Favorites extends Component {
       marginTop: '14px'
     }
 
-    let newQuery = '';
-    let currQuery = '';
-    const favoritesList = this.state.favorites.map((favorite, i) => {
-      if(currQuery !== this.state.favorites[i].query) {
-        newQuery = favorite.query;
-        currQuery = favorite.query;
-      } else {
-        newQuery = null
-      }
+    const dropDownMenu = Object.keys(this.state.favoritesObj).map((query, i) => {
       return (
-        <div>
-          <h2 className='query_header' style={headerStyle}>{newQuery}</h2>
-          <div className='box' style={boxStyle}>
-            <h4>{favorite.name}</h4>
-            <h6>{favorite.address}</h6>
-            <input
-              style={buttonMargin}
-              className='button is-success'
-              name={favorite.place_id}
-              type='button'
-              value='View Map'
-              onClick={this.viewMap}
-            />
-            <input
-              className='button is-danger'
-              name={favorite.place_id}
-              type='button'
-              value='Remove'
-              onClick={this.deleteFavorite}
-            />
-          </div>
+        <div className="dropdown-item" key={i}>
+          <input
+            className='button is-info is-outlined'
+            type='button'
+            value={query}
+            onClick={this.changeSelection}
+          />
         </div>
-      );
-    })
+      )
+    });
+
+    let favoritesList;
+    if (this.state.selection) {
+      favoritesList = this.state.favoritesObj[this.state.selection].map((favorite, i) => {
+        return (
+          <div>
+            <div className='box' style={boxStyle}>
+              <h4>{favorite.name}</h4>
+              <h6>{favorite.address}</h6>
+              <input
+                style={buttonMargin}
+                className='button is-success'
+                name={favorite.place_id}
+                type='button'
+                value='View Map'
+                onClick={this.viewMap}
+              />
+              <input
+                className='button is-danger'
+                name={favorite.place_id}
+                data-query={favorite.query}
+                type='button'
+                value='Remove'
+                onClick={this.deleteFavorite}
+              />
+            </div>
+          </div>
+        );
+      });
+    }
+
     return(
       <section className="hero is-medium is-primary is-bold">
         <div className="hero-body">
           <div className='content box' style={style}>
+            <div className="dropdown">
+              <div className="dropdown-trigger">
+                <button className="button" aria-haspopup="true" aria-controls="dropdown-menu" onClick={this.toggle}>
+                  <span>Which location?</span>
+                  <span className="icon is-small">
+                    <i className="fa fa-angle-down" aria-hidden="true"></i>
+                  </span>
+                </button>
+              </div>
+              <div className="dropdown-menu" id="dropdown-menu" role="menu">
+                <div className="dropdown-content">
+                  {dropDownMenu}
+                </div>
+              </div>
+            </div>
+            <h2 className='query_header' style={headerStyle}>{this.state.selection}</h2>
             {favoritesList}
           </div>
         </div>

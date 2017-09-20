@@ -29,7 +29,6 @@ module.exports = (knex) => {
       .where('users_favorites.user_id', '=', user)
       .orderBy('query', 'asc')
       .then((results) => {
-        console.log(results);
         res.json(results)
       })
   })
