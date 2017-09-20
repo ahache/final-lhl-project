@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import AlertContainer from 'react-alert';
 
-const URL = location.origin+"/register";
+const URL = "https:\//chrisboshfanclub.herokuapp.com//register";
 
 class RegisterForm extends Component {
 
