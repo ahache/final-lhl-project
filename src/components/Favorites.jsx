@@ -3,6 +3,7 @@ import $ from 'jquery'
 import axios from 'axios'
 import querystring from 'querystring'
 import logo from './static_html/logo-nearhere-bulma-green.png'
+import { Redirect } from 'react-router-dom';
 
 const URL = 'https:\//chrisboshfanclub.herokuapp.com/favorites/all';
 
@@ -80,6 +81,12 @@ export class Favorites extends Component {
   }
 
   render() {
+
+    if (!localStorage.getItem('token')) {
+      return(
+        <Redirect to="/" />
+      )
+    }
 
     const style = {
       margin: 'auto',

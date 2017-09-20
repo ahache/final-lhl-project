@@ -85,7 +85,7 @@ class Filters extends Component {
 
     if (!localStorage.getItem('token')) {
       return(
-        <Redirect to="/login" />
+        <Redirect to="/" />
       )
     }
 

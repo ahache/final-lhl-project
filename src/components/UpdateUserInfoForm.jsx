@@ -167,7 +167,7 @@ export class UpdateUserInfoForm extends React.Component {
 
       );
     } else {
-      <Redirect to="/login" />
+      <Redirect to="/" />
     }
 
   }

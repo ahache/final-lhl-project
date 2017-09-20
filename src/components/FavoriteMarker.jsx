@@ -28,7 +28,21 @@ export class FavoriteMarker extends React.Component {
       return null;
     }
 
+    const homeMarker = 'https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_red@.png';
     const markerOne = 'https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_green+.png';
+
+    if (Number(this.props.colorKey) === 0) {
+      let pos = position || mapCenter;
+      if (!(pos instanceof google.maps.LatLng)) {
+        position = new google.maps.LatLng(pos.lat, pos.lng);
+      }
+      const pref = {
+        map: map,
+        position: position,
+        icon: homeMarker
+      };
+      this.marker = new google.maps.Marker(pref);
+    }
 
     if (Number(this.props.colorKey) === 1) {
       let pos = position || mapCenter;
