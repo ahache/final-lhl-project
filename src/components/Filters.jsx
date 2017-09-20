@@ -4,7 +4,7 @@ import $ from 'jquery'
 import SearchContainer from './SearchContainer.jsx';
 import AlertContainer from 'react-alert';
 
-const URL = "http:\//localhost:3001/filters";
+const URL = "https:\//chrisboshfanclub.herokuapp.com/filters";
 
 class Filters extends Component {
   constructor(props){
@@ -31,7 +31,7 @@ class Filters extends Component {
 
   componentDidMount() {
     $.ajax({
-      url: '/filters',
+      url: URL,
       cache:false,
       data: {user: localStorage.getItem('token')}
     }).done((data) => {

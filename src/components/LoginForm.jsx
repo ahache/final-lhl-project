@@ -3,7 +3,7 @@ import $ from 'jquery';
 import jwt from 'jsonwebtoken';
 import AlertContainer from 'react-alert';
 
-const URL = "http:\//localhost:3001/login";
+const URL = "https:\//chrisboshfanclub.herokuapp.com/login";
 
 class LoginForm extends Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class LoginForm extends Component {
     if (!email || !password) {
       this.msg.error('Please fill out both fields');
     } else {
-      $.post('/login', {email: email, password: password})
+      $.post(URL, {email: email, password: password})
       .done((data) => {
         localStorage.setItem('token', data);
         this.props.login();

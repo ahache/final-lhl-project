@@ -5,7 +5,7 @@ import camelize from '../javascript/camelize.js'
 import $ from 'jquery'
 import AlertContainer from 'react-alert';
 
-const mapURL = location.origin+"/map";
+const mapURL = "https:\//chrisboshfanclub.herokuapp.com/map";
 
 export class PlacesSearch extends React.Component {
   constructor(props){

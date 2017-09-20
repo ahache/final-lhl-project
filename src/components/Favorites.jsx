@@ -4,7 +4,7 @@ import axios from 'axios'
 import querystring from 'querystring'
 import logo from './static_html/logo-nearhere-bulma-green.png'
 
-const URL = 'http:\//localhost:3000/favorites/all';
+const URL = 'https:\//chrisboshfanclub.herokuapp.com/favorites/all';
 
 export class Favorites extends Component {
 
@@ -21,7 +21,7 @@ export class Favorites extends Component {
 
   componentDidMount(){
     $.ajax({
-      url: '/favorites/all',
+      url: URL,
       cache:false,
       data: {user: localStorage.getItem('token')}
     }).done((data) => {
