@@ -5,7 +5,7 @@ import camelize from '../javascript/camelize.js'
 import $ from 'jquery'
 import AlertContainer from 'react-alert';
 
-const mapURL = "http:\//localhost:3001/map";
+const mapURL = "https:\//chrisboshfanclub.herokuapp.com/map";
 
 export class PlacesSearch extends React.Component {
   constructor(props){
@@ -72,7 +72,7 @@ export class PlacesSearch extends React.Component {
         })
         .fail((error) => {
           console.log(error.responseText);
-        });      
+        });
     }
     e.preventDefault();
   }
@@ -91,12 +91,12 @@ export class PlacesSearch extends React.Component {
     return (
       <form onSubmit={this.getMapResults}>
         <h2 style={headerStyle}>Where are you going?</h2>
-        <input 
-          ref='autocomplete' 
-          id="pac-input" 
-          style={inputStyle} 
-          className="input is-primary controls column is-11" 
-          type="text" 
+        <input
+          ref='autocomplete'
+          id="pac-input"
+          style={inputStyle}
+          className="input is-primary controls column is-11"
+          type="text"
           placeholder={this.state.lastSearch}
         />
         <input type="submit" className='button is-success' value='See Results' />
