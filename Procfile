@@ -1,1 +1,1 @@
-web: bin/boot
+web: server/bin/www
