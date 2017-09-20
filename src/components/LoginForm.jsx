@@ -3,7 +3,7 @@ import $ from 'jquery';
 import jwt from 'jsonwebtoken';
 import AlertContainer from 'react-alert';
 
-const URL = "https:\//chrisboshfanclub.herokuapp.com/login";
+const URL = "https:\//nearhere-lhl.herokuapp.com/login";
 
 class LoginForm extends Component {
   constructor(props) {

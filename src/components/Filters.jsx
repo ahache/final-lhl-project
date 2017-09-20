@@ -4,7 +4,7 @@ import $ from 'jquery'
 import SearchContainer from './SearchContainer.jsx';
 import AlertContainer from 'react-alert';
 
-const URL = "https:\//chrisboshfanclub.herokuapp.com/filters";
+const URL = "https:\//nearhere-lhl.herokuapp.com/filters";
 
 class Filters extends Component {
   constructor(props){

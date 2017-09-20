@@ -24,7 +24,6 @@ const filters = require('./routes/filters');
 const favorites = require('./routes/favorites');
 const map = require('./routes/map');
 
-
 const app = express();
 
 app.use(methodOverride('_method'));

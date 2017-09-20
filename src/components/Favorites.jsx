@@ -5,7 +5,7 @@ import querystring from 'querystring'
 import logo from './static_html/logo-nearhere-bulma-green.png'
 import { Redirect } from 'react-router-dom';
 
-const URL = 'https:\//chrisboshfanclub.herokuapp.com/favorites/all';
+const URL = 'https:\//nearhere-lhl.herokuapp.com/favorites/all';
 
 export class Favorites extends Component {
 

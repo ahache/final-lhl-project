@@ -5,7 +5,7 @@ import $ from 'jquery'
 import logo from './static_html/logo-nearhere-bulma-green.png'
 import AlertContainer from 'react-alert';
 
-const URL = "https:\//chrisboshfanclub.herokuapp.com/users";
+const URL = "https:\//nearhere-lhl.herokuapp.com/users";
 
 export class UpdateUserInfoForm extends React.Component {
   constructor(props){
