@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import UpdateUserInfoForm from './UpdateUserInfoForm.jsx'
 import $ from 'jquery'
 
-const URL = "https:\//chrisboshfanclub.herokuapp.com/users";
+const URL = "http:\//chrisboshfanclub.herokuapp.com/users";
 
 
 export class UpdateUserInfoContainer extends React.Component {
