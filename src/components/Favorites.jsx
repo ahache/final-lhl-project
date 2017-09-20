@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import $ from 'jquery'
 import axios from 'axios'
 import querystring from 'querystring'
+import logo from './static_html/logo-nearhere-bulma-green.png'
 
 const URL = 'http:\//localhost:3000/favorites/all';
 
@@ -99,6 +100,10 @@ export class Favorites extends Component {
       marginTop: '14px'
     }
 
+    const bottompadding = {
+      paddingBottom: "2.0rem"
+    }
+
     const dropDownMenu = Object.keys(this.state.favoritesObj).map((query, i) => {
       return (
         <div className="dropdown-item" key={i}>
@@ -143,7 +148,7 @@ export class Favorites extends Component {
     }
 
     return(
-      <section className="hero is-medium is-primary is-bold">
+      <section className="hero is-fullheight is-primary is-bold">
         <div className="hero-body">
           <div className='content box' style={style}>
             <div className="dropdown">
