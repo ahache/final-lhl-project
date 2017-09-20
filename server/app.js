@@ -38,7 +38,7 @@ app.use(logger('dev'));
 // app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../build')));
 
-// app.use(cors());
+app.use(cors());
 
 app.use(expressJWT({
   secret: 'CBFC',
