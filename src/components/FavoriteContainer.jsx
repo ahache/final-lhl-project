@@ -116,11 +116,12 @@ export class FavoriteContainer extends React.Component {
             visible={this.state.showingInfoWindow}
             onClose={this.onInfoWindowClose}
             onOpen={this.onInfoWindowOpen}>
-              <div>
-                <h1>{this.state.selectedPlace.name}</h1>
-                <h3>Address: {this.state.selectedPlace.address}</h3>
-                <h3>Rating: {rating}</h3>
-              </div>
+            <div>
+              <p className="is-size-5"><strong>{this.state.selectedPlace.name}</strong></p>
+              <br />
+              <p className="is-size-6"><strong>Address:</strong> {this.state.selectedPlace.address}</p>
+              <p className="is-size-6"><strong>Rating:</strong> {rating}</p>
+            </div>
           </FavoriteInfoWindow>
         </FavoriteMap>
       </div>

@@ -83,7 +83,7 @@ class RegisterForm extends Component {
 
         <div className="field">
           <p className="control has-icons-left has-icons-right">
-            <input className='input' type="text" placeholder="Password" ref={(password) => this.password = password} />
+            <input className='input' type="password" placeholder="Password" ref={(password) => this.password = password} />
             <span className="icon is-small is-left">
               <i className="fa fa-unlock-alt"></i>
             </span>
@@ -92,7 +92,7 @@ class RegisterForm extends Component {
 
         <div className="field">
           <p className="control has-icons-left has-icons-right">
-            <input className='input' type="text" placeholder="Confirm Password" ref={(confirmation) => this.confirmation = confirmation} />
+            <input className='input' type="password" placeholder="Confirm Password" ref={(confirmation) => this.confirmation = confirmation} />
             <span className="icon is-small is-left">
               <i className="fa fa-unlock-alt"></i>
             </span>

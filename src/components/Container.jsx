@@ -31,6 +31,7 @@ export class Container extends React.Component {
     this.getResultSet = this.getResultSet.bind(this);
     this.buttonId = '';
     this.buttonText = '';
+    this.buttonClass = '';
     this.mapMarkers;
     this.mapCoords;
     this.searchQuery;
@@ -112,10 +113,12 @@ export class Container extends React.Component {
     if (Number(result.data[0].count) > 0) {
       this.buttonId = 'remove';
       this.buttonText = 'Remove from Favorites'
+      this.buttonClass = 'button is-danger is-outlined is-small'
     }
     else {
       this.buttonId = 'add';
       this.buttonText = 'Add to Favorites'
+      this.buttonClass = 'button is-primary is-outlined is-small'
     }
     this.setState({showingInfoWindow:true});
   });
@@ -138,6 +141,7 @@ export class Container extends React.Component {
   .then(result => {
     this.buttonId = 'remove';
     this.buttonText = 'Remove from Favorites';
+    this.buttonClass = 'button is-danger is-small is-outlined';
     this.setState({showingInfoWindow:true});
   });
   }
@@ -154,6 +158,7 @@ export class Container extends React.Component {
   .then(result => {
     this.buttonId = 'add';
     this.buttonText = 'Add to Favorites';
+    this.buttonClass = 'button is-primary is-small is-outlined';
     this.setState({showingInfoWindow:true});
   });
   }
@@ -203,13 +208,14 @@ export class Container extends React.Component {
             removeFavorite={this.removeFavorite}
             onOpen={this.onInfoWindowOpen}>
               <div>
-                <h1>{this.state.selectedPlace.name}</h1>
-                <h3>Address: {this.state.selectedPlace.formatted_address}</h3>
-                <h3>Rating: {rating}</h3>
+                <p className="is-size-5"><strong>{this.state.selectedPlace.name}</strong></p>
                 <br />
-                <h3><em>This matches your search for:</em> <strong>{this.state.keyword}</strong></h3>
+                <p className="is-size-6"><strong>Address:</strong> {this.state.selectedPlace.formatted_address}</p>
+                <p className="is-size-6"><strong>Rating:</strong> {rating}</p>
                 <br />
-                <button id={this.buttonId}>{this.buttonText}</button>
+                <p className="is-size-6"><em>This matches your search for: <strong>{this.state.keyword}</strong></em></p>
+                <br />
+                <button className={this.buttonClass} id={this.buttonId}>{this.buttonText}</button>
               </div>
           </InfoWindow>
         </Map>

@@ -12,10 +12,9 @@ render() {
       <div className="container">
         <div className="content has-text-centered">
           <p>
-            <strong>Chris Bosh Fan Club</strong> by <a href="https://github.com/ahache">Alex H</a>, <a href="https://github.com/hounslow">Matt H</a>,  <a href="https://github.com/jonosue">Jonathan S</a>, and <a href="https://github.com/MattWillcox">Matt W</a>. The website content
-              is not licensed...yet.
-            </p>
-            <p>
+            <strong>NEARHERE &copy;2017</strong>. This app was lovingly created by Lighthouse Labs graduates <a href="https://github.com/ahache" target="_blank">Alex H.</a>, <a href="https://github.com/hounslow" target="_blank">Matt H.</a>,  <a href="https://github.com/jonosue" target="_blank">Jonathan S.</a>, and <a href="https://github.com/MattWillcox" target="_blank">Matt W.</a> It is currently in beta.
+          </p>
+          <p>
               <a className="icon" href="https://github.com/hounslow/final-lhl-project">
                 <i className="fa fa-github"></i>
               </a>

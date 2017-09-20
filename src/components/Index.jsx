@@ -53,14 +53,14 @@ class Index extends Component {
               <div className="field is-grouped is-grouped-centered hero-buttons">
                 <p className="control">
                   <Link to='/login'>
-                    <a className="button is-light hero-buttons">
+                    <a className="button is-primary is-inverted hero-buttons">
                       Login
                     </a>
                   </Link>
                 </p>
                 <p className="control">
                   <Link to='/register'>
-                    <a className="button is-light hero-buttons">
+                    <a className="button is-primary is-inverted hero-buttons">
                       Register
                     </a>
                   </Link>

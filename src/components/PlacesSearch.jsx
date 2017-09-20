@@ -72,7 +72,7 @@ export class PlacesSearch extends React.Component {
         })
         .fail((error) => {
           console.log(error.responseText);
-        });      
+        });
     }
     e.preventDefault();
   }
@@ -90,16 +90,16 @@ export class PlacesSearch extends React.Component {
 
     return (
       <form onSubmit={this.getMapResults}>
-        <h2 style={headerStyle}>Where are you going?</h2>
-        <input 
-          ref='autocomplete' 
-          id="pac-input" 
-          style={inputStyle} 
-          className="input is-primary controls column is-11" 
-          type="text" 
+        <h2 style={headerStyle}>Where are you going to be?</h2>
+        <input
+          ref='autocomplete'
+          id="pac-input"
+          style={inputStyle}
+          className="input is-primary controls column is-11"
+          type="text"
           placeholder={this.state.lastSearch}
         />
-        <input type="submit" className='button is-success' value='See Results' />
+        <input type="submit" className='button is-primary' value='View Map' />
         <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
       </form>
     )

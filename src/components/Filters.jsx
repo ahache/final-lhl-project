@@ -112,32 +112,32 @@ class Filters extends Component {
     const filterSpan = this.state.filters.map((filter, i) => {
       const normalized = filter.name[0].toUpperCase().concat(filter.name.slice(1).toLowerCase());
       return (
-        <span className='tag is-medium is-danger' key={i} style={filterStyle} >
+        <span className='tag is-medium is-white' key={i} style={filterStyle} >
           {normalized}
-          <button className='delete is-medium' name={filter.id} onClick={this.deleteFilter}></button>
+          <button className='delete is-medium is-danger' name={filter.id} onClick={this.deleteFilter}></button>
         </span>
       );
     })
 
     return (
-      <section className="hero is-medium is-primary is-bold">
+      <section className="hero is-fullheight is-primary is-bold">
         <div className="hero-body">
           <div className='box content column is-half is-offset-one-quarter' style={style}>
-            <h2 style={headerStyle}>What Are You Looking For?</h2>
+            <h2 style={headerStyle}>What do you want to find nearby?</h2>
             <form className="filters" onSubmit={this.addFilter}>
               <div>
-                <input 
+                <input
                   className='input is-primary column is-11'
                   id='filter-input'
-                  style={inputStyle} 
-                  type='text' 
-                  name="filter" 
-                  placeholder="Food, Fashion, Fitness..." 
+                  style={inputStyle}
+                  type='text'
+                  name="filter"
+                  placeholder="Enter some interests..."
                   ref={(filter) => this.filter = filter}
                 />
               </div>
               <div>
-                <input className="button is-info" type="submit" value='Add Filter' />
+                <input className="button is-focused" type="submit" value='Add Filter' />
               </div>
             </form>
             {filterSpan}

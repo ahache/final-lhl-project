@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {NavLink, Link, Redirect, Router} from 'react-router-dom';
 import Logout from './Logout.jsx';
 import $ from 'jquery';
-import logo from './static_html/explore-tool.png';
+import logo from './static_html/logo-nearhere-bulma-green-compass.png';
 
 class NavBar extends Component {
   constructor(props){
@@ -16,7 +16,7 @@ class NavBar extends Component {
   render() {
 
     const style = {
-      backgroundColor: 'rgb(230, 255, 242)'
+      backgroundColor: '#f5f5f5'
     }
 
     if (localStorage.getItem('token')) {
@@ -25,7 +25,7 @@ class NavBar extends Component {
 
           <div className="navbar-brand">
             <a className="navbar-item">
-              <img src={logo}  height="10" width="30" />
+              <img src={logo}  height="30" width="30" />
             </a>
             <button className="button navbar-burger" onClick={this.toggle}>
               <span></span>
@@ -58,7 +58,9 @@ class NavBar extends Component {
 
             <div className="navbar-end">
               <div className="navbar-item">
+              <a className="button is-focused">
                 <Logout />
+              </a>
               </div>
             </div>
 

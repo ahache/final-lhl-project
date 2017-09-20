@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Link, Redirect } from 'react-router-dom'
 import $ from 'jquery'
-
+import logo from './static_html/logo-nearhere-bulma-green.png'
 
 const URL = "http:\//localhost:3001/users";
 
@@ -80,88 +80,80 @@ export class UpdateUserInfoForm extends React.Component {
         "color": "#00d1b2"
       }
 
+          const bottompadding = {
+      paddingBottom: "2.0rem"
+    }
+
+
       return (
 
-        <section className="hero is-medium is-primary is-bold">
+        <section className="hero is-fullheight is-primary is-bold">
           <div className="hero-body">
             <div className="column is-offset-one-quarter is-half is-fluid" style={containerStyle}>
+                <div className="has-text-centered" style={bottompadding}>
+                <img src={logo} alt="NearHere" width="135" height="98" />
+                 </div>
 
+      <form className="updateUser" onSubmit={this.submitChanges}>
 
-              <h2 className="subtitle is-8 has-text-centered" style={fontStyle}>
-                Update your account information
-              </h2>
+        <div className="field">
+          <p className="control has-icons-left has-icons-right">
+            <input className="input" type="text" ref={(first_name) => this.first_name = first_name} placeholder={this.props.userInfo.first_name}/>
+            <span className="icon is-small is-left">
+              <i className="fa fa-user"></i>
+            </span>
+          </p>
+        </div>
 
-              <form className="updateUser" onSubmit={this.submitChanges}>
+        <div className="field">
+          <p className="control has-icons-left has-icons-right">
+            <input className="input" type="text" ref={(last_name) => this.last_name = last_name} placeholder={this.props.userInfo.last_name}/>
+            <span className="icon is-small is-left">
+              <i className="fa fa-user"></i>
+            </span>
+          </p>
+        </div>
 
-                <div className="level-item has-text-centered hero-buttons">
-                  <div className="field">
-                    <div className="control has-icons-left">
-                      <input className="input is-small" type="text" ref={(first_name) => this.first_name = first_name} placeholder={this.props.userInfo.first_name}/>
-                        <span className="icon is-small is-left">
-                          <i className="fa fa-user"></i>
-                        </span>
-                    </div>
-                  </div>
-                </div>
+        <div className="field">
+          <p className="control has-icons-left has-icons-right">
+           <input className="input" type="text" ref={(email) => this.email = email} placeholder={this.props.userInfo.email}/>
+            <span className="icon is-small is-left">
+              <i className="fa fa-envelope"></i>
+            </span>
+          </p>
+        </div>
 
-                <div className="level-item has-text-centered hero-buttons">
-                  <div className="field">
-                    <div className="control has-icons-left">
-                      <input className="input is-small" type="text" ref={(last_name) => this.last_name = last_name} placeholder={this.props.userInfo.last_name}/>
-                        <span className="icon is-small is-left">
-                          <i className="fa fa-user"></i>
-                        </span>
-                    </div>
-                  </div>
-                </div>
+        <div className="field">
+          <p className="control has-icons-left has-icons-right">
+            <input className="input password" type="password" ref={(password) => this.password = password} placeholder="Password"/>
+            <span className="icon is-small is-left">
+              <i className="fa fa-lock"></i>
+            </span>
+          </p>
+        </div>
 
-                <div className="level-item has-text-centered hero-buttons">
-                  <div className="field">
-                    <div className="control has-icons-left">
-                      <input className="input is-small" type="text" ref={(email) => this.email = email} placeholder={this.props.userInfo.email}/>
-                      <span className="icon is-small is-left">
-                        <i className="fa fa-envelope"></i>
-                      </span>
-                    </div>
-                  </div>
-                </div>
+        <div className="field">
+          <p className="control has-icons-left has-icons-right">
+            <input className="input password_confirmation" type="password" ref={(password_confirmation) => this.password_confirmation = password_confirmation} placeholder="Password Confirmation"/>
+            <span className="icon is-small is-left">
+              <i className="fa fa-lock"></i>
+            </span>
+          </p>
+        </div>
 
-                <div className="level-item has-text-centered hero-buttons">
-
-                  <div className="field">
-                    <div className="control has-icons-left">
-                      <input className="input is-small password" type="password" ref={(password) => this.password = password} placeholder="Password"/>
-                      <span className="icon is-small is-left">
-                        <i className="fa fa-lock"></i>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="level-item has-text-centered hero-buttons">
-                  <div className="field">
-                    <div className="control has-icons-left">
-                      <input className="input is-small password_confirmation" type="password" ref={(password_confirmation) => this.password_confirmation = password_confirmation} placeholder="Password Confirmation"/>
-                      <span className="icon is-small is-left">
-                        <i className="fa fa-lock"></i>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="field is-grouped is-grouped-centered" style={{paddingTop: "20px"}}>
-                  <p className="control">
-                    <button className="submit-button button is-primary" type="submit">Update Profile</button>
-                  </p>
-                  <p className="control">
-                    <button className="button" type="reset">Reset</button>
-                  </p>
-                </div>
-              </form>
-
+        <div className="field is-grouped is-grouped-centered">
+           <p className="control">
+             <button className="submit-button button is-primary" type="submit">Update Profile</button>
+            </p>
+            <p className="control">
+              <button className="button is-primary is-outlined" type="reset">Reset</button>
+            </p>
+        </div>
+        </form>
             </div>
           </div>
         </section>
+
       );
     } else {
       <Redirect to="/login" />
