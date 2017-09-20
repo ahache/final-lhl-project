@@ -13,7 +13,8 @@ export class FavoriteContainer extends React.Component {
       showingInfoWindow: true,
       activeMarker: {},
       selectedPlace: {},
-      dataLoaded: false
+      dataLoaded: false,
+      marker: false
     };
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
@@ -24,14 +25,20 @@ export class FavoriteContainer extends React.Component {
     this.getMapCoordinates = this.getMapCoordinates.bind(this);
     this.getSearchQuery = this.getSearchQuery.bind(this);
     this.getResultSet = this.getResultSet.bind(this);
+    this.getUserLocation = this.getUserLocation.bind(this);
     this.mapCoords;
     this.searchQuery;
     this.resultSet;
-    this.zoom = 17;
+    this.zoom = 13;
+    this.marker;
   }
 
   componentWillMount(){
     this.getFavorite();
+  }
+
+  componentDidUpdate() {
+    this.getUserLocation();
   }
 
   getFavorite() {
@@ -41,6 +48,7 @@ export class FavoriteContainer extends React.Component {
     }
   })
     .then(result => {
+      this.getUserLocation();
       this.getMapCoordinates(result.data[0].latitude, result.data[0].longitude);
       this.getSearchQuery(result.data[0].query);
       this.getResultSet(result.data[0]);
@@ -50,6 +58,25 @@ export class FavoriteContainer extends React.Component {
 
   getMapCoordinates(lat, lng) {
     this.mapCoords = {lat: lat, lng: lng}
+  }
+
+  getUserLocation() {
+    if (navigator && navigator.geolocation) {
+        const key = -1;
+        const colorKey = 0;
+        const object = {"name": "Current Location"};
+        navigator.geolocation.getCurrentPosition((pos) => {
+            const position = {lat: pos.coords.latitude, lng: pos.coords.longitude};
+            this.marker = <FavoriteMarker key={key} colorKey={colorKey} locationInfo={object} position={position} onClick={this.onMarkerClick} />
+            this.setState({marker: true});
+        }, () => {
+            this.marker = <FavoriteMarker />
+            this.setState({marker: false});
+          })
+    } else {
+      this.marker = <FavoriteMarker />
+      this.setState({marker: false});
+    }
   }
 
   getSearchQuery(searchQuery) {
@@ -100,16 +127,25 @@ export class FavoriteContainer extends React.Component {
   }
 
   render() {
+
     const style = {
       width: '100vw',
       height: '100vh'
     }
+  const homeMarker = this.marker;
   const mapMarker = this.renderMarker(this.resultSet);
-  const rating = (this.state.selectedPlace.rating > 0) ? this.state.selectedPlace.rating + " / 5" : "No ratings available!"
-    if (mapMarker && this.mapCoords && this.props.google) {
-      return (
+  const rating = (this.state.selectedPlace.rating > 0) ? this.state.selectedPlace.rating + " / 5" : "No ratings available!";
+
+  if (!mapMarker || !this.mapCoords || !this.props.google || !homeMarker) {
+    return (
+      <h1>Loading map...</h1>
+      )
+    }
+  else {
+    return (
       <div style={style}>
         <FavoriteMap google={this.props.google} onClick={this.onMapClick} initialCenter={this.mapCoords} zoom={this.zoom}>
+          { homeMarker }
           { mapMarker }
           <FavoriteInfoWindow
             marker={this.state.activeMarker}
@@ -125,14 +161,10 @@ export class FavoriteContainer extends React.Component {
           </FavoriteInfoWindow>
         </FavoriteMap>
       </div>
-    )
-    }
-    else {
-      return (
-      <div>Loading map...</div>
-    )
+      )
     }
   }
+
 }
 
 export default GoogleApiWrapper({

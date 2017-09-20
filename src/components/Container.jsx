@@ -224,8 +224,8 @@ export class Container extends React.Component {
     }
     else {
       return (
-      <div>Loading map...</div>
-    )
+      <h1>Loading map...</h1>
+      )
     }
   }
 }
