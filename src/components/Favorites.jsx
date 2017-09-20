@@ -21,7 +21,7 @@ export class Favorites extends Component {
 
   componentDidMount(){
     $.ajax({
-      url: URL,
+      url: '/favorites/all',
       cache:false,
       data: {user: localStorage.getItem('token')}
     }).done((data) => {

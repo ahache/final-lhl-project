@@ -25,7 +25,7 @@ class LoginForm extends Component {
     if (!email || !password) {
       this.msg.error('Please fill out both fields');
     } else {
-      $.post(URL, {email: email, password: password})
+      $.post('/login', {email: email, password: password})
       .done((data) => {
         localStorage.setItem('token', data);
         this.props.login();

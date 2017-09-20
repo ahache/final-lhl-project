@@ -5,7 +5,7 @@ import $ from 'jquery'
 import logo from './static_html/logo-nearhere-bulma-green.png'
 import AlertContainer from 'react-alert';
 
-const URL = "http:\//localhost:3001/users";
+const URL = location.origin+"/users";
 
 export class UpdateUserInfoForm extends React.Component {
   constructor(props){

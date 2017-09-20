@@ -31,7 +31,7 @@ class Filters extends Component {
 
   componentDidMount() {
     $.ajax({
-      url: URL,
+      url: '/filters',
       cache:false,
       data: {user: localStorage.getItem('token')}
     }).done((data) => {

@@ -5,7 +5,7 @@ import camelize from '../javascript/camelize.js'
 import $ from 'jquery'
 import AlertContainer from 'react-alert';
 
-const mapURL = "http:\//localhost:3001/map";
+const mapURL = location.origin+"/map";
 
 export class PlacesSearch extends React.Component {
   constructor(props){

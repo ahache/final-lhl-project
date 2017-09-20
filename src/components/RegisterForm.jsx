@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import AlertContainer from 'react-alert';
 
-const URL = "http:\//localhost:3001/register";
+const URL = location.origin+"/register";
 
 class RegisterForm extends Component {
 
