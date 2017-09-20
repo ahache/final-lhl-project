@@ -25,7 +25,7 @@ module.exports = (knex) => {
       knex('users').where('id', user_id)
       .update({first_name: req.body.first_name || user_info[0].first_name,
         last_name: req.body.last_name || user_info[0].last_name,
-        email: req.body.user_email || user_info[0].email,
+        email: req.body.email || user_info[0].email,
         password: bcrypt.hashSync(req.body.password, 10) || user_info[0].password}).
         returning("*")
       .then((results) => {

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { Link, Redirect } from 'react-router-dom'
 import $ from 'jquery'
 import logo from './static_html/logo-nearhere-bulma-green.png'
+import AlertContainer from 'react-alert';
 
 const URL = "http:\//localhost:3001/users";
 
@@ -11,6 +12,14 @@ export class UpdateUserInfoForm extends React.Component {
     super(props);
     this.submitChanges = this.submitChanges.bind(this);
     this.clearForm = this.clearForm.bind(this);
+  }
+
+  alertOptions = {
+    offset: 50,
+    position: 'top right',
+    theme: 'light',
+    time: 3000,
+    transition: 'scale'
   }
 
   // Not sure if a get is nece
@@ -42,10 +51,11 @@ export class UpdateUserInfoForm extends React.Component {
     const password_confirmation = this.password_confirmation.value;
 
     if (password !== password_confirmation) {
-      alert("Passwords don't match!");
+      this.msg.error('Passwords do not match');
       $(".input.password").toggleClass("is-danger");
       $(".input.password_confirmation").toggleClass("is-danger");
-      e.preventDefault();
+    } else if (email.search(/[\w\.]+\@[\w\.]+\.\w+/) < 0) {
+      this.msg.error('Must enter valid email');
     } else {
       $.ajax({
         url: URL,
@@ -58,8 +68,8 @@ export class UpdateUserInfoForm extends React.Component {
       }).fail((error) => {
         alert(error.responseText);
       });
-      e.preventDefault();
     }
+    e.preventDefault();
   }
 
   render() {
@@ -152,6 +162,7 @@ export class UpdateUserInfoForm extends React.Component {
         </form>
             </div>
           </div>
+          <AlertContainer ref={a => this.msg = a} {...this.alertOptions} />
         </section>
 
       );
