@@ -175,6 +175,6 @@ export class FavoriteContainer extends React.Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: process.env.API_KEY,
+  apiKey: process.env['API_KEY'],
   version: '3.29'
 })(FavoriteContainer)
