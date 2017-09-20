@@ -39,19 +39,19 @@ class NavBar extends Component {
             <div className="navbar-start">
 
               <div className="navbar-item">
-                <Link to="/filters">Filters</Link>
+                <Link to="/filters" onClick={this.toggle}>Filters</Link>
               </div>
 
               <div className="navbar-item">
-                <Link to="/map">Map</Link>
+                <Link to="/map" onClick={this.toggle}>Map</Link>
               </div>
 
               <div className="navbar-item">
-                <Link to="/favorites">Favorites</Link>
+                <Link to="/favorites" onClick={this.toggle}>Favorites</Link>
               </div>
 
               <div className="navbar-item">
-                <Link to="/user">Update Profile</Link>
+                <Link to="/user" onClick={this.toggle}>Update Profile</Link>
               </div>
 
             </div>
