@@ -41,7 +41,18 @@ export class FavoriteMap extends React.Component {
         center: center,
         zoom: zoom
       })
+
+      const styles = {
+        hide: [
+          {
+            featureType: 'poi.business',
+            stylers: [{visibility: 'off'}]
+          },
+        ]
+      };
+
       this.map = new maps.Map(node, mapConfig);
+      this.map.setOptions({styles: styles['hide']});
       this.setState({mapLoaded: true});
 
       const eventNames = ['ready', 'click', 'dragend'];
