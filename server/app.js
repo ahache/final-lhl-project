@@ -3,7 +3,7 @@
 require('dotenv').config();
 
 const express = require('express');
-const ENV = process.env.ENV || "development";
+const ENV = process.env.NODE_ENV || "development";
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
