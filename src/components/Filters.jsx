@@ -109,12 +109,16 @@ class Filters extends Component {
       marginTop: '18.76px'
     }
 
+    const bgColor = {
+      backgroundColor: "#ff3860"
+    }
+
     const filterSpan = this.state.filters.map((filter, i) => {
       const normalized = filter.name[0].toUpperCase().concat(filter.name.slice(1).toLowerCase());
       return (
         <span className='tag is-medium is-white' key={i} style={filterStyle} >
           {normalized}
-          <button className='delete is-medium is-danger' name={filter.id} onClick={this.deleteFilter}></button>
+          <button style={bgColor} className='delete is-medium' name={filter.id} onClick={this.deleteFilter}></button>
         </span>
       );
     })
