@@ -71,7 +71,7 @@ export class Favorites extends Component {
       place_id: favoriteID
     }))
     .then(() => {
-      window.location.href = '/favoritesmap';
+      window.location.replace('/favoritesmap');
     })
   }
 
