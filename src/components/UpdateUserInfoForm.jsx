@@ -24,7 +24,7 @@ export class UpdateUserInfoForm extends React.Component {
 
   // Not sure if a get is nece
   // componentWillMount() {
-  //   $.get(URL, {user: localStorage.getItem('token')})
+  //   $.get(URL, {user: sessionStorage.getItem('token')})
   //   .done((data) => {
   //     const userInfo = data[0];
   //     this.props.update(userInfo);
@@ -32,7 +32,7 @@ export class UpdateUserInfoForm extends React.Component {
   // }
 
   componentDidMount() {
-    $.get(URL, {user: localStorage.getItem('token')})
+    $.get(URL, {user: sessionStorage.getItem('token')})
     .done((data) => {
       const userInfo = data[0];
       this.props.update(userInfo);
@@ -60,7 +60,7 @@ export class UpdateUserInfoForm extends React.Component {
       $.ajax({
         url: URL,
         type: 'PUT',
-        data: {user: localStorage.getItem('token'), first_name: first_name, last_name: last_name, email: email, password: password}
+        data: {user: sessionStorage.getItem('token'), first_name: first_name, last_name: last_name, email: email, password: password}
       }).done((data) => {
         const userInfo = data[0];
         this.clearForm();
@@ -77,7 +77,7 @@ export class UpdateUserInfoForm extends React.Component {
       padding: '60px 0px',
     };
 
-    if (localStorage.getItem('token')) {
+    if (sessionStorage.getItem('token')) {
 
       const containerStyle = {
         backgroundColor: "white",

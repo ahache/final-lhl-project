@@ -27,7 +27,7 @@ class LoginForm extends Component {
     } else {
       $.post(URL, {email: email, password: password})
       .done((data) => {
-        localStorage.setItem('token', data);
+        sessionStorage.setItem('token', data);
         this.props.login();
       })
       .fail(() => {

@@ -47,7 +47,7 @@ export class Container extends React.Component {
   getGoogleSearch() {
     axios.get('/map', {
       params: {
-        user: localStorage.getItem('token')
+        user: sessionStorage.getItem('token')
       }
     })
     .then(result => {
@@ -106,7 +106,7 @@ export class Container extends React.Component {
   checkFavorite(place_id) {
   axios.get('/favorites', {
     params: {
-      user: localStorage.getItem('token'),
+      user: sessionStorage.getItem('token'),
       place_id: place_id
     }
   })
@@ -129,7 +129,7 @@ export class Container extends React.Component {
    this.buttonId = '';
    this.buttonText = 'Adding...';
    axios.post('/favorites/add', querystring.stringify({
-      user: localStorage.getItem('token'),
+      user: sessionStorage.getItem('token'),
       address: this.state.selectedPlace.formatted_address,
       name: this.state.selectedPlace.name,
       place_id: this.state.selectedPlace.place_id,
@@ -152,7 +152,7 @@ export class Container extends React.Component {
    this.buttonText = 'Removing...';
    axios.delete('/favorites/remove/', {params:
     {
-      user: localStorage.getItem('token'),
+      user: sessionStorage.getItem('token'),
       place_id: this.state.selectedPlace.place_id
     }
   })
@@ -195,7 +195,7 @@ export class Container extends React.Component {
   const mapMarkers = this.renderMarkers(this.resultSet);
   const rating = (this.state.selectedPlace.rating > 0) ? this.state.selectedPlace.rating + " / 5" : "No ratings available!"
 
-  if (!localStorage.getItem('token')) {
+  if (!sessionStorage.getItem('token')) {
       return(
         <Redirect to="/" />
       )

@@ -50,7 +50,7 @@ export class PlacesSearch extends React.Component {
   }
 
   componentDidMount() {
-    $.get(`${mapURL}/last`, {user: localStorage.getItem('token')})
+    $.get(`${mapURL}/last`, {user: sessionStorage.getItem('token')})
       .done((data) => {
         const lastSearch = data[0].last_search;
         this.setState({lastSearch: lastSearch});
@@ -66,7 +66,7 @@ export class PlacesSearch extends React.Component {
       this.msg.error('Please Enter Some Filters');
     } else {
       const destination = this.refs.autocomplete.value || this.state.lastSearch;
-      $.post(mapURL, {user: localStorage.getItem('token'), destination: destination})
+      $.post(mapURL, {user: sessionStorage.getItem('token'), destination: destination})
         .done((data) => {
           window.location = '/map';
         })

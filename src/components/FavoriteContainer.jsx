@@ -45,7 +45,7 @@ export class FavoriteContainer extends React.Component {
   getFavorite() {
     axios.get('/map/favorites', {
     params: {
-      user: localStorage.getItem('token')
+      user: sessionStorage.getItem('token')
     }
   })
     .then(result => {
@@ -137,7 +137,7 @@ export class FavoriteContainer extends React.Component {
   const mapMarker = this.renderMarker(this.resultSet);
   const rating = (this.state.selectedPlace.rating > 0) ? this.state.selectedPlace.rating + " / 5" : "No ratings available!";
 
-  if (!localStorage.getItem('token')) {
+  if (!sessionStorage.getItem('token')) {
       return(
         <Redirect to="/" />
       )

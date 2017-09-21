@@ -24,7 +24,7 @@ export class Favorites extends Component {
     $.ajax({
       url: URL,
       cache:false,
-      data: {user: localStorage.getItem('token')}
+      data: {user: sessionStorage.getItem('token')}
     }).done((data) => {
       // Build the incoming data into an object keyed by search query
       let favoritesObj = {};
@@ -45,7 +45,7 @@ export class Favorites extends Component {
     let query = e.target.dataset.query;
     axios.delete('/favorites/remove/', {params:
       {
-        user: localStorage.getItem('token'),
+        user: sessionStorage.getItem('token'),
         place_id: favoriteID
       }
     })
@@ -59,7 +59,7 @@ export class Favorites extends Component {
         const selection = Object.keys(favoritesObj)[0];
         this.setState({favoritesObj: favoritesObj, selection: selection});
       } else {
-        this.setState({favoritesObj: favoritesObj});        
+        this.setState({favoritesObj: favoritesObj});
       }
     })
   }
@@ -67,7 +67,7 @@ export class Favorites extends Component {
   viewMap(e){
     let favoriteID = e.target.name;
     axios.post('/favorites/setfavorite', querystring.stringify({
-      user: localStorage.getItem('token'),
+      user: sessionStorage.getItem('token'),
       place_id: favoriteID
     }))
     .then(() => {
@@ -88,7 +88,7 @@ export class Favorites extends Component {
 
   render() {
 
-    if (!localStorage.getItem('token')) {
+    if (!sessionStorage.getItem('token')) {
       return(
         <Redirect to="/" />
       )
@@ -163,7 +163,7 @@ export class Favorites extends Component {
           </div>
         );
       });
-    } 
+    }
 
     if (!this.state.selection) {
       return (

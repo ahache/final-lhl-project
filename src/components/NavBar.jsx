@@ -19,7 +19,7 @@ class NavBar extends Component {
       backgroundColor: '#f5f5f5'
     }
 
-    if (localStorage.getItem('token')) {
+    if (sessionStorage.getItem('token')) {
       return (
         <nav className='navbar' style={style} role='navigation' aria-label='main navigation'>
 

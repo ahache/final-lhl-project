@@ -21,7 +21,7 @@ export class UpdateUserInfoContainer extends React.Component {
 
   render() {
 
-    if (!localStorage.getItem('token')) {
+    if (!sessionStorage.getItem('token')) {
       return(
         <Redirect to="/" />
       )

@@ -39,7 +39,7 @@ class RegisterForm extends Component {
           password: password
         })
         .done((data) => {
-          localStorage.setItem('token', data);
+          sessionStorage.setItem('token', data);
           this.props.login();
         })
         .fail(() => {
