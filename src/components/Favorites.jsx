@@ -3,7 +3,7 @@ import $ from 'jquery'
 import axios from 'axios'
 import querystring from 'querystring'
 import logo from './static_html/logo-nearhere-bulma-green.png'
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 const URL = 'https:\//nearhere-lhl.herokuapp.com/favorites/all';
 
@@ -54,7 +54,13 @@ export class Favorites extends Component {
       favoritesObj[query] = favoritesObj[query].filter((favorite) => {
         return (favorite.place_id !== favoriteID);
       });
-      this.setState({favoritesObj: favoritesObj});
+      if (favoritesObj[query].length === 0) {
+        delete favoritesObj[query];
+        const selection = Object.keys(favoritesObj)[0];
+        this.setState({favoritesObj: favoritesObj, selection: selection});
+      } else {
+        this.setState({favoritesObj: favoritesObj});        
+      }
     })
   }
 
@@ -111,6 +117,11 @@ export class Favorites extends Component {
       paddingBottom: "2.0rem"
     }
 
+    const link = {
+      textDecoration: "underline",
+      color: "#2a61ba"
+    }
+
     const dropDownMenu = Object.keys(this.state.favoritesObj).map((query, i) => {
       return (
         <div className="dropdown-item" key={i}>
@@ -152,33 +163,45 @@ export class Favorites extends Component {
           </div>
         );
       });
-    }
+    } 
 
-    return(
-      <section className="hero is-fullheight is-primary is-bold">
-        <div className="hero-body">
-          <div className='content box' style={style}>
-            <div className="dropdown">
-              <div className="dropdown-trigger">
-                <button className="button" aria-haspopup="true" aria-controls="dropdown-menu" onClick={this.toggle}>
-                  <span>Which location?</span>
-                  <span className="icon is-small">
-                    <i className="fa fa-angle-down" aria-hidden="true"></i>
-                  </span>
-                </button>
-              </div>
-              <div className="dropdown-menu" id="dropdown-menu" role="menu">
-                <div className="dropdown-content">
-                  {dropDownMenu}
+    if (!this.state.selection) {
+      return (
+        <section className="hero is-fullheight is-primary is-bold">
+          <div className="hero-body">
+            <div className='content box' style={style}>
+              <p className="is-size-4">You have no favorites. Please go to the <Link to="/map"><span style={link}>map</span></Link> to add some!</p>
+            </div>
+          </div>
+        </section>
+      )
+    } else {
+      return(
+        <section className="hero is-fullheight is-primary is-bold">
+          <div className="hero-body">
+            <div className='content box' style={style}>
+              <div className="dropdown">
+                <div className="dropdown-trigger">
+                  <button className="button" aria-haspopup="true" aria-controls="dropdown-menu" onClick={this.toggle}>
+                    <span>Which location?</span>
+                    <span className="icon is-small">
+                      <i className="fa fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                  </button>
+                </div>
+                <div className="dropdown-menu" id="dropdown-menu" role="menu">
+                  <div className="dropdown-content">
+                    {dropDownMenu}
+                  </div>
                 </div>
               </div>
+              <h2 className='query_header' style={headerStyle}>{this.state.selection}</h2>
+              {favoritesList}
             </div>
-            <h2 className='query_header' style={headerStyle}>{this.state.selection}</h2>
-            {favoritesList}
           </div>
-        </div>
-      </section>
-    );
+        </section>
+      );
+    }
   }
 }
 
