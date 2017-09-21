@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import camelize from '../javascript/camelize.js'
 import $ from 'jquery'
 import AlertContainer from 'react-alert';
@@ -12,7 +12,8 @@ export class PlacesSearch extends React.Component {
     super(props);
     this.state = {
       googleLoad: false,
-      lastSearch: ''
+      lastSearch: '',
+      mapTime: false
     }
     this.getMapResults = this.getMapResults.bind(this);
   }
@@ -68,7 +69,8 @@ export class PlacesSearch extends React.Component {
       const destination = this.refs.autocomplete.value || this.state.lastSearch;
       $.post(mapURL, {user: sessionStorage.getItem('token'), destination: destination})
         .done((data) => {
-          window.location.replace('/map');
+          this.setState({mapTime: true});
+          // window.location = '/map';
         })
         .fail((error) => {
           console.log(error.responseText);
@@ -78,6 +80,12 @@ export class PlacesSearch extends React.Component {
   }
 
   render(){
+
+    if (this.state.mapTime) {
+      return (
+        <Redirect to="/map"/>
+      )
+    }
 
     const inputStyle = {
       // width: '35%'

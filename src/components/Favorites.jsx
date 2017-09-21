@@ -14,10 +14,12 @@ export class Favorites extends Component {
     this.state = {
       favorites: [],
       favoritesObj: {},
-      selection: ''
+      selection: '',
+      mapTime: false
     }
     this.changeSelection = this.changeSelection.bind(this);
     this.deleteFavorite = this.deleteFavorite.bind(this);
+    this.viewMap = this.viewMap.bind(this);
   }
 
   componentDidMount(){
@@ -71,7 +73,7 @@ export class Favorites extends Component {
       place_id: favoriteID
     }))
     .then(() => {
-      window.location.replace('/favoritesmap');
+      this.setState({mapTime: true});
     })
   }
 
@@ -87,6 +89,12 @@ export class Favorites extends Component {
   }
 
   render() {
+
+    if (this.state.mapTime) {
+      return (
+        <Redirect to="/favoritesmap"/>
+      )
+    }
 
     if (!sessionStorage.getItem('token')) {
       return(
