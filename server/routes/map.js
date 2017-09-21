@@ -3,7 +3,7 @@ const router  = express.Router();
 const request = require('request');
 const jwt = require('jsonwebtoken');
 
-const API = process.env['API_KEY'];
+const API = "AIzaSyB5GDa5558nr1BrKFxboyA5lBw-9-RiAFc";
 const mapsClient = require('@google/maps').createClient({
   key: API
 });
