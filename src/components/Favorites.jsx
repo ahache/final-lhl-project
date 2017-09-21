@@ -54,7 +54,13 @@ export class Favorites extends Component {
       favoritesObj[query] = favoritesObj[query].filter((favorite) => {
         return (favorite.place_id !== favoriteID);
       });
-      this.setState({favoritesObj: favoritesObj});
+      if (favoritesObj[query].length === 0) {
+        delete favoritesObj[query];
+        const selection = Object.keys(favoritesObj)[0];
+        this.setState({favoritesObj: favoritesObj, selection: selection});
+      } else {
+        this.setState({favoritesObj: favoritesObj});        
+      }
     })
   }
 
