@@ -191,6 +191,18 @@ export class Container extends React.Component {
       width: '100vw',
       height: '100vh'
     }
+
+    const navstyle = {
+      padding: '5px'
+    }
+
+    const border = {
+      border: '1px solid #00d1b2'
+    }
+
+    const link = {
+      color: "#ff3860"
+    }
   const homeMarker = this.createHomeMarker(this.mapCoords);
   const mapMarkers = this.renderMarkers(this.resultSet);
   const rating = (this.state.selectedPlace.rating > 0) ? this.state.selectedPlace.rating + " / 5" : "No ratings available!"
@@ -203,7 +215,14 @@ export class Container extends React.Component {
 
     if (mapMarkers !== [] && this.mapCoords) {
       return (
-      <div style={style}>
+        <div>
+          <div className="tile is-info" style={border}>
+            <div className="container">
+              <div className="content has-text-centered" style={navstyle}>
+                <span className="is-size-7"><strong>Click on map icons to view information about places and add them to your favorites. The <span style={link}>red marker</span> is the location you chose.</strong></span>
+              </div>
+            </div>
+          </div>
         <Map google={this.props.google} onClick={this.onMapClick} initialCenter={this.mapCoords} zoom={this.zoom}>
           { homeMarker }
           { mapMarkers }
