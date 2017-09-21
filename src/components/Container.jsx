@@ -186,9 +186,6 @@ export class Container extends React.Component {
         activeMarker: null
       });
     }
-    this.setState({
-      infobar: "is-hidden"
-    });
   }
 
   render() {
