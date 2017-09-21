@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import camelize from '../javascript/camelize.js'
 import $ from 'jquery'
 import AlertContainer from 'react-alert';
@@ -12,7 +12,8 @@ export class PlacesSearch extends React.Component {
     super(props);
     this.state = {
       googleLoad: false,
-      lastSearch: ''
+      lastSearch: '',
+      mapTime: false
     }
     this.getMapResults = this.getMapResults.bind(this);
   }
@@ -50,7 +51,7 @@ export class PlacesSearch extends React.Component {
   }
 
   componentDidMount() {
-    $.get(`${mapURL}/last`, {user: localStorage.getItem('token')})
+    $.get(`${mapURL}/last`, {user: sessionStorage.getItem('token')})
       .done((data) => {
         const lastSearch = data[0].last_search;
         this.setState({lastSearch: lastSearch});
@@ -66,9 +67,10 @@ export class PlacesSearch extends React.Component {
       this.msg.error('Please Enter Some Filters');
     } else {
       const destination = this.refs.autocomplete.value || this.state.lastSearch;
-      $.post(mapURL, {user: localStorage.getItem('token'), destination: destination})
+      $.post(mapURL, {user: sessionStorage.getItem('token'), destination: destination})
         .done((data) => {
-          window.location = '/map';
+          this.setState({mapTime: true});
+          // window.location = '/map';
         })
         .fail((error) => {
           console.log(error.responseText);
@@ -78,6 +80,12 @@ export class PlacesSearch extends React.Component {
   }
 
   render(){
+
+    if (this.state.mapTime) {
+      return (
+        <Redirect to="/map"/>
+      )
+    }    
 
     const inputStyle = {
       // width: '35%'

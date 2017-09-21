@@ -33,7 +33,7 @@ class Filters extends Component {
     $.ajax({
       url: URL,
       cache:false,
-      data: {user: localStorage.getItem('token')}
+      data: {user: sessionStorage.getItem('token')}
     }).done((data) => {
       const newFilters = this.state.filters.concat(data);
       this.setState({filters: newFilters});
@@ -48,7 +48,7 @@ class Filters extends Component {
       this.msg.error('Please enter a filter');
     } else {
       this.filter.value = '';
-      $.post(URL, {user: localStorage.getItem('token'), filter: newFilter.name})
+      $.post(URL, {user: sessionStorage.getItem('token'), filter: newFilter.name})
         .done((data) => {
           if (data) {
             newFilter['id'] = data;
@@ -71,7 +71,7 @@ class Filters extends Component {
     $.ajax({
       url: deleteURL,
       type: 'DELETE',
-      data: {user: localStorage.getItem('token')},
+      data: {user: sessionStorage.getItem('token')},
     }).done((data) => {
       newFilters = data;
       this.setState({filters: newFilters});
@@ -83,7 +83,7 @@ class Filters extends Component {
 
   render() {
 
-    if (!localStorage.getItem('token')) {
+    if (!sessionStorage.getItem('token')) {
       return(
         <Redirect to="/" />
       )

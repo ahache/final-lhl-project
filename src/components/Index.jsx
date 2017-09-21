@@ -29,7 +29,7 @@ class Index extends Component {
     //   minHeight: '56.25vw',
     // }
 
-    if (localStorage.getItem('token')) {
+    if (sessionStorage.getItem('token')) {
       return (
         <Redirect to="/filters" />
       )
