@@ -54,7 +54,7 @@ export class UpdateUserInfoForm extends React.Component {
       this.msg.error('Passwords do not match');
       $(".input.password").toggleClass("is-danger");
       $(".input.password_confirmation").toggleClass("is-danger");
-    } else if (email) {
+    } else if (email.length > 0) {
       if (email.search(/[\w\.]+\@[\w\.]+\.\w+/) < 0) {
         this.msg.error('Must enter valid email');
       } else {
