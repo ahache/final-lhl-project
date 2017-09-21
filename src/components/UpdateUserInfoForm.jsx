@@ -54,8 +54,22 @@ export class UpdateUserInfoForm extends React.Component {
       this.msg.error('Passwords do not match');
       $(".input.password").toggleClass("is-danger");
       $(".input.password_confirmation").toggleClass("is-danger");
-    } else if (email.search(/[\w\.]+\@[\w\.]+\.\w+/) < 0) {
-      this.msg.error('Must enter valid email');
+    } else if (email) {
+      if (email.search(/[\w\.]+\@[\w\.]+\.\w+/) < 0) {
+        this.msg.error('Must enter valid email');
+      } else {
+        $.ajax({
+          url: URL,
+          type: 'PUT',
+          data: {user: sessionStorage.getItem('token'), first_name: first_name, last_name: last_name, email: email, password: password}
+        }).done((data) => {
+          const userInfo = data[0];
+          this.clearForm();
+          this.props.update(userInfo);
+        }).fail((error) => {
+          alert(error.responseText);
+        });
+      }
     } else {
       $.ajax({
         url: URL,

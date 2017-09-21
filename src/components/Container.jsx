@@ -15,7 +15,8 @@ export class Container extends React.Component {
       activeMarker: {},
       selectedPlace: {},
       dataLoaded: false,
-      keyword: ''
+      keyword: '',
+      infobar: "tile is-info"
     };
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
@@ -98,7 +99,8 @@ export class Container extends React.Component {
     this.setState({
       selectedPlace: props,
       keyword: keyword,
-      activeMarker: marker
+      activeMarker: marker,
+      infobar: "is-hidden"
     });
     this.checkFavorite(props.place_id);
   }
@@ -184,12 +186,27 @@ export class Container extends React.Component {
         activeMarker: null
       });
     }
+    this.setState({
+      infobar: "is-hidden"
+    });
   }
 
   render() {
     const style = {
       width: '100vw',
       height: '100vh'
+    }
+
+    const navstyle = {
+      padding: '5px'
+    }
+
+    const border = {
+      border: '1px solid #00d1b2'
+    }
+
+    const link = {
+      color: "#ff3860"
     }
   const homeMarker = this.createHomeMarker(this.mapCoords);
   const mapMarkers = this.renderMarkers(this.resultSet);
@@ -203,7 +220,14 @@ export class Container extends React.Component {
 
     if (mapMarkers !== [] && this.mapCoords) {
       return (
-      <div style={style}>
+        <div>
+          <div className={this.state.infobar} style={border}>
+            <div className="container">
+              <div className="content has-text-centered" style={navstyle}>
+                <span className="is-size-7"><strong>Click on markers for more info and to add them to your favorites. The <span style={link}>red marker</span> is the location you chose.</strong></span>
+              </div>
+            </div>
+          </div>
         <Map google={this.props.google} onClick={this.onMapClick} initialCenter={this.mapCoords} zoom={this.zoom}>
           { homeMarker }
           { mapMarkers }
