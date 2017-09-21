@@ -68,7 +68,7 @@ export class PlacesSearch extends React.Component {
       const destination = this.refs.autocomplete.value || this.state.lastSearch;
       $.post(mapURL, {user: sessionStorage.getItem('token'), destination: destination})
         .done((data) => {
-          window.location = '/map';
+          document.location = '/map';
         })
         .fail((error) => {
           console.log(error.responseText);
