@@ -15,7 +15,8 @@ export class Container extends React.Component {
       activeMarker: {},
       selectedPlace: {},
       dataLoaded: false,
-      keyword: ''
+      keyword: '',
+      infobar: "tile is-info"
     };
     this.onMarkerClick = this.onMarkerClick.bind(this);
     this.onInfoWindowClose = this.onInfoWindowClose.bind(this);
@@ -98,7 +99,8 @@ export class Container extends React.Component {
     this.setState({
       selectedPlace: props,
       keyword: keyword,
-      activeMarker: marker
+      activeMarker: marker,
+      infobar: "is-hidden"
     });
     this.checkFavorite(props.place_id);
   }
@@ -184,6 +186,9 @@ export class Container extends React.Component {
         activeMarker: null
       });
     }
+    this.setState({
+      infobar: "is-hidden"
+    });
   }
 
   render() {
@@ -216,10 +221,10 @@ export class Container extends React.Component {
     if (mapMarkers !== [] && this.mapCoords) {
       return (
         <div>
-          <div className="tile is-info" style={border}>
+          <div className={this.state.infobar} style={border}>
             <div className="container">
               <div className="content has-text-centered" style={navstyle}>
-                <span className="is-size-7"><strong>Click on map icons to view information about places and add them to your favorites. The <span style={link}>red marker</span> is the location you chose.</strong></span>
+                <span className="is-size-7"><strong>Click on markers for more info and to add them to your favorites. The <span style={link}>red marker</span> is the location you chose.</strong></span>
               </div>
             </div>
           </div>
