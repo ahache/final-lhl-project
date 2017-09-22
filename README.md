@@ -1,11 +1,13 @@
-# "NEARHERE" - Final Project
+# "NEARHERE" - Final Project (Lighthouse Labs Web Development Bootcamp)
 ### Group Members: [Alex Hache](https://github.com/ahache), [Jonathan Sue](https://github.com/jonosue), [Matt Willcox](https://github.com/MattWillcox), [Matthew Hounslow](https://github.com/hounslow)
 #### (README authored by Jonathan Sue)
 
 
 ## Overview
 
-For this project, we created an app called NearHere that allows a user to input an address/location/landmark anywhere in the world. They can then enter interests (such as food cuisines, shopping desires, parks, etc.) and receive a single map that shows places which are close by to their chosen location. Users can add/remove favorite locations and save them to their profiles in order to view them on a map later. We also built a companion mobile app which allows users to access their saved favorites for viewing while "on-the-go". This mobile app has been launched in "development mode" to the Google Play Store, while the web app has been deployed on Heroku.
+For this final group project, we created an app called NearHere that allows a user to input an address/location/landmark anywhere in the world. They can then enter interests (such as food cuisines, shopping desires, parks, etc.) and receive a single map that shows places which are close by to their chosen location. Users can add/remove favorite locations and save them to their profiles in order to view them on a map later. We also built a companion mobile app which allows users to access their saved favorites for viewing while "on-the-go". This mobile app has been launched in "development mode" to the Google Play Store, while the web app has been deployed on Heroku.
+
+(To view the dedicated Git repository for the mobile app, please [click here](https://github.com/MattWillcox/final_lhl_native_app).)
 
 
 ## Final Product
