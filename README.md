@@ -1,7 +1,5 @@
 # "NEARHERE" - Final Project (Lighthouse Labs Web Development Bootcamp)
-### Group Members: [Alex Hache](https://github.com/ahache), [Jonathan Sue](https://github.com/jonosue), [Matt Willcox](https://github.com/MattWillcox), [Matthew Hounslow](https://github.com/hounslow)
-#### (README authored by Jonathan Sue)
-
+### Main Contributors: [Alex Hache](https://github.com/ahache), [Jonathan Sue](https://github.com/jonosue), [Matt Willcox](https://github.com/MattWillcox), [Matthew Hounslow](https://github.com/hounslow)
 
 ## Overview
 
@@ -42,9 +40,9 @@ For this final group project, we created an app called NearHere that allows a us
 - React Router
 
 
-## Contact the Author
+## Contact the Contributors
 
-Questions? Comments? Please tweet the author of the README at [@JonoSue](http://twitter.com/JonoSue).
+Questions? Comments? Want to contribute to this? Feel free to contact any of the contributors of this repo. 
 
 
 *Last updated September 22, 2017*
